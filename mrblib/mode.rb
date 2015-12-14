@@ -34,7 +34,7 @@ module Scimre
     def initialize
       @name = "default"
       @keyword_list = ""
-      @style = {}
+      @style = []
       @indent = 2
     end
 
@@ -76,6 +76,7 @@ module Scimre
 
   class FundamentalMode < Mode
     def initialize
+      super.initialize
       @name = "fundamental"
     end
   end
