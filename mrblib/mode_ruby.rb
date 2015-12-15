@@ -1,4 +1,4 @@
-module Scimre
+module Mrbmacs
   class RubyMode < Mode
     def initialize
       super.initialize

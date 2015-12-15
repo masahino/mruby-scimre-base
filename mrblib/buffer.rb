@@ -1,4 +1,4 @@
-module Scimre
+module Mrbmacs
   class Buffer
     attr_accessor :filename, :directory, :docpointer, :name, :encoding
     def initialize(filename = nil)
@@ -56,7 +56,7 @@ module Scimre
         echo_win.sci_refresh
         view_win.sci_set_focus(true)
         
-#        mode = Scimre::Mode.set_mode_by_filename(filename)
+#        mode = Mrbmacs::Mode.set_mode_by_filename(filename)
 #        view_win.set_lexer_language(mode.name)
 #        mode.set_style(view_win)
 #        view_win.set_sel_back(true, 0xff0000)

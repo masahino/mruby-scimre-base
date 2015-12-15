@@ -1,4 +1,4 @@
-module Scimre
+module Mrbmacs
   class << self
     def load_file(app, filename)
       view_win = app.frame.view_win
@@ -66,7 +66,7 @@ module Scimre
         app.prev_buffer = app.current_buffer
         app.current_buffer = new_buffer
         load_file(app, filename)
-        app.mode = Scimre::Mode.set_mode_by_filename(filename)
+        app.mode = Mrbmacs::Mode.set_mode_by_filename(filename)
         view_win.sci_set_lexer_language(app.mode.name)
         app.mode.set_style(view_win, app.theme)
         view_win.sci_set_sel_back(true, 0xff0000)

@@ -1,4 +1,4 @@
-module Scimre
+module Mrbmacs
   class KeyMap
     include Scintilla
     attr_accessor :command_list

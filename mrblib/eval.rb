@@ -1,4 +1,4 @@
-module Scimre
+module Mrbmacs
   class << self
     def eval_last_exp(app)
       text, pos = app.frame.view_win.sci_get_curline

@@ -1,4 +1,4 @@
-module Scimre
+module Mrbmacs
   $mode_list = {
 	# ruby-mode
 	".rb" => "ruby",
@@ -27,7 +27,7 @@ module Scimre
 
     def self.set_mode_by_filename(filename)
       cur_mode = get_mode_by_suffix(File.extname(filename))
-      mode = Scimre.const_get(cur_mode.capitalize+"Mode").new
+      mode = Mrbmacs.const_get(cur_mode.capitalize+"Mode").new
       return mode
     end
       

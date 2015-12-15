@@ -1,4 +1,4 @@
-module Scimre
+module Mrbmacs
     include Scintilla
   class CppMode < Mode
     def initialize

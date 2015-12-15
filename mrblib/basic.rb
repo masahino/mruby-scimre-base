@@ -1,4 +1,4 @@
-module Scimre
+module Mrbmacs
   class << self
     def set_mark(app)
       app.mark_pos = app.frame.view_win.sci_get_current_pos

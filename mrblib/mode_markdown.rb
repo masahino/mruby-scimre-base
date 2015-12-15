@@ -1,4 +1,4 @@
-module Scimre
+module Mrbmacs
   class MarkdownMode < Mode
     include Scintilla
     def initialize
