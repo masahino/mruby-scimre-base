@@ -22,7 +22,7 @@ module Mrbmacs
       current_pos = win.sci_get_current_pos
       line = win.sci_line_from_position(current_pos)
       line_end_pos = win.sci_get_line_end_position(line)
-      if win.get_line(line) != "\n"
+      if win.sci_get_line(line) != "\n"
         win.sci_copy_range(current_pos, line_end_pos)
         win.sci_delete_range(current_pos, line_end_pos-current_pos)
       else
