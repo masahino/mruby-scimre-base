@@ -6,7 +6,7 @@ module Mrbmacs
     
     def copy_region(app)
       win = app.frame.view_win
-      win.copy_range(app.mark_pos, win.get_current_pos)
+      win.sci_copy_range(app.mark_pos, win.sci_get_current_pos)
       app.mark_pos = nil
     end
 
