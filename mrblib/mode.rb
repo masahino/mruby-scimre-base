@@ -69,7 +69,7 @@ module Mrbmacs
     end
     
     def get_indent_level(view_win)
-
+      0
     end
 
   end

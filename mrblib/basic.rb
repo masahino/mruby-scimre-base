@@ -12,9 +12,12 @@ module Mrbmacs
 
     def cut_region(app)
       win = app.frame.view_win
-      win.sci_copy_range(app.mark_pos, win.sci_get_current_pos)
-      win.sci_delete_range(app.mark_pos, win.sci_get_current_pos - app.mark_pos)
-      app.mark_pos = nil
+      if app.mark_pos != nil
+        win.sci_copy_range(app.mark_pos, win.sci_get_current_pos)
+        win.sci_delete_range(app.mark_pos,
+                             win.sci_get_current_pos - app.mark_pos)
+        app.mark_pos = nil
+      end
     end
 
     def kill_line(app)
