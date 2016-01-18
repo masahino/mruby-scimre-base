@@ -73,6 +73,22 @@ module Mrbmacs
 #        view_win.sci_refresh
       end
     end
-    
+
+    def insert_file(app, file_path = nil)
+      view_win = app.frame.view_win
+      if file_path == nil
+        dir = app.current_buffer.directory
+        prefix_text = dir + "/"
+
+        file_path = app.frame.echo_gets("insert file: ", prefix_text) do |input_text|
+          file_list = Dir.glob(input_text+"*")
+          file_list.map{|f| File.basename(f)}.join(" ")
+        end
+      end
+      if file_path != nil
+        text = File.open(file_path).read
+        view_win.sci_insert_text(view_win.sci_get_current_pos, text)
+      end
+    end
   end
 end

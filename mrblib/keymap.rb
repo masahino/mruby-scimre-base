@@ -73,6 +73,7 @@ module Mrbmacs
         'C-x' => "prefix",
         'C-y' => SCI_PASTE,
         'C-x b' => "switch-to-buffer",
+        'C-x i' => "insert-file",
         'C-x k' => "kill-buffer",
         'C-x C-c' => "save_buffers_kill-terminal",
         'C-x C-f' => "find-file",
