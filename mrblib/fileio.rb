@@ -54,7 +54,12 @@ module Mrbmacs
 
       filename = app.frame.echo_gets("find file: ", prefix_text) do |input_text|
         file_list = Dir.glob(input_text+"*")
-        file_list.map{|f| File.basename(f)}.join(" ")
+        len = if input_text[-1] == "/"
+          0
+        else
+          input_text.length - File.dirname(input_text).length - 1
+        end
+        [file_list.map{|f| File.basename(f)}.join(" "), len]
       end
       if filename != nil
         new_buffer = Buffer.new(filename)
