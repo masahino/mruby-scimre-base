@@ -1,15 +1,17 @@
 module Mrbmacs
   $mode_list = {
 	# ruby-mode
-	".rb" => "ruby",
-	".c" => "cpp",
-	".h" => "cpp",
-	".cpp" => "cpp",
-	".cxx" => "cpp",
-        ".md" => "markdown",
-        ".txt" => "fundamental",
-        "" => "fundamental",
-      }
+    ".rb" => "ruby",
+    ".c" => "cpp",
+    ".h" => "cpp",
+    ".cpp" => "cpp",
+    ".cxx" => "cpp",
+    ".md" => "markdown",
+    ".txt" => "fundamental",
+    ".html" => "html",
+    ".htm" => "html",
+    "" => "fundamental",
+  }
     
   class Mode
 
