@@ -33,7 +33,7 @@ module Mrbmacs
       echo_text = "Switch to buffer: (default #{app.prev_buffer.name}) "
       buffername = app.frame.echo_gets(echo_text, "") do |input_text|
         buffer_list = app.buffer_list.collect{|b| b.name}.select{|b| b =~ /^#{input_text}/}
-        buffer_list.join(" ")
+        [buffer_list.join(" "), input_text.length]
       end
       if buffername != nil
         if buffername == ""
@@ -53,14 +53,14 @@ module Mrbmacs
           app.current_buffer = new_buffer
         end
         echo_win.sci_set_focus(false)
-        echo_win.sci_refresh
+        echo_win.refresh
         view_win.sci_set_focus(true)
         
 #        mode = Mrbmacs::Mode.set_mode_by_filename(filename)
 #        view_win.set_lexer_language(mode.name)
 #        mode.set_style(view_win)
 #        view_win.set_sel_back(true, 0xff0000)
-        view_win.sci_refresh
+        view_win.refresh
       end
     end
 
