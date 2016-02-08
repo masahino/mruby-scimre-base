@@ -22,6 +22,14 @@ module Mrbmacs
 
       @file_encodings = []
       load_init_file(init_filename)
+      set_default_style
+    end
+
+    def set_default_style
+      @frame.view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, @theme.foreground_color)
+      @frame.view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, @theme.background_color)
+      @frame.view_win.sci_style_clear_all
+      @frame.view_win.refresh
     end
 
     def load_init_file(init_filename)
