@@ -10,6 +10,7 @@ module Mrbmacs
         'C-d' => SCI_CLEAR,
         'C-e' => SCI_LINEEND,
         'C-f' => SCI_CHARRIGHT,
+        'C-g' => "keyboard-quit",
         'C-h' => SCI_DELETEBACK,
         'C-k' => "kill-line",
         'C-w' => "cut-region",
@@ -78,6 +79,7 @@ module Mrbmacs
         'C-x C-c' => "save_buffers_kill-terminal",
         'C-x C-f' => "find-file",
         'C-x C-s' => "save-buffer",
+        'C-x C-w' => "write-file",
         'M-x' => "extend",
       }
       set_keymap(win, keymap)

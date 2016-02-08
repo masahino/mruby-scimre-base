@@ -46,6 +46,9 @@ module Mrbmacs
       app.frame.view_win.sci_set_save_point
     end
 
+    def write_file(app)
+    end
+
     def find_file(app)
       view_win = app.frame.view_win
       echo_win = app.frame.view_win

@@ -69,5 +69,8 @@ module Mrbmacs
       exit
     end
 
+    def keyboard_quit(app)
+      app.mark_pos = nil
+    end
   end
 end

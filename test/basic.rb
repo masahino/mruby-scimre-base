@@ -117,3 +117,13 @@ assert('newline') do
 
   assert_equal("\n" + org_text, text)
 end
+
+assert('keyboard-quit') do
+  app = setup
+  win = app.frame.view_win
+  org_text = win.sci_get_text(win.sci_get_length + 1)
+  Mrbmacs::set_mark(app)
+  assert_equal(0, app.mark_pos)
+  Mrbmacs::keyboard_quit(app)
+  assert_equal(nil, app.mark_pos)
+end
