@@ -74,9 +74,8 @@ module Mrbmacs
         app.prev_buffer = app.current_buffer
         app.current_buffer = new_buffer
         load_file(app, filename)
-        app.mode = Mrbmacs::Mode.set_mode_by_filename(filename)
-        view_win.sci_set_lexer_language(app.mode.name)
-        app.mode.set_style(view_win, app.theme)
+        view_win.sci_set_lexer_language(app.current_buffer.mode.name)
+        app.current_buffer.mode.set_style(view_win, app.theme)
         view_win.sci_set_sel_back(true, 0xff0000)
 #        view_win.sci_refresh
       end

@@ -40,7 +40,7 @@ module Mrbmacs
       win = app.frame.view_win
       line = win.sci_line_from_position(win.sci_get_current_pos())
       level = win.sci_get_fold_level(line) & Scintilla::SC_FOLDLEVELNUMBERMASK - Scintilla::SC_FOLDLEVELBASE
-      level = app.mode.get_indent_level(win)
+      level = app.current_buffer.mode.get_indent_level(win)
       indent = win.sci_get_indent()*level
       win.sci_set_line_indentation(line, indent)
       if win.sci_get_column(win.sci_get_current_pos) < indent

@@ -1,7 +1,6 @@
 class TestApp
   attr_accessor :frame, :mark_pos
   attr_accessor :current_buffer, :buffer_list, :prev_buffer
-  attr_accessor :mode
   attr_accessor :theme
   attr_accessor :file_encodings
 end
@@ -30,7 +29,7 @@ def setup
   frame = TestFrame.new
   frame.view_win = sci
   app.frame = frame
-  app.mode = Mrbmacs::Mode.new
+  app.current_buffer = Mrbmacs::Buffer.new
   app
 end
 
@@ -127,3 +126,4 @@ assert('keyboard-quit') do
   Mrbmacs::keyboard_quit(app)
   assert_equal(nil, app.mark_pos)
 end
+

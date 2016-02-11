@@ -63,7 +63,7 @@ module Mrbmacs
       x = @view_win.sci_get_column(@view_win.sci_get_current_pos)+1
       y = @view_win.sci_line_from_position(@view_win.sci_get_current_pos)+1
       mode_text += sprintf("%-10s", "(#{x},#{y})")
-      mode_text += "["+app.mode.name+"]"
+      mode_text += "["+app.current_buffer.mode.name+"]"
     end      
 
     def read_buffername(prompt)
