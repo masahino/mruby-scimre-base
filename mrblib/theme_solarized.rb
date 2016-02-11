@@ -92,7 +92,47 @@ module Mrbmacs
           {:fore => COLOR_BASE0}, #define SCE_H_COMMENT 9
           {:fore => COLOR_BASE0}, #define SCE_H_ENTITY 10
           {:fore => COLOR_BASE0}, #define SCE_H_TAGEND 11
-          ]
+          ],
+        'markdown' => [
+          {:fore => COLOR_BASE0}, # SCE_MARKDOWN_DEFAULT 0
+          {:fore => COLOR_BLUE}, # SCE_MARKDOWN_LINE_BEGIN 1
+          {:fore => COLOR_BLUE}, # SCE_MARKDOWN_STRONG1 2
+          {:fore => COLOR_BLUE}, # SCE_MARKDOWN_STRONG2 3
+          {:fore => COLOR_BLUE}, # SCE_MARKDOWN_EM1 4
+          {:fore => COLOR_BLUE}, # SCE_MARKDOWN_EM2 5
+          {:fore => COLOR_ORANGE},  # SCE_MARKDOWN_HEADER1 6
+          {:fore => COLOR_BLUE},  # SCE_MARKDOWN_HEADER2 7
+          {:fore => COLOR_BLUE},  # SCE_MARKDOWN_HEADER3 8
+          {:fore => COLOR_BLUE},  # SCE_MARKDOWN_HEADER4 9
+          {:fore => COLOR_BLUE},  # SCE_MARKDOWN_HEADER5 10
+          {:fore => COLOR_BLUE},  # SCE_MARKDOWN_HEADER6 11
+          {:fore => COLOR_YELLOW}, # SCE_MARKDOWN_PRECHAR 12
+          {:fore => COLOR_YELLOW},  # SCE_MARKDOWN_ULIST_ITEM 13
+          {:fore => COLOR_BLUE},  # SCE_MARKDOWN_OLIST_ITEM 14
+          {:fore => COLOR_CYAN},  # SCE_MARKDOWN_BLOCKQUOTE 15
+          {:fore => COLOR_ORANGE},   # SCE_MARKDOWN_STRIKEOUT 16
+          {:fore => COLOR_ORANGE}, # SCE_MARKDOWN_HRULE 17
+          {:fore => COLOR_BLUE}, # SCE_MARKDOWN_LINK 18
+          {:fore => COLOR_BLUE},  # SCE_MARKDOWN_CODE 19
+          {:fore => COLOR_MAGENTA}, # SCE_MARKDOWN_CODE2 20
+          {:fore => COLOR_VIOLET}, # SCE_MARKDOWN_CODEBK 21},
+          ],
+        'bash' => [
+          {:fore => COLOR_BASE0}, #define SCE_SH_DEFAULT 0
+          {:fore => COLOR_BASE0}, #define SCE_SH_ERROR 1
+          {:fore => COLOR_BASE01}, #define SCE_SH_COMMENTLINE 2
+          {:fore => COLOR_CYAN}, #define SCE_SH_NUMBER 3
+          {:fore => COLOR_GREEN}, #define SCE_SH_WORD 4
+          {:fore => COLOR_CYAN}, #define SCE_SH_STRING 5
+          {:fore => COLOR_YELLOW}, #define SCE_SH_CHARACTER 6
+          {:fore => COLOR_BASE0}, #define SCE_SH_OPERATOR 7
+          {:fore => COLOR_BASE0}, #define SCE_SH_IDENTIFIER 8
+          {:fore => COLOR_ORANGE}, #define SCE_SH_SCALAR 9
+          {:fore => COLOR_BASE0}, #define SCE_SH_PARAM 10
+          {:fore => COLOR_BASE0}, #define SCE_SH_BACKTICKS 11
+          {:fore => COLOR_BASE0}, #define SCE_SH_HERE_DELIM 12
+          {:fore => COLOR_BASE0}, #define SCE_SH_HERE_Q 13
+          ],
       }
     end
   end

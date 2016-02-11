@@ -10,6 +10,7 @@ module Mrbmacs
     ".txt" => "fundamental",
     ".html" => "html",
     ".htm" => "html",
+    ".sh" => "bash",
     "" => "fundamental",
   }
     
