@@ -46,25 +46,48 @@ module Mrbmacs
       app.frame.view_win.sci_set_save_point
     end
 
-    def write_file(app)
-    end
-
-    def find_file(app)
+    def write_file(app, filename = nil)
       view_win = app.frame.view_win
-      echo_win = app.frame.view_win
-      dir = app.current_buffer.directory
-      prefix_text = dir + "/"
-
-      filename = app.frame.echo_gets("find file: ", prefix_text) do |input_text|
-        file_list = Dir.glob(input_text+"*")
-        len = if input_text[-1] == "/"
-          0
-        else
-          input_text.length - File.dirname(input_text).length - 1
+      
+      if filename == nil
+        dir = app.current_buffer.directory
+        prefix_text = dir + "/"
+        
+        filename = app.frame.echo_gets("Write file: ", prefix_text) do |input_text|
+          file_list = Dir.glob(input_text + "*")
+          len = if input_text[-1] == "/"
+                  0
+                else
+                  input_text.length - File.dirname(input_text).length - 1
+                end
+          [file_list.map{|f| File.basename(f)}.join(" "), len]
         end
-        [file_list.map{|f| File.basename(f)}.join(" "), len]
       end
       if filename != nil
+        app.current_buffer.filename = filename
+        save_buffer(app)
+      end
+    end
+
+    def find_file(app, filename = nil)
+      view_win = app.frame.view_win
+      
+      if filename == nil
+        dir = app.current_buffer.directory
+        prefix_text = dir + "/"
+
+        filename = app.frame.echo_gets("find file: ", prefix_text) do |input_text|
+          file_list = Dir.glob(input_text+"*")
+          len = if input_text[-1] == "/"
+            0
+          else
+            input_text.length - File.dirname(input_text).length - 1
+          end
+          [file_list.map{|f| File.basename(f)}.join(" "), len]
+        end
+      end
+      if filename != nil
+        app.current_buffer.pos = view_win.sci_get_current_pos
         new_buffer = Buffer.new(filename)
         view_win.sci_add_refdocument(app.current_buffer.docpointer)
         view_win.sci_set_docpointer(nil)

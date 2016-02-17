@@ -30,7 +30,7 @@ def setup
   frame = TestFrame.new
   frame.view_win = sci
   app.frame = frame
-  app.mode = Mrbmacs::Mode.new
+  app.current_buffer = Mrbmacs::Buffer.new
   app
 end
 
@@ -53,4 +53,14 @@ assert('insert-file 2') do
   Mrbmacs::insert_file(app, test_file)
   text = win.sci_get_text(win.sci_get_length + 1)
   assert_equal(org_text[0..4] + org_text + org_text[5..-1], text)
+end
+
+assert('write-file') do
+  app = setup
+  win = app.frame.view_win
+  org_text = win.sci_get_text(win.sci_get_length + 1)
+  test_file = File.dirname(__FILE__) + "/test.output"
+  Mrbmacs::write_file(app, test_file)
+  test_text = File.open(test_file).read
+  assert_equal(org_text, test_text)
 end
