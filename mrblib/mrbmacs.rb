@@ -27,7 +27,7 @@ module Mrbmacs
       @frame.view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, @theme.foreground_color)
       @frame.view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, @theme.background_color)
       @frame.view_win.sci_style_clear_all
-      @frame.view_win.refresh
+#      @frame.view_win.refresh
     end
 
     def load_init_file(init_filename)
@@ -63,6 +63,36 @@ module Mrbmacs
       else
         extend(command)
       end
+    end
+
+    def run(file = nil)
+      if file != nil
+        buffer = Mrbmacs::Buffer.new(file)
+        @current_buffer = buffer
+        Mrbmacs::load_file(self, file)
+        @frame.view_win.sci_set_lexer_language(buffer.mode.name)
+        if $DEBUG
+          $stderr.puts "["+@frame.view_win.sci_get_lexer_language()+"]"
+        end
+        @frame.view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT,
+                                           @theme.foreground_color)
+        @frame.view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT,
+                                           @theme.background_color)
+        @frame.view_win.sci_style_clear_all
+        @current_buffer.mode.set_style(@frame.view_win, @theme)
+        @frame.view_win.sci_set_sel_back(true, 0xff0000)
+#        @frame.view_win.refresh
+        @filename = file
+      else
+        buffer = Mrbmacs::Buffer.new(nil)
+        @current_buffer = buffer
+      end
+      buffer.docpointer = @frame.view_win.sci_get_docpointer()
+      @prev_buffer = buffer
+      @buffer_list.push(buffer)
+      @frame.modeline(self)
+
+      editloop()
     end
   end
 end
