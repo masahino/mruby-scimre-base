@@ -88,7 +88,7 @@ module Mrbmacs
       end
       if filename != nil
         app.current_buffer.pos = view_win.sci_get_current_pos
-        new_buffer = Buffer.new(filename)
+        new_buffer = Buffer.new(filename, app.buffer_list.map{|b| b.name})
         view_win.sci_add_refdocument(app.current_buffer.docpointer)
         view_win.sci_set_docpointer(nil)
         new_buffer.docpointer = view_win.sci_get_docpointer

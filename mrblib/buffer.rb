@@ -1,10 +1,11 @@
 module Mrbmacs
   class Buffer
     attr_accessor :filename, :directory, :docpointer, :name, :encoding, :mode, :pos
-    def initialize(filename = nil)
+    def initialize(filename = nil, buffer_name_list = [])
       if filename != nil
         @filename = File.expand_path(filename)
-        @name = File.basename(@filename)
+        @name = create_new_buffer_name(@filename, buffer_name_list)
+        #@name = File.basename(@filename)
         @directory = File.dirname(@filename)
         @mode = Mrbmacs::Mode.set_mode_by_filename(filename)
       else
@@ -17,7 +18,22 @@ module Mrbmacs
       @encoding = "utf-8"
       @docpointer = nil
       @pos = 0
-    end 
+    end
+
+    def create_new_buffer_name(filename, buffer_name_list)
+      buffer_name = File.basename(filename)
+      dir = File.dirname(filename).split("/")
+      tmp_str = ""
+      while buffer_name_list.include?(buffer_name)
+        if tmp_str == ""
+          tmp_str = dir.pop
+        else
+          tmp_str = dir.pop + "/" + tmp_str
+        end
+        buffer_name = File.basename(filename) + "<" + tmp_str + ">"
+      end
+      return buffer_name
+    end
   end
 
   class << self

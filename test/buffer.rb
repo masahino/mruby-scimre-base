@@ -65,3 +65,15 @@ assert('switch-to-buffer') do
   assert_equal("test", app.current_buffer.name)
   assert_equal(10, app.current_buffer.pos)
 end
+
+assert('new buffer name') do
+  app = setup
+  buffer = Mrbmacs::Buffer.new("/foo/bar/hoge.rb", [])
+  assert_equal("hoge.rb", buffer.name)
+
+  buffer = Mrbmacs::Buffer.new("/foo/bar/hoge.rb", ["hoge.rb"])
+  assert_equal("hoge.rb<bar>", buffer.name)
+
+  buffer = Mrbmacs::Buffer.new("/foo/bar/hoge.rb", ["hoge.rb", "hoge.rb<bar>"])
+  assert_equal("hoge.rb<foo/bar>", buffer.name)
+end
