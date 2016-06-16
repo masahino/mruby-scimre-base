@@ -45,37 +45,39 @@ module Mrbmacs
       end
       return nil
     end
+  end
 
-    def switch_to_buffer(app, buffername = nil)
-      view_win = app.frame.view_win
-      echo_win = app.frame.view_win
+  class Application
+    def switch_to_buffer(buffername = nil)
+      view_win = @frame.view_win
+      echo_win = @frame.view_win
       if buffername == nil
-        echo_text = "Switch to buffer: (default #{app.prev_buffer.name}) "
-        buffername = app.frame.echo_gets(echo_text, "") do |input_text|
-          buffer_list = app.buffer_list.collect{|b| b.name}.select{|b| b =~ /^#{input_text}/}
+        echo_text = "Switch to buffer: (default #{@prev_buffer.name}) "
+        buffername = @frame.echo_gets(echo_text, "") do |input_text|
+          buffer_list = @buffer_list.collect{|b| b.name}.select{|b| b =~ /^#{input_text}/}
           [buffer_list.join(" "), input_text.length]
         end
       end
       if buffername != nil
         if buffername == ""
-          buffername = app.prev_buffer.name
+          buffername = @prev_buffer.name
         end
-        if buffername == app.current_buffer.name
+        if buffername == @current_buffer.name
 #          echo_win.sci_set_focus(false)
           #view_win.sci_set_focus(true)
           return
         end
-        new_buffer = get_buffer_from_name(app.buffer_list, buffername)
+        new_buffer = Mrbmacs::get_buffer_from_name(@buffer_list, buffername)
         if new_buffer != nil
-          app.current_buffer.pos = view_win.sci_get_current_pos
+          @current_buffer.pos = view_win.sci_get_current_pos
           tmp_p = view_win.sci_get_docpointer
-          view_win.sci_add_refdocument(app.current_buffer.docpointer)
+          view_win.sci_add_refdocument(@current_buffer.docpointer)
           view_win.sci_set_docpointer(new_buffer.docpointer)
-          app.prev_buffer = app.current_buffer
-          app.current_buffer = new_buffer
-          view_win.sci_set_lexer_language(app.current_buffer.mode.name)
-          app.current_buffer.mode.set_style(view_win, app.theme)
-          view_win.sci_goto_pos(app.current_buffer.pos)
+          @prev_buffer = @current_buffer
+          @current_buffer = new_buffer
+          view_win.sci_set_lexer_language(@current_buffer.mode.name)
+          @current_buffer.mode.set_style(view_win, @theme)
+          view_win.sci_goto_pos(@current_buffer.pos)
         end
         #echo_win.sci_set_focus(false)
         #echo_win.refresh
@@ -90,12 +92,12 @@ module Mrbmacs
       end
     end
 
-    def kill_buffer(app)
-      echo_text = "kill-buffer (default #{app.current_buffer.name}): "
-      buffername = app.frame.echo_gets(echo_text, "") do |input_text|
+    def kill_buffer()
+      echo_text = "kill-buffer (default #{@current_buffer.name}): "
+      buffername = @frame.echo_gets(echo_text, "") do |input_text|
       end
       if echo_text == nil
-        buffername = app.current_buffer.name
+        buffername = @current_buffer.name
       end
     end
   end

@@ -1,9 +1,8 @@
-class TestApp
-  attr_accessor :frame, :mark_pos
-  attr_accessor :current_buffer, :buffer_list, :prev_buffer
-  attr_accessor :mode
-  attr_accessor :theme
-  attr_accessor :file_encodings
+module Mrbmacs
+  class TestApp < Application
+    def initialize
+    end
+  end
 end
 
 class TestFrame
@@ -11,7 +10,7 @@ class TestFrame
 end
 
 def setup
-  app = TestApp.new
+  app = Mrbmacs::TestApp.new
   sci = nil
   test_text = File.open(File.dirname(__FILE__) + "/test.input").read
 
@@ -39,7 +38,7 @@ assert('insert-file 1') do
   win = app.frame.view_win
   org_text = win.sci_get_text(win.sci_get_length + 1)
   test_file = File.dirname(__FILE__) + "/test.input"
-  Mrbmacs::insert_file(app, test_file)
+  app.insert_file(test_file)
   text = win.sci_get_text(win.sci_get_length + 1)
   assert_equal(org_text + org_text, text)
 end
@@ -50,7 +49,7 @@ assert('insert-file 2') do
   org_text = win.sci_get_text(win.sci_get_length + 1)
   test_file = File.dirname(__FILE__) + "/test.input"
   win.sci_set_current_pos(5)
-  Mrbmacs::insert_file(app, test_file)
+  app.insert_file(test_file)
   text = win.sci_get_text(win.sci_get_length + 1)
   assert_equal(org_text[0..4] + org_text + org_text[5..-1], text)
 end
@@ -60,7 +59,7 @@ assert('write-file') do
   win = app.frame.view_win
   org_text = win.sci_get_text(win.sci_get_length + 1)
   test_file = File.dirname(__FILE__) + "/test.output"
-  Mrbmacs::write_file(app, test_file)
+  app.write_file(test_file)
   test_text = File.open(test_file).read
   assert_equal(org_text, test_text)
 end

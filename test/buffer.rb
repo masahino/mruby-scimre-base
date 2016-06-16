@@ -1,8 +1,8 @@
-class TestApp
-  attr_accessor :frame, :mark_pos
-  attr_accessor :current_buffer, :buffer_list, :prev_buffer
-  attr_accessor :theme
-  attr_accessor :file_encodings
+module Mrbmacs
+  class TestApp < Application
+    def initialize
+    end
+  end
 end
 
 class TestFrame
@@ -19,7 +19,7 @@ class TestTheme
 end
 
 def setup
-  app = TestApp.new
+  app = Mrbmacs::TestApp.new
   sci = nil
   test_text = File.open(File.dirname(__FILE__) + "/test.input").read
 
@@ -55,13 +55,13 @@ assert('switch-to-buffer') do
   
   new_buffer = Mrbmacs::Buffer.new("new")
   app.buffer_list.push(new_buffer)
-  Mrbmacs::switch_to_buffer(app, "new")
+  app.switch_to_buffer("new")
   app.current_buffer.docpointer = app.frame.view_win.sci_get_docpointer
 
   assert_equal("new", app.current_buffer.name)
   assert_equal(0, app.current_buffer.pos)
   assert_equal(2, app.buffer_list.size)
-  Mrbmacs::switch_to_buffer(app, "test")
+  app.switch_to_buffer("test")
   assert_equal("test", app.current_buffer.name)
   assert_equal(10, app.current_buffer.pos)
 end

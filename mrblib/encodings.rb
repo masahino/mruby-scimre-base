@@ -3,13 +3,15 @@ module Mrbmacs
     def get_encoding_list()
       `iconv -l`.split(' ')
     end
+  end
     
-    def set_buffer_file_coding_system(app, code = nil)
-      view_win = app.frame.view_win
+  class Application
+    def set_buffer_file_coding_system(code = nil)
+      view_win = @frame.view_win
       if code == nil
-        code = app.frame.echo_gets("Coding system for saving file:",) do |input_text|
+        code = @frame.echo_gets("Coding system for saving file:",) do |input_text|
           tmp_str = input_text.upcase
-          comp_list = app.system_encodings.select do |encoding|
+          comp_list = @system_encodings.select do |encoding|
             encoding.start_with?(tmp_str)
           end
           if $DEBUG
@@ -19,8 +21,8 @@ module Mrbmacs
         end
       end
       if code != nil
-        if app.system_encodings.include?(code.upcase) == true
-          app.current_buffer.encoding = code
+        if @system_encodings.include?(code.upcase) == true
+          @current_buffer.encoding = code
         end
       end
     end

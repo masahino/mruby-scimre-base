@@ -1,8 +1,8 @@
-class TestApp
-  attr_accessor :frame, :mark_pos
-  attr_accessor :current_buffer, :buffer_list, :prev_buffer
-  attr_accessor :theme
-  attr_accessor :file_encodings, :system_encodings
+module Mrbmacs
+  class TestApp < Application
+    def initialize
+    end
+  end
 end
 
 class TestFrame
@@ -10,7 +10,7 @@ class TestFrame
 end
 
 def setup
-  app = TestApp.new
+  app = Mrbmacs::TestApp.new
   sci = nil
   test_text = File.open(File.dirname(__FILE__) + "/test-utf8.input").read
 
@@ -37,9 +37,9 @@ end
 assert('set-buffer-file-coding-system') do
   app = setup
   assert_equal("utf-8", app.current_buffer.encoding)
-  Mrbmacs::set_buffer_file_coding_system(app, "shift_jis")
+  app.set_buffer_file_coding_system("shift_jis")
   assert_equal("shift_jis", app.current_buffer.encoding)
-  Mrbmacs::set_buffer_file_coding_system(app, "hogehoge")
+  app.set_buffer_file_coding_system("hogehoge")
   assert_equal("shift_jis", app.current_buffer.encoding)
 end
 

@@ -83,7 +83,7 @@ module Mrbmacs
         'C-x C-w' => "write-file",
         'C-x Enter' => "prefix",
         'C-x Enter f' => "set-buffer-file-coding-system",
-        'M-x' => "extend",
+        'M-x' => "execute-extended-command",
       }
       set_keymap(win, keymap)
     end

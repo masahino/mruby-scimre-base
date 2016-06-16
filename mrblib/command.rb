@@ -1,13 +1,15 @@
 module Mrbmacs
-  def Mrbmacs::extend(app)
-    echo_win = app.frame.echo_win
-    command = app.frame.echo_gets("M-x ")
+  class Application
+  def execute_extended_command()
+    echo_win = @frame.echo_win
+    command = @frame.echo_gets("M-x ")
     if command != ""
       begin
-        instance_eval("Mrbmacs::#{command.gsub("-", "_")}(app)")
+        instance_eval("#{command.gsub("-", "_")}()")
         rescue
         $stderr.puts $!
         end
     end
   end
+end
 end

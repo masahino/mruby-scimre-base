@@ -1,8 +1,8 @@
-class TestApp
-  attr_accessor :frame, :mark_pos
-  attr_accessor :current_buffer, :buffer_list, :prev_buffer
-  attr_accessor :theme
-  attr_accessor :file_encodings
+module Mrbmacs
+  class TestApp < Application
+    def initialize
+    end
+  end
 end
 
 class TestFrame
@@ -10,7 +10,7 @@ class TestFrame
 end
 
 def setup
-  app = TestApp.new
+  app = Mrbmacs::TestApp.new
   sci = nil
   test_text = File.open(File.dirname(__FILE__) + "/test.input").read
 
@@ -36,16 +36,16 @@ end
 assert('set-mark') do
   app = setup
   assert_equal(nil, app.mark_pos)
-  Mrbmacs::set_mark(app)
+  app.set_mark()
   assert_equal(0, app.mark_pos)
-  ret = Mrbmacs::copy_region(app)
+  ret = app.copy_region()
   assert_equal(nil, app.mark_pos)
 end
 
 assert('copy-region') do
   app = setup
   org_text = app.frame.view_win.sci_get_text(app.frame.view_win.sci_get_length+1)
-  Mrbmacs::copy_region(app)
+  app.copy_region()
   text = app.frame.view_win.sci_get_text(app.frame.view_win.sci_get_length+1)
   assert_equal(org_text, text)
 end
@@ -54,14 +54,14 @@ assert('cut-region') do
   app = setup
   win = app.frame.view_win
   org_text = win.sci_get_text(win.sci_get_length + 1)
-  Mrbmacs::cut_region(app)
+  app.cut_region()
   text = win.sci_get_text(win.sci_get_length + 1)
   assert_equal(org_text, text)
 
   # cut all text
-  Mrbmacs::set_mark(app)
+  app.set_mark()
   win.sci_set_current_pos(win.sci_get_length + 1)
-  Mrbmacs::cut_region(app)
+  app.cut_region()
   text = win.sci_get_text(win.sci_get_length + 1)
   assert_equal("", text)
 end
@@ -70,7 +70,7 @@ assert('kill-line 1') do
   app = setup
   win = app.frame.view_win
   org_text = win.sci_get_text(win.sci_get_length + 1)
-  Mrbmacs::kill_line(app)
+  app.kill_line()
   text = win.sci_get_text(win.sci_get_length + 1)
   assert_equal("", text.split("\n")[0])
   assert_equal(org_text.split("\n")[1], text.split("\n")[1])
@@ -82,7 +82,7 @@ assert('kill-line 2') do
   org_text = win.sci_get_text(win.sci_get_length + 1)
 
   win.sci_set_current_pos(5)
-  Mrbmacs::kill_line(app)
+  app.kill_line()
   text = win.sci_get_text(win.sci_get_length + 1)
   assert_equal(org_text.split("\n")[0][0..4], text.split("\n")[0])
 end
@@ -91,10 +91,10 @@ assert('beginning-of-buffer') do
   app = setup
   win = app.frame.view_win
 
-  Mrbmacs::beginning_of_buffer(app)
+  app.beginning_of_buffer()
   assert_equal(0, win.sci_get_current_pos)
   win.sci_set_current_pos(win.sci_get_length + 1)  
-  Mrbmacs::beginning_of_buffer(app)
+  app.beginning_of_buffer()
   assert_equal(0, win.sci_get_current_pos)
 end
 
@@ -102,7 +102,7 @@ assert('end-of-buffer') do
   app = setup
   win = app.frame.view_win
 
-  Mrbmacs::end_of_buffer(app)
+  app.end_of_buffer()
   assert_equal(win.sci_get_length, win.sci_get_current_pos)
 end
   
@@ -111,7 +111,7 @@ assert('newline') do
   win = app.frame.view_win
   org_text = win.sci_get_text(win.sci_get_length + 1)
 
-  Mrbmacs::newline(app)
+  app.newline()
   text = win.sci_get_text(win.sci_get_length + 1)
 
   assert_equal("\n" + org_text, text)
@@ -121,16 +121,16 @@ assert('keyboard-quit') do
   app = setup
   win = app.frame.view_win
   org_text = win.sci_get_text(win.sci_get_length + 1)
-  Mrbmacs::set_mark(app)
+  app.set_mark()
   assert_equal(0, app.mark_pos)
-  Mrbmacs::keyboard_quit(app)
+  app.keyboard_quit()
   assert_equal(nil, app.mark_pos)
 end
 
 assert('isearch-forward') do
-  assert_equal(true, Mrbmacs.methods.include?(:isearch_forward))
+  assert_equal(true, Mrbmacs::Application.instance_methods.include?(:isearch_forward))
 end
 
 assert('isearch-backward') do
-  assert_equal(true, Mrbmacs.methods.include?(:isearch_backward))
+  assert_equal(true, Mrbmacs::Application.instance_methods.include?(:isearch_backward))
 end

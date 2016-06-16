@@ -47,7 +47,7 @@ module Mrbmacs
         @frame.view_win.send_message(command)
       else
         begin
-          instance_eval("Mrbmacs::#{command.gsub("-", "_")}(self)")
+          instance_eval("#{command.gsub("-", "_")}()")
         rescue
           $stderr.puts $!
         end
@@ -70,7 +70,7 @@ module Mrbmacs
       if file != nil
         buffer = Mrbmacs::Buffer.new(file)
         @current_buffer = buffer
-        Mrbmacs::load_file(self, file)
+        load_file(file)
         @frame.view_win.sci_set_lexer_language(buffer.mode.name)
         if $DEBUG
           $stderr.puts "["+@frame.view_win.sci_get_lexer_language()+"]"
