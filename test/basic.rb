@@ -127,3 +127,10 @@ assert('keyboard-quit') do
   assert_equal(nil, app.mark_pos)
 end
 
+assert('isearch-forward') do
+  assert_equal(true, Mrbmacs.methods.include?(:isearch_forward))
+end
+
+assert('isearch-backward') do
+  assert_equal(true, Mrbmacs.methods.include?(:isearch_backward))
+end

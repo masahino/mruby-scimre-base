@@ -69,6 +69,7 @@ module Mrbmacs
         'C-m' => SCI_NEWLINE,
         'C-n' => SCI_LINEDOWN,
         'C-p' => SCI_LINEUP,
+        'C-r' => "isearch-backward",
         'C-s' => "isearch-forward",
         'C-v' => SCI_PAGEDOWN,
         'C-x' => "prefix",
@@ -80,6 +81,8 @@ module Mrbmacs
         'C-x C-f' => "find-file",
         'C-x C-s' => "save-buffer",
         'C-x C-w' => "write-file",
+        'C-x Enter' => "prefix",
+        'C-x Enter f' => "set-buffer-file-coding-system",
         'M-x' => "extend",
       }
       set_keymap(win, keymap)

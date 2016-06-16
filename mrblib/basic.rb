@@ -32,6 +32,9 @@ module Mrbmacs
         win.sci_line_cut
       end
     end
+
+    def isearch_backward(app)
+    end
     
     def isearch_forward(app)
     end
