@@ -5,7 +5,7 @@ module Mrbmacs
     attr_accessor :frame, :mark_pos
     attr_accessor :current_buffer, :buffer_list, :prev_buffer
     attr_accessor :theme
-    attr_accessor :file_encodings
+    attr_accessor :file_encodings, :system_encodings
     def initialize(init_filename, opts = nil)
       @frame = Mrbmacs::Frame.new()
       @keymap = ViewKeyMap.new(@frame.view_win)
@@ -19,6 +19,7 @@ module Mrbmacs
       @filename = nil
 
       @file_encodings = []
+      @system_encodings = Mrbmacs::get_encoding_list()
       load_init_file(init_filename)
       set_default_style
     end
