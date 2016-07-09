@@ -1,7 +1,12 @@
 module Mrbmacs
   class << self
     def get_encoding_list()
-      `iconv -l`.split(' ')
+      begin
+        `iconv -l`.split(' ')
+      rescue
+        $stderr.puts "iconv -l error"
+        []
+      end
     end
   end
     
