@@ -1,12 +1,13 @@
 module Mrbmacs
   class << self
     def get_encoding_list()
-      begin
-        `iconv -l`.split(' ')
-      rescue
-        $stderr.puts "iconv -l error"
-        []
+      list = []
+      if Iconv.methods.include?(:list)
+        Iconv.list do |name|
+          list.push(name)
+        end
       end
+      list
     end
   end
     
