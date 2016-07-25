@@ -6,6 +6,8 @@ module Mrbmacs
         Iconv.list do |name|
           list.push(name)
         end
+      else
+        list += ['ISO-2022-JP', 'UTF-8', 'EUC-JP', 'CP932']
       end
       list
     end
