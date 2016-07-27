@@ -30,7 +30,7 @@ def setup
   frame.view_win = sci
   app.frame = frame
   app.current_buffer = Mrbmacs::Buffer.new
-  app.system_encodings = `iconv -l`.split(' ')
+  app.system_encodings = Mrbmacs::get_encoding_list
   app
 end
 
