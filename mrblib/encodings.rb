@@ -7,7 +7,7 @@ module Mrbmacs
           list.push(name)
         end
       else
-        list += ['ISO-2022-JP', 'UTF-8', 'EUC-JP', 'CP932', 'Shift_JIS']
+        list += ['ISO-2022-JP', 'UTF-8', 'EUC-JP', 'CP932', 'SHIFT_JIS']
       end
       list
     end
