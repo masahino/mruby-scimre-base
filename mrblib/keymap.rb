@@ -5,7 +5,7 @@ module Mrbmacs
     def initialize(win)
       @command_list = {}
       keymap = {
-        'C-a' => SCI_VCHOME,
+        'C-a' => SCI_HOME,
         'C-b' => SCI_CHARLEFT,
         'C-d' => SCI_CLEAR,
         'C-e' => SCI_LINEEND,
