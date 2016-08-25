@@ -42,19 +42,16 @@ module Mrbmacs
     end
 
     def set_style(view_win, theme)
-      style = @style
-      if theme.style_list[@name] != nil
-        style = theme.style_list[@name]
-      end
-      for i in 0..style.length-1
-        if style[i][:fore]
-          view_win.sci_style_set_fore(i, style[i][:fore])
+      for i in 0..@style.length-1
+        color = theme.font_color[@style[i]]
+        if color[0] # foreground
+          view_win.sci_style_set_fore(i, color[0])
         end
-        if style[i][:back]
-          view_win.sci_style_set_back(i, style[i][:back])
+        if color[1] # italic
+          view_win.sci_style_set_italic(i, color[1])
         end
-        if style[i][:italic]
-          view_win.sci_style_set_italic(i, style[i][:italic])
+        if color[2] # bold
+          view_win.sci_style_set_bold(i, color[2])
         end
       end
 

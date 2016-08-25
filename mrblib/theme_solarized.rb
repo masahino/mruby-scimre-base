@@ -1,138 +1,33 @@
 module Mrbmacs
   class SolarizedDarkTheme
-    attr_accessor :style_list, :foreground_color, :background_color
+    attr_accessor :style_list, :foreground_color, :background_color, :font_color
     def initialize
       @foreground_color = Mrbmacs::COLOR_BASE0
       @background_color = Mrbmacs::COLOR_BASE03
-      @style_list= {
-        'cpp' => [
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_DEFAULT 0
-          {:fore => Mrbmacs::COLOR_BASE01, :italic => true}, # SCE_C_COMMENT 1
-          {:fore => Mrbmacs::COLOR_BASE01, :italic => true}, # SCE_C_COMMENTLINE 2
-          {:fore => Mrbmacs::COLOR_BASE01, :italic => true}, # SCE_C_COMMENTDOC 3
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_NUMBER 4
-          {:fore => Mrbmacs::COLOR_BLUE}, # SCE_C_WORD 5
-          {:fore => Mrbmacs::COLOR_CYAN}, # SCE_C_STRING 6
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_CHARACTER 7
-          {:fore => Mrbmacs::COLOR_GREEN}, # SCE_C_UUID 8
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_PREPROCESSOR 9
-          {:fore => Mrbmacs::COLOR_BLUE}, # SCE_C_OPERATOR 10
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_IDENTIFIER 11
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_STRINGEOL 21
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_VERBATIM 13
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_REGEX 14
-          {:fore => Mrbmacs::COLOR_BASE01, :italic => true}, # SCE_C_COMMENTLINEDOC 15
-          {:fore => Mrbmacs::COLOR_BLUE}, # SCE_C_WORD2 16
-          {:fore => Mrbmacs::COLOR_BASE01}, # SCE_C_COMMENTDOCKEYWORD 17
-          {:fore => Mrbmacs::COLOR_BASE01}, # SCE_C_COMMENTDOCKEYWORDERROR 18
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_GLOBALCLASS 19
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_STRINGRAW 20
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_TRIPLEVERBATIM 21
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_HASHQUOTEDSTRING 22
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_PREPROCESSORCOMMENT 23
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_PREPROCESSORCOMMENTDOC 24
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_USERLITERAL 25
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_TASKMARKER 26
-          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_ESCAPESEQUENCE 27
-        ],
-        'ruby' => [
-          {:fore => COLOR_BASE0}, # SCE_RB_DEFAULT 0
-          {:back => COLOR_RED}, # SCE_RB_ERROR 1 
-          {:fore => COLOR_BASE01, :italic => true}, # SCE_RB_COMMENTLINE 2
-          {}, # SCE_RB_POD 3
-          {:fore => COLOR_BASE0}, # SCE_RB_NUMBER 4
-          {:fore => COLOR_YELLOW}, # SCE_RB_WORD 5
-          {:fore => COLOR_CYAN}, # SCE_RB_STRING 6
-          {:fore => COLOR_CYAN}, # SCE_RB_CHARACTER 7
-          {:fore => COLOR_YELLOW}, # SCE_RB_CLASSNAME 8
-          {:fore => COLOR_BLUE}, # SCE_RB_DEFNAME 9
-          {:fore => COLOR_BASE0}, # SCE_RB_OPERATOR 10
-          {:fore => COLOR_BASE0}, # SCE_RB_IDENTIFIER 11
-          {:fore => COLOR_RED}, # SCE_RB_REGEX 12
-          {:fore => COLOR_BLUE}, # SCE_RB_GLOBAL 13
-          {:fore => COLOR_BLUE}, # SCE_RB_SYMBOL 14
-          {:fore => COLOR_ORANGE}, # SCE_RB_MODULE_NAME 15
-          {:fore => COLOR_BLUE}, # SCE_RB_INSTANCE_VAR 16
-          {:fore => COLOR_BLUE}, # SCE_RB_CLASS_VAR 17
-          {:fore => COLOR_RED}, # SCE_RB_BACKTICKS 18 
-          {}, # SCE_RB_DATASECTION 19
-          {}, # SCE_RB_HERE_DELIM 20
-          {}, # SCE_RB_HERE_Q 21
-          {}, # SCE_RB_HERE_QQ 22
-          {}, # SCE_RB_HERE_QX 23
-          {}, # SCE_RB_STRING_Q 24
-          {}, # SCE_RB_STRING_QQ 25
-          {}, # SCE_RB_STRING_QX 26
-          {}, # SCE_RB_STRING_QR 27
-          {}, # SCE_RB_STRING_QW 28
-          {:fore => COLOR_BLUE}, # SCE_RB_WORD_DEMOTED 29
-          {:fore => COLOR_BASE0}, # SCE_RB_STDIN 30
-          {}, # SCE_RB_STDOUT 31
-          {}, # 32
-          {}, # 33
-          {}, # 34
-          {}, # 35
-          {}, # 36
-          {}, # 37
-          {}, # 38
-          {}, # 39
-          {}, # SCE_RB_STDERR 40
-          {:fore => COLOR_YELLOW}, # SCE_RB_UPPER_BOUND 41
-        ],
-        'html' => [
-          {:fore => COLOR_BASE0}, #define SCE_H_DEFAULT 0
-          {:fore => COLOR_BLUE},  #define SCE_H_TAG 1
-          {:fore => COLOR_BLUE}, #define SCE_H_TAGUNKNOWN 2
-          {:fore => COLOR_ORANGE}, #define SCE_H_ATTRIBUTE 3
-          {:fore => COLOR_ORANGE}, #define SCE_H_ATTRIBUTEUNKNOWN 4
-          {:fore => COLOR_CYAN}, #define SCE_H_NUMBER 5
-          {:fore => COLOR_CYAN}, #define SCE_H_DOUBLESTRING 6
-          {:fore => COLOR_CYAN}, #define SCE_H_SINGLESTRING 7
-          {:fore => COLOR_BASE0}, #define SCE_H_OTHER 8
-          {:fore => COLOR_BASE0}, #define SCE_H_COMMENT 9
-          {:fore => COLOR_BASE0}, #define SCE_H_ENTITY 10
-          {:fore => COLOR_BASE0}, #define SCE_H_TAGEND 11
-          ],
-        'markdown' => [
-          {:fore => COLOR_BASE0}, # SCE_MARKDOWN_DEFAULT 0
-          {:fore => COLOR_BLUE}, # SCE_MARKDOWN_LINE_BEGIN 1
-          {:fore => COLOR_BLUE}, # SCE_MARKDOWN_STRONG1 2
-          {:fore => COLOR_BLUE}, # SCE_MARKDOWN_STRONG2 3
-          {:fore => COLOR_BLUE}, # SCE_MARKDOWN_EM1 4
-          {:fore => COLOR_BLUE}, # SCE_MARKDOWN_EM2 5
-          {:fore => COLOR_ORANGE},  # SCE_MARKDOWN_HEADER1 6
-          {:fore => COLOR_BLUE},  # SCE_MARKDOWN_HEADER2 7
-          {:fore => COLOR_BLUE},  # SCE_MARKDOWN_HEADER3 8
-          {:fore => COLOR_BLUE},  # SCE_MARKDOWN_HEADER4 9
-          {:fore => COLOR_BLUE},  # SCE_MARKDOWN_HEADER5 10
-          {:fore => COLOR_BLUE},  # SCE_MARKDOWN_HEADER6 11
-          {:fore => COLOR_YELLOW}, # SCE_MARKDOWN_PRECHAR 12
-          {:fore => COLOR_YELLOW},  # SCE_MARKDOWN_ULIST_ITEM 13
-          {:fore => COLOR_BLUE},  # SCE_MARKDOWN_OLIST_ITEM 14
-          {:fore => COLOR_CYAN},  # SCE_MARKDOWN_BLOCKQUOTE 15
-          {:fore => COLOR_ORANGE},   # SCE_MARKDOWN_STRIKEOUT 16
-          {:fore => COLOR_ORANGE}, # SCE_MARKDOWN_HRULE 17
-          {:fore => COLOR_BLUE}, # SCE_MARKDOWN_LINK 18
-          {:fore => COLOR_BLUE},  # SCE_MARKDOWN_CODE 19
-          {:fore => COLOR_MAGENTA}, # SCE_MARKDOWN_CODE2 20
-          {:fore => COLOR_VIOLET}, # SCE_MARKDOWN_CODEBK 21},
-          ],
-        'bash' => [
-          {:fore => COLOR_BASE0}, #define SCE_SH_DEFAULT 0
-          {:fore => COLOR_BASE0}, #define SCE_SH_ERROR 1
-          {:fore => COLOR_BASE01}, #define SCE_SH_COMMENTLINE 2
-          {:fore => COLOR_CYAN}, #define SCE_SH_NUMBER 3
-          {:fore => COLOR_GREEN}, #define SCE_SH_WORD 4
-          {:fore => COLOR_CYAN}, #define SCE_SH_STRING 5
-          {:fore => COLOR_YELLOW}, #define SCE_SH_CHARACTER 6
-          {:fore => COLOR_BASE0}, #define SCE_SH_OPERATOR 7
-          {:fore => COLOR_BASE0}, #define SCE_SH_IDENTIFIER 8
-          {:fore => COLOR_ORANGE}, #define SCE_SH_SCALAR 9
-          {:fore => COLOR_BASE0}, #define SCE_SH_PARAM 10
-          {:fore => COLOR_BASE0}, #define SCE_SH_BACKTICKS 11
-          {:fore => COLOR_BASE0}, #define SCE_SH_HERE_DELIM 12
-          {:fore => COLOR_BASE0}, #define SCE_SH_HERE_Q 13
-          ],
+      @font_color = {
+        #                                italic, bold
+        :color_foreground => [Mrbmacs::COLOR_BASE0, nil, nil],
+        :color_builtin => [Mrbmacs::COLOR_GREEN, nil, nil],
+        :color_comment => [Mrbmacs::COLOR_BASE01, true, nil],
+        :color_constant => [Mrbmacs::COLOR_CYAN, nil, nil],
+        :color_function_name => [Mrbmacs::COLOR_BLUE, nil, nil],
+        :color_keyword => [Mrbmacs::COLOR_GREEN, nil, nil],
+        :color_string => [Mrbmacs::COLOR_CYAN, nil, nil],
+        :color_type => [Mrbmacs::COLOR_YELLOW, nil, nil],
+        :color_variable_name => [Mrbmacs::COLOR_BLUE, nil, nil],
+        :color_warning => [Mrbmacs::COLOR_RED, nil, true],
+        :color_doc => [Mrbmacs::COLOR_BASE01, true, nil],
+        :color_doc_string => [Mrbmacs::COLOR_BASE01, true, nil],
+        :color_color_constant => [Mrbmacs::COLOR_GREEN, nil, nil],
+        :color_comment_delimiter => [Mrbmacs::COLOR_BASE01, true, nil],
+        :color_preprocessor => [Mrbmacs::COLOR_ORANGE, nil, nil],
+        :color_negation_char => [Mrbmacs::COLOR_RED, nil, nil],
+        :color_other_type => [Mrbmacs::COLOR_BLUE, true, nil],
+        :color_regexp_grouping_construct => [Mrbmacs::COLOR_ORANGE, nil, nil],
+        :color_special_keyword => [Mrbmacs::COLOR_RED, nil, nil],
+        :color_exit => [Mrbmacs::COLOR_RED, nil, nil],
+        :color_other_emphasized => [Mrbmacs::COLOR_VIOLET, true, true],
+        :color_regexp_grouping_backslash => [Mrbmacs::COLOR_YELLOW, nil, nil],
       }
     end
   end

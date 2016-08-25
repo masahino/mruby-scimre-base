@@ -5,6 +5,20 @@ module Mrbmacs
       super.initialize
       @name = "html"
       @keyword_list = ""
+      @style = [
+        :color_foreground, #define SCE_H_DEFAULT 0
+        :color_keyword,  #define SCE_H_TAG 1
+        :color_warning, #define SCE_H_TAGUNKNOWN 2
+        :color_variable_name, #define SCE_H_ATTRIBUTE 3
+        :color_warning, #define SCE_H_ATTRIBUTEUNKNOWN 4
+        :color_foreground, #define SCE_H_NUMBER 5
+        :color_string, #define SCE_H_DOUBLESTRING 6
+        :color_string, #define SCE_H_SINGLESTRING 7
+        :color_foreground, #define SCE_H_OTHER 8
+        :color_comment, #define SCE_H_COMMENT 9
+        :color_foreground, #define SCE_H_ENTITY 10
+        :color_foreground, #define SCE_H_TAGEND 11
+        ]
     end
     def get_indent_level(view_win)
       line = view_win.sci_line_from_position(view_win.sci_get_current_pos())
