@@ -52,9 +52,7 @@ module Mrbmacs
     
     def get_indent_level(view_win)
       line = view_win.sci_line_from_position(view_win.sci_get_current_pos())
-      $stderr.puts "line = #{line}"
       level = view_win.sci_get_fold_level(line) & Scintilla::SC_FOLDLEVELNUMBERMASK - Scintilla::SC_FOLDLEVELBASE
-      $stderr.puts "level = #{view_win.sci_get_fold_level(line)}"
       cur_line = view_win.sci_get_curline()[0]
       if level > 0 and cur_line =~/^\s+(end|else|then|elsif|when|rescue|ensure|}).*$/
         level -= 1
