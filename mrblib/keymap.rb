@@ -17,6 +17,7 @@ module Mrbmacs
         'C-y' => SCI_PASTE,
         'C-@' => "set-mark", # C-SPC
         'C-x u' => SCI_UNDO,
+        'Escape' => 'prefix',
         'M-w' => "copy-region",
         'M-<' => "beginning-of-buffer",
         'M->' => "end-of-buffer",
@@ -83,6 +84,7 @@ module Mrbmacs
         'C-x C-w' => "write-file",
         'C-x Enter' => "prefix",
         'C-x Enter f' => "set-buffer-file-coding-system",
+        'M-v' => SCI_PAGEUP,
         'M-x' => "execute-extended-command",
       }
       set_keymap(win, keymap)
