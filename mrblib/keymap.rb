@@ -42,6 +42,7 @@ module Mrbmacs
 
     def set_keybind(win, key, cmd)
       ctrl_code = Scintilla::SCMOD_CTRL
+      meta_code = Scintilla::SCMOD_ALT
       if Scintilla::PLATFORM == :GTK_MACOSX
         ctrl_code = Scintilla::SCMOD_META
       end
@@ -49,6 +50,8 @@ module Mrbmacs
       if key =~ /^(\w)-(\w)$/
         if $1 == "C"
           keydef += ctrl_code << 16
+        elsif $1 == "M"
+          keydef += meta_code << 16
         end
         if Scintilla::PLATFORM == :GTK_MACOSX
           keydef += $2.upcase.ord
