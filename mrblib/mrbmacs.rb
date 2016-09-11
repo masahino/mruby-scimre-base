@@ -13,6 +13,9 @@ module Mrbmacs
       @echo_keymap = EchoWinKeyMap.new(@frame.echo_win)
 
       @theme = SolarizedDarkTheme.new
+      if @theme.respond_to?(:set_pallete)
+        @theme.set_pallete
+      end
       @mark_pos = nil
       @buffer_list = []
       @current_buffer = nil

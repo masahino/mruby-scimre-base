@@ -20,7 +20,6 @@ module Mrbmacs
           break
         end
         if file_encoding != "utf-8"
-	  $stderr.puts file_encoding
           text = Iconv.conv("utf-8", file_encoding, text)
           current_buffer.encoding = file_encoding
         end
@@ -28,7 +27,6 @@ module Mrbmacs
         view_win.sci_set_savepoint
       rescue
         # new file
-	$stderr.puts $!
         $stderr.puts "error load file"
       end
     end

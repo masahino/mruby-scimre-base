@@ -66,6 +66,9 @@ module Mrbmacs
       mode_text += sprintf("%-10s", "["+app.current_buffer.mode.name+"]")
     end      
 
+    def echo_set_prompt(prompt)
+    end
+
     def read_buffername(prompt)
       echo_gets(prompt)
     end
