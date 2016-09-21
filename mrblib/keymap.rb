@@ -89,6 +89,7 @@ module Mrbmacs
         'C-x Enter f' => "set-buffer-file-coding-system",
         'M-v' => SCI_PAGEUP,
         'M-x' => "execute-extended-command",
+        'M-%' => "query-replace",
       }
       set_keymap(win, keymap)
     end
