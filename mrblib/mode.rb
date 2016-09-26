@@ -8,8 +8,8 @@ module Mrbmacs
     ".cxx" => "cpp",
     ".md" => "markdown",
     ".txt" => "fundamental",
-    ".html" => "html",
-    ".htm" => "html",
+    ".html" => "hypertext",
+    ".htm" => "hypertext",
     ".sh" => "bash",
     "" => "fundamental",
   }

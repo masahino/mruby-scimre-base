@@ -1,9 +1,9 @@
 module Mrbmacs
-  class HtmlMode < Mode
+  class HypertextMode < Mode
     include Scintilla
     def initialize
       super.initialize
-      @name = "html"
+      @name = "hypertext"
       @keyword_list = ""
       @style = [
         :color_foreground, #define SCE_H_DEFAULT 0
