@@ -92,13 +92,33 @@ module Mrbmacs
       end
     end
 
-    def kill_buffer()
+    def kill_buffer(buffername = nil)
+      if @buffer_list.size <= 1
+        return
+      end
       echo_text = "kill-buffer (default #{@current_buffer.name}): "
       buffername = @frame.echo_gets(echo_text, "") do |input_text|
+        buffer_list = @buffer_list.collect{|b| b.name}.select{|b| b =~ /^#{input_text}/}
+        [buffer_list.join(" "), input_text.length]
       end
-      if echo_text == nil
+      if buffername == ""
         buffername = @current_buffer.name
       end
+      # if buffer is modified
+      if @frame.view_win.sci_get_modify != 0
+        ret = @frame.y_or_n("Buffer #{buffername} modified; kill anyway? (y or n) ")
+        if ret == false
+          return
+        end
+      end
+      # delete buffer
+      target_buffer = Mrbmacs::get_buffer_from_name(@buffer_list, buffername)
+      @buffer_list.delete(target_buffer)
+#      @frame.view_win.sci_release_document(target_buffer.docpointer)
+      if @prev_buffer == target_buffer
+        @pref_buffer = @buffer_list[0]
+      end
+      switch_to_buffer(@buffer_list[0].name)
     end
   end
 end
