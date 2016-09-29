@@ -8,7 +8,7 @@ module Mrbmacs
         :color_foreground, # SCE_RB_DEFAULT 0
         :color_warning, # SCE_RB_ERROR 1
         :color_comment, # SCE_RB_COMMENTLINE 2
-        :color_foreground, # SCE_RB_POD 3
+        :color_comment, # SCE_RB_POD 3
         :color_foreground, # SCE_RB_NUMBER 4
         :color_foreground, # SCE_RB_WORD 5
         :color_string, # SCE_RB_STRING 6
