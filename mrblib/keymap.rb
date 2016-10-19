@@ -18,6 +18,8 @@ module Mrbmacs
         'C-@' => "set-mark", # C-SPC
         'C-x u' => SCI_UNDO,
         'Escape' => 'prefix',
+        'M-b' => SCI_WORDLEFT,
+        'M-f' => SCI_WORDRIGHT,
         'M-w' => "copy-region",
         'M-<' => "beginning-of-buffer",
         'M->' => "end-of-buffer",
