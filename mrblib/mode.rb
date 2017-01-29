@@ -55,6 +55,10 @@ module Mrbmacs
         end
       end
 
+      # bracelight
+      view_win.sci_style_set_fore(34, theme.background_color)
+      view_win.sci_style_set_back(34, theme.foreground_color)
+
       view_win.sci_set_keywords(0, @keyword_list)
       view_win.sci_set_property("fold", "1")
       view_win.sci_set_tab_width(@indent)
