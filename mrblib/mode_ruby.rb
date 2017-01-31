@@ -37,16 +37,16 @@ module Mrbmacs
         :color_foreground, # SCE_RB_WORD_DEMOTED 29
         :color_foreground, # SCE_RB_STDIN 30
         :color_foreground, # SCE_RB_STDOUT 31
-        :color_foreground, # 32
-        :color_foreground, # 33
-        :color_foreground, # 34
-        :color_foreground, # 35
-        :color_foreground, # 36
-        :color_foreground, # 37
-        :color_foreground, # 38
-        :color_foreground, # 39
-        :color_foreground, # SCE_RB_STDERR 40
-        :color_foreground, # SCE_RB_UPPER_BOUND 41
+#        :color_foreground, # 32
+#        :color_foreground, # 33
+#        :color_foreground, # 34
+#        :color_foreground, # 35
+#        :color_foreground, # 36
+#        :color_foreground, # 37
+#        :color_foreground, # 38
+#        :color_foreground, # 39
+#        :color_foreground, # SCE_RB_STDERR 40
+#        :color_foreground, # SCE_RB_UPPER_BOUND 41
         ]
     end
     
@@ -58,6 +58,11 @@ module Mrbmacs
         level -= 1
       end
       return level
+    end
+
+    def syntax_check(view_win)
+      all_text = view_win.sci_get_text(view_win.sci_get_length+1)
+      Mrbmacs::mrb_check_syntax(all_text)
     end
   end
 end

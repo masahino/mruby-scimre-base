@@ -31,6 +31,17 @@ module Mrbmacs
       @frame.view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, @theme.foreground_color)
       @frame.view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, @theme.background_color)
       @frame.view_win.sci_style_clear_all
+      if @theme.font_color[:color_brace_highlight]
+        @frame.view_win.sci_style_set_fore(Scintilla::STYLE_BRACELIGHT,
+          @theme.font_color[:color_brace_highlight][0])
+        @frame.view_win.sci_style_set_back(Scintilla::STYLE_BRACELIGHT,
+          @theme.font_color[:color_brace_highlight][1])
+      end
+      if @theme.font_color[:color_annotation]
+        @frame.view_win.sci_style_set_fore(254, @theme.font_color[:color_annotation][0])
+        @frame.view_win.sci_style_set_back(254, @theme.font_color[:color_annotation][1])
+        @frame.view_win.sci_annotation_set_visible(Scintilla::ANNOTATION_BOXED)
+      end
 #      @frame.view_win.refresh
     end
 
@@ -78,11 +89,11 @@ module Mrbmacs
         if $DEBUG
           $stderr.puts "["+@frame.view_win.sci_get_lexer_language()+"]"
         end
-        @frame.view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT,
-                                           @theme.foreground_color)
-        @frame.view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT,
-                                           @theme.background_color)
-        @frame.view_win.sci_style_clear_all
+#        @frame.view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT,
+#                                           @theme.foreground_color)
+#        @frame.view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT,
+#                                           @theme.background_color)
+#        @frame.view_win.sci_style_clear_all
         @current_buffer.mode.set_style(@frame.view_win, @theme)
         @frame.view_win.sci_set_sel_back(true, 0xff0000)
 #        @frame.view_win.refresh
@@ -95,7 +106,11 @@ module Mrbmacs
       @prev_buffer = buffer
       @buffer_list.push(buffer)
       @frame.modeline(self)
-
+      error = @current_buffer.mode.syntax_check(@frame.view_win)
+$stderr.puts error
+      if error.size > 0
+        @frame.show_annotation(error[0], error[1], error[2])
+      end
       editloop()
     end
   end

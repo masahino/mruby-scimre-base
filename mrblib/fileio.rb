@@ -42,6 +42,12 @@ module Mrbmacs
         f.write all_text
       end
       @frame.view_win.sci_set_save_point
+
+      @frame.view_win.sci_annotation_clearall
+      error = @current_buffer.mode.syntax_check(@frame.view_win)
+      if error.size > 0
+        @frame.show_annotation(error[0], error[1], error[2])
+      end
     end
 
     def write_file(filename = nil)

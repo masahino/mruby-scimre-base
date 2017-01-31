@@ -15,7 +15,6 @@ module Mrbmacs
   }
     
   class Mode
-
     def name
       @name
     end
@@ -47,17 +46,20 @@ module Mrbmacs
         if color[0] # foreground
           view_win.sci_style_set_fore(i, color[0])
         end
-        if color[1] # italic
-          view_win.sci_style_set_italic(i, color[1])
+        if color[1] # background
+          view_win.sci_style_set_back(i, color[1])
         end
-        if color[2] # bold
-          view_win.sci_style_set_bold(i, color[2])
+        if color[2] # italic
+          view_win.sci_style_set_italic(i, color[2])
+        end
+        if color[3] # bold
+          view_win.sci_style_set_bold(i, color[3])
         end
       end
 
-      # bracelight
-      view_win.sci_style_set_fore(34, theme.background_color)
-      view_win.sci_style_set_back(34, theme.foreground_color)
+#     # bracelight
+#      view_win.sci_style_set_fore(34, theme.background_color)
+#      view_win.sci_style_set_back(34, theme.foreground_color)
 
       view_win.sci_set_keywords(0, @keyword_list)
       view_win.sci_set_property("fold", "1")
@@ -74,6 +76,10 @@ module Mrbmacs
     
     def get_indent_level(view_win)
       0
+    end
+
+    def syntax_check(view_win)
+      []
     end
 
   end
