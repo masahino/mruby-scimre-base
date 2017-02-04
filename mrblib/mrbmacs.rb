@@ -107,7 +107,6 @@ module Mrbmacs
       @buffer_list.push(buffer)
       @frame.modeline(self)
       error = @current_buffer.mode.syntax_check(@frame.view_win)
-$stderr.puts error
       if error.size > 0
         @frame.show_annotation(error[0], error[1], error[2])
       end

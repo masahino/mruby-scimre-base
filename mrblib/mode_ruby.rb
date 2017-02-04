@@ -64,5 +64,182 @@ module Mrbmacs
       all_text = view_win.sci_get_text(view_win.sci_get_length+1)
       Mrbmacs::mrb_check_syntax(all_text)
     end
+
+    def get_completion_list(view_win)
+      pos = view_win.sci_get_current_pos()
+      col = view_win.sci_get_column(pos)
+      if col > 0
+        line = view_win.sci_line_from_position(pos)
+        line_text = view_win.sci_get_line(line).chomp[0..col]
+        input = line_text.split(" ").pop
+        if input != nil and input.length > 0
+          candidates = get_candidates(input)
+          [input.length, candidates.join(" ")]
+        else
+          [0, []]
+        end
+      else
+        [0, []]
+      end
+    end
+
+    def get_candidates(input)
+      case input
+      when /^((["'`]).*\2)\.([^.]*)$/
+        # String
+        receiver = $1
+        message = Regexp.quote($3)
+
+        candidates = String.instance_methods.collect{|m| m.to_s}.sort
+
+      when /^(\/[^\/]*\/)\.([^.]*)$/
+        # Regexp
+        receiver = $1
+        message = Regexp.quote($2)
+
+        candidates = Regexp.instance_methods.collect{|m| m.to_s}.sort
+
+      when /^([^\]]*\])\.([^.]*)$/
+        # Array
+        receiver = $1
+        message = Regexp.quote($2)
+
+        candidates = Array.instance_methods.collect{|m| m.to_s}.sort
+
+      when /^([^\}]*\})\.([^.]*)$/
+        # Proc or Hash
+        receiver = $1
+        message = Regexp.quote($2)
+
+        candidates = Proc.instance_methods.collect{|m| m.to_s}
+        candidates |= Hash.instance_methods.collect{|m| m.to_s}.sort
+
+      when /^(:[^:.]*)$/
+        # Symbol
+        if Symbol.respond_to?(:all_symbols)
+          sym = $1
+          candidates = Symbol.all_symbols.collect{|s| ":" + s.id2name}
+          candidates.grep(/^#{Regexp.quote(sym)}/).sort
+        else
+          []
+        end
+
+      when /^::([A-Z][^:\.\(]*)$/
+        # Absolute Constant or class methods
+        receiver = $1
+        candidates = Object.constants.collect{|m| m.to_s}
+        candidates.grep(/^#{receiver}/).collect{|e| "::" + e}.sort
+
+      when /^([A-Z].*)::([^:.]*)$/
+        # Constant or class methods
+        receiver = $1
+        message = Regexp.quote($2)
+        begin
+          candidates = eval("#{receiver}.constants.collect{|m| m.to_s}")
+          candidates |= eval("#{receiver}.methods.collect{|m| m.to_s}").sort
+        rescue Exception
+          candidates = []
+        end
+
+      when /^(:[^:.]+)(\.|::)([^.]*)$/
+        # Symbol
+        receiver = $1
+        sep = $2
+        message = Regexp.quote($3)
+
+        candidates = Symbol.instance_methods.collect{|m| m.to_s}.sort
+
+      when /^(-?(0[dbo])?[0-9_]+(\.[0-9_]+)?([eE]-?[0-9]+)?)(\.|::)([^.]*)$/
+        # Numeric
+        receiver = $1
+        sep = $5
+        message = Regexp.quote($6)
+
+        begin
+          candidates = eval(receiver).methods.collect{|m| m.to_s}.sort
+        rescue Exception
+          candidates = []
+        end
+
+      when /^(-?0x[0-9a-fA-F_]+)(\.|::)([^.]*)$/
+        # Numeric(0xFFFF)
+        receiver = $1
+        sep = $2
+        message = Regexp.quote($3)
+
+        begin
+          candidates = eval(receiver).methods.collect{|m| m.to_s}.sort
+        rescue Exception
+          candidates = []
+        end
+
+      when /^(\$[^.]*)$/
+        # global var
+        regmessage = Regexp.new(Regexp.quote($1))
+        candidates = global_variables.collect{|m| m.to_s}.grep(regmessage).sort
+
+      when /^([^."].*)(\.|::)([^.]*)$/
+        # variable.func or func.func
+        receiver = $1
+        sep = $2
+        message = Regexp.quote($3)
+
+        gv = eval("global_variables").collect{|m| m.to_s}
+        lv = eval("local_variables").collect{|m| m.to_s}
+        iv = eval("instance_variables").collect{|m| m.to_s}
+        cv = eval("self.class.constants").collect{|m| m.to_s}
+
+        if (gv | lv | iv | cv).include?(receiver) or /^[A-Z]/ =~ receiver && /\./ !~ receiver
+          # foo.func and foo is var. OR
+          # foo::func and foo is var. OR
+          # foo::Const and foo is var. OR
+          # Foo::Bar.func
+          begin
+            candidates = []
+            rec = eval(receiver)
+            if sep == "::" and rec.kind_of?(Module)
+              candidates = rec.constants.collect{|m| m.to_s}
+            end
+            candidates |= rec.methods.collect{|m| m.to_s}.sort
+          rescue Exception
+            candidates = []
+          end
+        else
+          # func1.func2
+          candidates = []
+          ObjectSpace.each_object(Module){|m|
+            begin
+              name = m.name
+            rescue Exception
+              name = ""
+            end
+            begin
+              next if name != "IRB::Context" and
+              /^(IRB|SLex|RubyLex|RubyToken)/ =~ name
+            rescue Exception
+              next
+            end
+            candidates.concat m.instance_methods(false).collect{|x| x.to_s}
+          }
+          candidates.sort!
+          candidates.uniq!
+        end
+
+      when /^\.([^.]*)$/
+        # unknown(maybe String)
+
+        receiver = ""
+        message = Regexp.quote($1)
+
+        candidates = String.instance_methods(true).collect{|m| m.to_s}.sort
+
+      else
+        candidates = eval("methods | private_methods | local_variables | instance_variables | self.class.constants").collect{|m| m.to_s}
+
+        reserved_words = @keyword_list.split(" ")
+        (candidates | reserved_words).grep(/^#{Regexp.quote(input)}/).sort
+      end
+    end
+
   end
 end

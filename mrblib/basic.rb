@@ -41,13 +41,17 @@ module Mrbmacs
 
     def indent()
       win = @frame.view_win
-      line = win.sci_line_from_position(win.sci_get_current_pos())
-      level = win.sci_get_fold_level(line) & Scintilla::SC_FOLDLEVELNUMBERMASK - Scintilla::SC_FOLDLEVELBASE
-      level = @current_buffer.mode.get_indent_level(win)
-      indent = win.sci_get_indent()*level
-      win.sci_set_line_indentation(line, indent)
-      if win.sci_get_column(win.sci_get_current_pos) < indent
-        win.sci_goto_pos(win.sci_position_from_line(line)+indent)
+      if win.sci_autoc_active == 1
+        win.sci_tab
+      else
+        line = win.sci_line_from_position(win.sci_get_current_pos())
+        level = win.sci_get_fold_level(line) & Scintilla::SC_FOLDLEVELNUMBERMASK - Scintilla::SC_FOLDLEVELBASE
+        level = @current_buffer.mode.get_indent_level(win)
+        indent = win.sci_get_indent()*level
+        win.sci_set_line_indentation(line, indent)
+        if win.sci_get_column(win.sci_get_current_pos) < indent
+          win.sci_goto_pos(win.sci_position_from_line(line)+indent)
+        end
       end
     end
 
@@ -63,8 +67,11 @@ module Mrbmacs
 
     def newline()
       win = @frame.view_win
+      if win.sci_autoc_active == 1
+        win.sci_autoc_cancel
+      end
       win.sci_new_line
-      indent()
+#      indent()
     end
 
     def save_buffers_kill_terminal()
@@ -73,6 +80,7 @@ module Mrbmacs
     end
 
     def keyboard_quit()
+      @frame.view_win.sci_autoc_cancel
       @mark_pos = nil
     end
   end

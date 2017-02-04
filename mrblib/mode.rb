@@ -82,6 +82,9 @@ module Mrbmacs
       []
     end
 
+    def get_completion_list(view_win)
+      [0, []]
+    end
   end
 
   class FundamentalMode < Mode

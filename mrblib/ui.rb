@@ -35,6 +35,8 @@ module Mrbmacs
       @view_win.sci_set_margin_maskn(1, Scintilla::SC_MASK_FOLDERS)
       @view_win.sci_set_marginsensitiven(1, 1)
       @view_win.sci_set_automatic_fold(Scintilla::SC_AUTOMATICFOLD_CLICK)
+      @view_win.sci_set_viewws(2)
+
       #@echo_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, Scintilla::COLOR_WHITE)
       @echo_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, 0xffffff)
       #@echo_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, Scintilla::COLOR_BLACK)
@@ -42,8 +44,8 @@ module Mrbmacs
       @echo_win.sci_style_clear_all()
       @echo_win.sci_auto_cset_choose_single(1)
       @echo_win.sci_auto_cset_auto_hide(false)
-    end      
-      
+    end
+
     def get_mode_str(app)
       newline = case @view_win.sci_get_eol_mode
       when 0
@@ -66,7 +68,7 @@ module Mrbmacs
       y = @view_win.sci_line_from_position(@view_win.sci_get_current_pos)+1
       mode_text += sprintf("%-10s", "(#{x},#{y})")
       mode_text += sprintf("%-10s", "["+app.current_buffer.mode.name+"]")
-    end      
+    end
 
     def echo_set_prompt(prompt)
     end
