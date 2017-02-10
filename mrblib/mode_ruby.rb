@@ -90,14 +90,16 @@ module Mrbmacs
         receiver = $1
         message = Regexp.quote($3)
 
-        candidates = String.instance_methods.collect{|m| m.to_s}.sort
+        candidates = String.instance_methods.collect{|m| m.to_s}
+        select_message(receiver, message, candidates).compact.sort.uniq
 
       when /^(\/[^\/]*\/)\.([^.]*)$/
         # Regexp
         receiver = $1
         message = Regexp.quote($2)
 
-        candidates = Regexp.instance_methods.collect{|m| m.to_s}.sort
+        candidates = Regexp.instance_methods.collect{|m| m.to_s}
+        select_message(receiver, message, candidates).compact.sort.uniq
 
       when /^([^\]]*\])\.([^.]*)$/
         # Array
@@ -105,6 +107,7 @@ module Mrbmacs
         message = Regexp.quote($2)
 
         candidates = Array.instance_methods.collect{|m| m.to_s}.sort
+        select_message(receiver, message, candidates)
 
       when /^([^\}]*\})\.([^.]*)$/
         # Proc or Hash
@@ -113,6 +116,7 @@ module Mrbmacs
 
         candidates = Proc.instance_methods.collect{|m| m.to_s}
         candidates |= Hash.instance_methods.collect{|m| m.to_s}.sort
+        select_message(receiver, message, candidates)
 
       when /^(:[^:.]*)$/
         # Symbol
@@ -128,7 +132,7 @@ module Mrbmacs
         # Absolute Constant or class methods
         receiver = $1
         candidates = Object.constants.collect{|m| m.to_s}
-        candidates.grep(/^#{receiver}/).collect{|e| "::" + e}.sort
+        candidates.grep(/^#{receiver}/).collect{|e| "::" + e}.compact.sort.uniq
 
       when /^([A-Z].*)::([^:.]*)$/
         # Constant or class methods
@@ -140,6 +144,7 @@ module Mrbmacs
         rescue Exception
           candidates = []
         end
+        select_message(receiver, message, candidates, "::")
 
       when /^(:[^:.]+)(\.|::)([^.]*)$/
         # Symbol
@@ -147,7 +152,8 @@ module Mrbmacs
         sep = $2
         message = Regexp.quote($3)
 
-        candidates = Symbol.instance_methods.collect{|m| m.to_s}.sort
+        candidates = Symbol.instance_methods.collect{|m| m.to_s}
+        select_message(receiver, message, candidates, sep).compact.sort.uniq
 
       when /^(-?(0[dbo])?[0-9_]+(\.[0-9_]+)?([eE]-?[0-9]+)?)(\.|::)([^.]*)$/
         # Numeric
@@ -156,10 +162,11 @@ module Mrbmacs
         message = Regexp.quote($6)
 
         begin
-          candidates = eval(receiver).methods.collect{|m| m.to_s}.sort
+          candidates = eval(receiver).methods.collect{|m| m.to_s}
         rescue Exception
           candidates = []
         end
+        select_message(receiver, message, candidates, sep).compact.sort.uniq
 
       when /^(-?0x[0-9a-fA-F_]+)(\.|::)([^.]*)$/
         # Numeric(0xFFFF)
@@ -172,6 +179,7 @@ module Mrbmacs
         rescue Exception
           candidates = []
         end
+        select_message(receiver, message, candidates, sep)
 
       when /^(\$[^.]*)$/
         # global var
@@ -187,7 +195,7 @@ module Mrbmacs
         gv = eval("global_variables").collect{|m| m.to_s}
         lv = eval("local_variables").collect{|m| m.to_s}
         iv = eval("instance_variables").collect{|m| m.to_s}
-        cv = eval("self.class.constants").collect{|m| m.to_s}
+        cv = eval("Object.constants").collect{|m| m.to_s}
 
         if (gv | lv | iv | cv).include?(receiver) or /^[A-Z]/ =~ receiver && /\./ !~ receiver
           # foo.func and foo is var. OR
@@ -200,7 +208,9 @@ module Mrbmacs
             if sep == "::" and rec.kind_of?(Module)
               candidates = rec.constants.collect{|m| m.to_s}
             end
-            candidates |= rec.methods.collect{|m| m.to_s}.sort
+            candidates |= rec.methods.collect{|m| m.to_s}
+            candidates.sort!
+            candidates.uniq!
           rescue Exception
             candidates = []
           end
@@ -224,6 +234,7 @@ module Mrbmacs
           candidates.sort!
           candidates.uniq!
         end
+        select_message(receiver, message, candidates, sep)
 
       when /^\.([^.]*)$/
         # unknown(maybe String)
@@ -232,12 +243,27 @@ module Mrbmacs
         message = Regexp.quote($1)
 
         candidates = String.instance_methods(true).collect{|m| m.to_s}.sort
+        select_message(receiver, message, candidates)
 
       else
-        candidates = eval("methods | private_methods | local_variables | instance_variables | self.class.constants").collect{|m| m.to_s}
-
+        candidates = eval("methods | private_methods | local_variables | instance_variables | Object.constants").collect{|m| m.to_s}
         reserved_words = @keyword_list.split(" ")
         (candidates | reserved_words).grep(/^#{Regexp.quote(input)}/).sort
+      end
+    end
+
+    # Set of available operators in Ruby
+    Operators = %w[% & * ** + - / < << <= <=> == === =~ > >= >> [] []= ^ ! != !~]
+
+    def select_message(receiver, message, candidates, sep = ".")
+      candidates.grep(/^#{message}/).collect do |e|
+        case e
+        when /^[a-zA-Z_]/
+          receiver + sep + e
+        when /^[0-9]/
+        when *Operators
+          #receiver + " " + e
+        end
       end
     end
 
