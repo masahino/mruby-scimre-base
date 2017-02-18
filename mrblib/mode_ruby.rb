@@ -107,7 +107,7 @@ module Mrbmacs
         message = Regexp.quote($2)
 
         candidates = Array.instance_methods.collect{|m| m.to_s}.sort
-        select_message(receiver, message, candidates)
+        select_message(receiver, message, candidates).compact.sort.uniq
 
       when /^([^\}]*\})\.([^.]*)$/
         # Proc or Hash
@@ -116,7 +116,7 @@ module Mrbmacs
 
         candidates = Proc.instance_methods.collect{|m| m.to_s}
         candidates |= Hash.instance_methods.collect{|m| m.to_s}.sort
-        select_message(receiver, message, candidates)
+        select_message(receiver, message, candidates).compact.sort.uniq
 
       when /^(:[^:.]*)$/
         # Symbol
@@ -144,7 +144,7 @@ module Mrbmacs
         rescue Exception
           candidates = []
         end
-        select_message(receiver, message, candidates, "::")
+        select_message(receiver, message, candidates, "::").compact.sort.uniq
 
       when /^(:[^:.]+)(\.|::)([^.]*)$/
         # Symbol
@@ -234,7 +234,7 @@ module Mrbmacs
           candidates.sort!
           candidates.uniq!
         end
-        select_message(receiver, message, candidates, sep)
+        select_message(receiver, message, candidates, sep).compact.sort.uniq
 
       when /^\.([^.]*)$/
         # unknown(maybe String)
@@ -242,8 +242,8 @@ module Mrbmacs
         receiver = ""
         message = Regexp.quote($1)
 
-        candidates = String.instance_methods(true).collect{|m| m.to_s}.sort
-        select_message(receiver, message, candidates)
+        candidates = String.instance_methods(true).collect{|m| m.to_s}
+        select_message(receiver, message, candidates).compact.sort.uniq
 
       else
         candidates = eval("methods | private_methods | local_variables | instance_variables | Object.constants").collect{|m| m.to_s}
