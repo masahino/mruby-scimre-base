@@ -3,7 +3,7 @@ module Mrbmacs
     def eval_last_exp()
       text, pos = @frame.view_win.sci_get_curline
       begin
-        ret = instance_eval(text[0..pos-1])
+        ret = eval(text[0..pos-1])
       rescue
 #        $stderr.puts $!
       end
