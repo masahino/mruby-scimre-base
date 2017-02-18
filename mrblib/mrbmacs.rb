@@ -23,8 +23,8 @@ module Mrbmacs
 
       @file_encodings = []
       @system_encodings = Mrbmacs::get_encoding_list()
-      load_init_file(init_filename)
       set_default_style
+      load_init_file(init_filename)
     end
 
     def set_default_style
@@ -49,7 +49,7 @@ module Mrbmacs
       begin
         File.open(init_filename, "r") do |f|
           init_str = f.read()
-          instance_eval(init_str)
+          eval(init_str)
         end
       rescue
         $stderr.puts $!
@@ -61,7 +61,7 @@ module Mrbmacs
         @frame.view_win.send_message(command)
       else
         begin
-          instance_eval("#{command.gsub("-", "_")}()")
+          eval("#{command.gsub("-", "_")}()")
         rescue
           $stderr.puts $!
         end
