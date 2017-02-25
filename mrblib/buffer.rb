@@ -52,12 +52,14 @@ module Mrbmacs
       view_win = @frame.view_win
       echo_win = @frame.view_win
       if buffername == nil
-        echo_text = "Switch to buffer: (default #{@prev_buffer.name}) "
-        buffername = @frame.echo_gets(echo_text, "") do |input_text|
-          buffer_list = @buffer_list.collect{|b| b.name}.select{|b| b =~ /^#{input_text}/}
-          [buffer_list.join(" "), input_text.length]
-        end
+        buffername = @frame.select_buffer(@prev_buffer.name, @buffer_list.collect{|b| b.name})
+#        echo_text = "Switch to buffer: (default #{@prev_buffer.name}) "
+#        buffername = @frame.echo_gets(echo_text, "") do |input_text|
+#          buffer_list = @buffer_list.collect{|b| b.name}.select{|b| b =~ /^#{input_text}/}
+#          [buffer_list.join(" "), input_text.length]
+#        end
       end
+$stderr.puts "buffer_name = #{buffername}"
       if buffername != nil
         if buffername == ""
           buffername = @prev_buffer.name

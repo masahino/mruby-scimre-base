@@ -96,6 +96,7 @@ module Mrbmacs
 #        @frame.view_win.sci_style_clear_all
         @current_buffer.mode.set_style(@frame.view_win, @theme)
         @frame.view_win.sci_set_sel_back(true, 0xff0000)
+        @frame.set_buffer_name(@current_buffer.name)
 #        @frame.view_win.refresh
         @filename = file
       else

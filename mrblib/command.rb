@@ -10,7 +10,7 @@ module Mrbmacs
       end
       if command != ""
         begin
-          instance_eval("#{command.gsub("-", "_")}()")
+          eval("#{command.gsub("-", "_")}()")
         rescue
           $stderr.puts $!
         end
