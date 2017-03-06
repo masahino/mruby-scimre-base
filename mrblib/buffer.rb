@@ -59,7 +59,6 @@ module Mrbmacs
 #          [buffer_list.join(" "), input_text.length]
 #        end
       end
-$stderr.puts "buffer_name = #{buffername}"
       if buffername != nil
         if buffername == ""
           buffername = @prev_buffer.name
