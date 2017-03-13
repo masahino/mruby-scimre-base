@@ -20,6 +20,7 @@ module Mrbmacs
       @buffer_list = []
       @current_buffer = nil
       @filename = nil
+      @target_start_pos = nil
 
       @file_encodings = []
       @system_encodings = Mrbmacs::get_encoding_list()
