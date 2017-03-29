@@ -68,12 +68,14 @@ end
 
 assert('new buffer name') do
   app = setup
-  buffer = Mrbmacs::Buffer.new("/foo/bar/hoge.rb", [])
-  assert_equal("hoge.rb", buffer.name)
+  buffer1 = Mrbmacs::Buffer.new("/foo/bar/hoge.rb", [])
+  assert_equal("hoge.rb", buffer1.name)
+  buffer_list = [buffer1]
 
-  buffer = Mrbmacs::Buffer.new("/foo/bar/hoge.rb", ["hoge.rb"])
-  assert_equal("hoge.rb<bar>", buffer.name)
+  buffer2 = Mrbmacs::Buffer.new("/aaa/bbb/hoge.rb", buffer_list)
+  assert_equal("hoge.rb<bbb>", buffer2.name)
+  buffer_list.push(buffer2)
 
-  buffer = Mrbmacs::Buffer.new("/foo/bar/hoge.rb", ["hoge.rb", "hoge.rb<bar>"])
-  assert_equal("hoge.rb<foo/bar>", buffer.name)
+  buffer3 = Mrbmacs::Buffer.new("/ccc/bbb/hoge.rb", buffer_list)
+  assert_equal("hoge.rb<ccc/bbb>", buffer3.name)
 end

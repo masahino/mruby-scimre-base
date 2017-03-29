@@ -98,8 +98,8 @@ module Mrbmacs
         filename = read_file_name("find file: ", dir)
       end
       if filename != nil
-        if Mrbmacs::get_buffer_from_name(@buffer_list, File.basename(filename)) != nil
-          switch_to_buffer(File.basename(filename))
+        if Mrbmacs::get_buffer_from_path(@buffer_list, filename) != nil
+          switch_to_buffer(Mrbmacs::get_buffer_from_path(@buffer_list, filename).name)
         else
           @current_buffer.pos = view_win.sci_get_current_pos
           new_buffer = Buffer.new(filename, @buffer_list)

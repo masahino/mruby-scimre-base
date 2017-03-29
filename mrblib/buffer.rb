@@ -1,10 +1,10 @@
 module Mrbmacs
   class Buffer
     attr_accessor :filename, :directory, :docpointer, :name, :encoding, :mode, :pos
-    def initialize(filename = nil, buffer_name_list = [])
+    def initialize(filename = nil, buffer_list = [])
       if filename != nil
         @filename = File.expand_path(filename)
-        @name = create_new_buffer_name(@filename, buffer_name_list)
+        @name = create_new_buffer_name(@filename, buffer_list)
         #@name = File.basename(@filename)
         @directory = File.dirname(@filename)
         @mode = Mrbmacs::Mode.set_mode_by_filename(filename)
@@ -20,15 +20,20 @@ module Mrbmacs
       @pos = 0
     end
 
-    def create_new_buffer_name(filename, buffer_name_list)
+    def create_new_buffer_name(filename, buffer_list)
       buffer_name = File.basename(filename)
-      dir = File.dirname(filename).split("/")
+      dir = File.dirname(filename)
+      dir_a = File.dirname(filename).split("/")
       tmp_str = ""
+      buffer_name_list = buffer_list.collect{|b| b.name}
       while buffer_name_list.include?(buffer_name)
+        if Mrbmacs::get_buffer_from_name(buffer_list, buffer_name).directory == dir
+          return buffer_name
+        end
         if tmp_str == ""
-          tmp_str = dir.pop
+          tmp_str = dir_a.pop
         else
-          tmp_str = dir.pop + "/" + tmp_str
+          tmp_str = dir_a.pop + "/" + tmp_str
         end
         buffer_name = File.basename(filename) + "<" + tmp_str + ">"
       end
@@ -40,6 +45,16 @@ module Mrbmacs
     def get_buffer_from_name(buffer_list, name)
       buffer_list.each do |b|
         if b.name == name
+          return b
+        end
+      end
+      return nil
+    end
+
+    def get_buffer_from_path(buffer_list, file_path)
+      path = File.expand_path(file_path)
+      buffer_list.each do |b|
+        if b.filename == path
           return b
         end
       end
