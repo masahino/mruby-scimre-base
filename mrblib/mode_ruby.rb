@@ -54,7 +54,7 @@ module Mrbmacs
       line = view_win.sci_line_from_position(view_win.sci_get_current_pos())
       level = view_win.sci_get_fold_level(line) & Scintilla::SC_FOLDLEVELNUMBERMASK - Scintilla::SC_FOLDLEVELBASE
       cur_line = view_win.sci_get_curline()[0]
-      if level > 0 and cur_line =~/^\s+(end|else|then|elsif|when|rescue|ensure|}).*$/
+      if level > 0 and cur_line =~/^\s*(end|else|then|elsif|when|rescue|ensure|}).*$/
         level -= 1
       end
       return level
