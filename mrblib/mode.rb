@@ -2,6 +2,7 @@ module Mrbmacs
   $mode_list = {
 	# ruby-mode
     ".rb" => "ruby",
+    ".rake" => "ruby",
     ".c" => "cpp",
     ".h" => "cpp",
     ".cpp" => "cpp",
