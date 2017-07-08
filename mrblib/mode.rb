@@ -7,6 +7,7 @@ module Mrbmacs
     ".h" => "cpp",
     ".cpp" => "cpp",
     ".cxx" => "cpp",
+    ".js" => "cpp",
     ".md" => "markdown",
     ".txt" => "fundamental",
     ".html" => "hypertext",
