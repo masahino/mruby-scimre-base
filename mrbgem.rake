@@ -5,7 +5,7 @@ MRuby::Gem::Specification.new('mruby-mrbmacs-base') do |spec|
   spec.add_dependency 'mruby-io'
   spec.add_dependency 'mruby-dir'
   spec.add_dependency 'mruby-eval'
-  spec.add_dependency 'mruby-pcre-regexp'
+  spec.add_dependency 'mruby-regexp-pcre'
   spec.add_dependency 'mruby-array-ext'
   spec.add_dependency 'mruby-symbol-ext'
   spec.add_dependency 'mruby-objectspace'
