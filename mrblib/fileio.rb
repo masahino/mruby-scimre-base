@@ -27,7 +27,7 @@ module Mrbmacs
         view_win.sci_set_savepoint
       rescue
         # new file
-        $stderr.puts "error load file"
+        message "error load file"
       end
     end
 
