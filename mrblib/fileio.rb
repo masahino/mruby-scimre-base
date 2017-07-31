@@ -96,6 +96,7 @@ module Mrbmacs
       if filename == nil
         dir = @current_buffer.directory
         filename = read_file_name("find file: ", dir)
+        @frame.modeline_refresh(self)
       end
       if filename != nil
         if Mrbmacs::get_buffer_from_path(@buffer_list, filename) != nil
