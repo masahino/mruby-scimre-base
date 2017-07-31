@@ -24,6 +24,8 @@ module Mrbmacs
 
       @file_encodings = []
       @system_encodings = Mrbmacs::get_encoding_list()
+
+      @auto_completion = false
       set_default_style
       load_init_file(init_filename)
     end
