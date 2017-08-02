@@ -23,6 +23,7 @@ module Mrbmacs
           text = Iconv.conv("utf-8", file_encoding, text)
           current_buffer.encoding = file_encoding
         end
+        view_win.sci_set_codepage(Scintilla::SC_CP_UTF8)
         view_win.sci_set_text(text)
         view_win.sci_set_savepoint
       rescue
@@ -117,6 +118,7 @@ module Mrbmacs
           view_win.sci_set_sel_back(true, 0xff0000)
           @frame.set_buffer_name(@current_buffer.name)
 #        view_win.sci_refresh
+          @frame.modeline(self)
         end
       end
     end
