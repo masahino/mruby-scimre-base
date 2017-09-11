@@ -1,6 +1,7 @@
 module Mrbmacs
   class Buffer
-    attr_accessor :filename, :directory, :docpointer, :name, :encoding, :mode, :pos
+    attr_accessor :filename, :directory
+    attr_accessor :docpointer, :name, :encoding, :mode, :pos
     def initialize(filename = nil, buffer_list = [])
       if filename != nil
         @filename = File.expand_path(filename)
