@@ -12,6 +12,7 @@ module Mrbmacs
     ".txt" => "fundamental",
     ".html" => "hypertext",
     ".htm" => "hypertext",
+    ".erb" => "hypertext",
     ".sh" => "bash",
     "" => "fundamental",
   }
