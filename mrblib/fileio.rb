@@ -113,7 +113,7 @@ module Mrbmacs
           @prev_buffer = @current_buffer
           @current_buffer = new_buffer
           load_file(filename)
-          view_win.sci_set_lexer_language(@current_buffer.mode.name)
+          view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
           @current_buffer.mode.set_style(view_win, @theme)
           view_win.sci_set_sel_back(true, 0xff0000)
           @frame.set_buffer_name(@current_buffer.name)

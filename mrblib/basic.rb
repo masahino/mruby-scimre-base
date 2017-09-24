@@ -50,7 +50,7 @@ module Mrbmacs
         indent = win.sci_get_indent()*level
         win.sci_set_line_indentation(line, indent)
         if win.sci_get_column(win.sci_get_current_pos) < indent
-          win.sci_goto_pos(win.sci_position_from_line(line)+indent)
+          win.sci_vchome
         end
       end
     end

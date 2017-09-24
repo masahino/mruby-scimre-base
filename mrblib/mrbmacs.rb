@@ -88,7 +88,7 @@ module Mrbmacs
         buffer = Mrbmacs::Buffer.new(file)
         @current_buffer = buffer
         load_file(file)
-        @frame.view_win.sci_set_lexer_language(buffer.mode.name)
+        @frame.view_win.sci_set_lexer_language(buffer.mode.lexer)
         if $DEBUG
           $stderr.puts "["+@frame.view_win.sci_get_lexer_language()+"]"
         end

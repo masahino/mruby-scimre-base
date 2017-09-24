@@ -4,6 +4,7 @@ module Mrbmacs
     def initialize
       super.initialize
       @name = "bash"
+      @lexer = "bash"
       @keyword_list = ""
       @style = [
         :color_foreground, #define SCE_SH_DEFAULT 0

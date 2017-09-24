@@ -4,6 +4,7 @@ module Mrbmacs
     def initialize
       super.initialize
       @name = "markdown"
+      @lexer = "markdown"
       @style = [
         :color_foreground, # SCE_MARKDOWN_DEFAULT 0
         :color_foreground, # SCE_MARKDOWN_LINE_BEGIN 1

@@ -2,21 +2,22 @@ module Mrbmacs
   class RubyMode < Mode
     def initialize
       super.initialize
-    @name = "ruby"
-    @keyword_list = "attr_accessor attr_reader attr_writer module_function begin break elsif module retry unless end case next return until class ensure nil self when def false not super while alias defined? for or then yield and do if redo true else in rescue undef"
+      @name = "ruby"
+      @lexer = "ruby"
+      @keyword_list = "attr_accessor attr_reader attr_writer module_function begin break elsif module retry unless end case next return until class ensure nil self when def false not super while alias defined? for or then yield and do if redo true else in rescue undef"
       @style = [
         :color_foreground, # SCE_RB_DEFAULT 0
         :color_warning, # SCE_RB_ERROR 1
         :color_comment, # SCE_RB_COMMENTLINE 2
         :color_comment, # SCE_RB_POD 3
         :color_foreground, # SCE_RB_NUMBER 4
-        :color_keyword, # SCE_RB_WORD 5
+        :color_builtin, # SCE_RB_WORD 5
         :color_string, # SCE_RB_STRING 6
         :color_string, # SCE_RB_CHARACTER 7
         :color_type, # SCE_RB_CLASSNAME 8
         :color_function_name, # SCE_RB_DEFNAME 9
         :color_foreground, # SCE_RB_OPERATOR 10
-        :color_foreground, # SCE_RB_IDENTIFIER 11
+        :color_keyword, # SCE_RB_IDENTIFIER 11
         :color_regexp_grouping_construct, # SCE_RB_REGEX 12
         :color_variable_name, # SCE_RB_GLOBAL 13
         :color_string, # SCE_RB_SYMBOL 14

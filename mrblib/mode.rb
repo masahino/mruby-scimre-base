@@ -10,17 +10,19 @@ module Mrbmacs
     ".js" => "cpp",
     ".md" => "markdown",
     ".txt" => "fundamental",
-    ".html" => "hypertext",
-    ".htm" => "hypertext",
-    ".erb" => "hypertext",
+    ".html" => "html",
+    ".htm" => "html",
+    ".erb" => "html",
     ".sh" => "bash",
+    ".go" => "go",
     "" => "fundamental",
   }
     
   class Mode
-    def name
-      @name
-    end
+    attr_accessor :name, :lexer
+#    def name
+#      @name
+#    end
     
     def self.get_mode_by_suffix(suffix)
       if $mode_list.has_key?(suffix)
@@ -41,6 +43,9 @@ module Mrbmacs
       @keyword_list = ""
       @style = []
       @indent = 2
+      @use_tab = false
+      @tab_indent = 0
+      @lexer = @name
     end
 
     def set_style(view_win, theme)
@@ -67,8 +72,8 @@ module Mrbmacs
       view_win.sci_set_keywords(0, @keyword_list)
       view_win.sci_set_property("fold", "1")
       view_win.sci_set_tab_width(@indent)
-      view_win.sci_set_use_tabs(false)
-      view_win.sci_set_tab_indents(true)
+      view_win.sci_set_use_tabs(@use_tabs)
+      view_win.sci_set_tab_indents(@tab_indent)
       view_win.sci_set_back_space_un_indents(true)
       view_win.sci_set_indent(@indent)
       view_win.sci_set_wrap_mode(Scintilla::SC_WRAP_CHAR)
