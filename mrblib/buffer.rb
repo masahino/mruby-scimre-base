@@ -4,11 +4,18 @@ module Mrbmacs
     attr_accessor :docpointer, :name, :encoding, :mode, :pos
     def initialize(filename = nil, buffer_list = [])
       if filename != nil
-        @filename = File.expand_path(filename)
-        @name = create_new_buffer_name(@filename, buffer_list)
-        #@name = File.basename(@filename)
-        @directory = File.dirname(@filename)
-        @mode = Mrbmacs::Mode.set_mode_by_filename(filename)
+        if filename =~ /^\*.*\*$/ # special buffer
+          @filanem = ""
+          @name = filename
+          @directory = Dir.getwd
+          @mode = Mrbmacs::Mode.new
+        else
+          @filename = File.expand_path(filename)
+          @name = create_new_buffer_name(@filename, buffer_list)
+          #@name = File.basename(@filename)
+          @directory = File.dirname(@filename)
+          @mode = Mrbmacs::Mode.set_mode_by_filename(filename)
+        end
       else
         @filename = ""
         @name = ""
@@ -40,6 +47,7 @@ module Mrbmacs
       end
       return buffer_name
     end
+
   end
 
   class << self
