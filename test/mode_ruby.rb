@@ -35,7 +35,7 @@ end
 
 assert('get_candidates Symbol') do
   mode = Mrbmacs::RubyMode.new
-  assert_equal([':test.class', ':test.clone'], mode.get_candidates(':test.cl'))
+  assert_equal([':test.class', ':test.class_defined?', ':test.clone'], mode.get_candidates(':test.cl'))
 end
 
 assert('get_candidates Numeric') do
