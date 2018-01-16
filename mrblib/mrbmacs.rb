@@ -7,7 +7,9 @@ module Mrbmacs
     attr_accessor :theme
     attr_accessor :file_encodings, :system_encodings
     def initialize(init_filename, opts = nil)
-      @frame = Mrbmacs::Frame.new()
+      @current_buffer = Buffer.new("*scratch*")
+      @frame = Mrbmacs::Frame.new(@current_buffer)
+      @current_buffer.docpointer = @frame.view_win.sci_get_docpointer
       @keymap = ViewKeyMap.new(@frame.view_win)
       @command_list = @keymap.command_list
       @echo_keymap = EchoWinKeyMap.new(@frame.echo_win)
@@ -17,8 +19,7 @@ module Mrbmacs
 #        @theme.set_pallete
 #      end
       @mark_pos = nil
-      @buffer_list = []
-      @current_buffer = nil
+      @buffer_list = [@current_buffer]
       @filename = nil
       @target_start_pos = nil
 
@@ -28,6 +29,7 @@ module Mrbmacs
       @auto_completion = false
       set_default_style
       load_init_file(init_filename)
+      @frame.modeline(self)
     end
 
     def set_default_style
@@ -85,34 +87,7 @@ module Mrbmacs
 
     def run(file = nil)
       if file != nil
-        buffer = Mrbmacs::Buffer.new(file)
-        @current_buffer = buffer
-        load_file(file)
-        @frame.view_win.sci_set_lexer_language(buffer.mode.lexer)
-        if $DEBUG
-          $stderr.puts "["+@frame.view_win.sci_get_lexer_language()+"]"
-        end
-#        @frame.view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT,
-#                                           @theme.foreground_color)
-#        @frame.view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT,
-#                                           @theme.background_color)
-#        @frame.view_win.sci_style_clear_all
-        @current_buffer.mode.set_style(@frame.view_win, @theme)
-        @frame.view_win.sci_set_sel_back(true, 0xff0000)
-        @frame.set_buffer_name(@current_buffer.name)
-#        @frame.view_win.refresh
-        @filename = file
-      else
-        buffer = Mrbmacs::Buffer.new(nil)
-        @current_buffer = buffer
-      end
-      buffer.docpointer = @frame.view_win.sci_get_docpointer()
-      @prev_buffer = buffer
-      @buffer_list.push(buffer)
-      @frame.modeline(self)
-      error = @current_buffer.mode.syntax_check(@frame.view_win)
-      if error.size > 0
-        @frame.show_annotation(error[0], error[1], error[2])
+        find_file(file)
       end
       editloop()
     end

@@ -105,10 +105,11 @@ module Mrbmacs
         else
           @current_buffer.pos = view_win.sci_get_current_pos
           new_buffer = Buffer.new(filename, @buffer_list)
-          view_win.sci_add_refdocument(@current_buffer.docpointer)
+          if @current_buffer.docpointer != nil
+            view_win.sci_add_refdocument(@current_buffer.docpointer)
+          end
           view_win.sci_set_docpointer(nil)
           new_buffer.docpointer = view_win.sci_get_docpointer
-#         new_buffer.docpointer = view_win.create_document
           @buffer_list.push(new_buffer)
           @prev_buffer = @current_buffer
           @current_buffer = new_buffer
@@ -117,8 +118,11 @@ module Mrbmacs
           @current_buffer.mode.set_style(view_win, @theme)
           view_win.sci_set_sel_back(true, 0xff0000)
           @frame.set_buffer_name(@current_buffer.name)
-#        view_win.sci_refresh
           @frame.modeline(self)
+          error = @current_buffer.mode.syntax_check(@frame.view_win)
+          if error.size > 0
+            @frame.show_annotation(error[0], error[1], error[2])
+          end
         end
       end
     end
