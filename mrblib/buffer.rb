@@ -5,7 +5,7 @@ module Mrbmacs
     def initialize(filename = nil, buffer_list = [])
       if filename != nil
         if filename =~ /^\*.*\*$/ # special buffer
-          @filanem = ""
+          @filename = ""
           @name = filename
           @directory = Dir.getwd
           @mode = Mrbmacs::Mode.new
@@ -74,22 +74,14 @@ module Mrbmacs
   class Application
     def switch_to_buffer(buffername = nil)
       view_win = @frame.view_win
-      echo_win = @frame.view_win
       if buffername == nil
         buffername = @frame.select_buffer(@prev_buffer.name, @buffer_list.collect{|b| b.name})
-#        echo_text = "Switch to buffer: (default #{@prev_buffer.name}) "
-#        buffername = @frame.echo_gets(echo_text, "") do |input_text|
-#          buffer_list = @buffer_list.collect{|b| b.name}.select{|b| b =~ /^#{input_text}/}
-#          [buffer_list.join(" "), input_text.length]
-#        end
       end
       if buffername != nil
         if buffername == ""
           buffername = @prev_buffer.name
         end
         if buffername == @current_buffer.name
-#          echo_win.sci_set_focus(false)
-          #view_win.sci_set_focus(true)
           return
         end
         new_buffer = Mrbmacs::get_buffer_from_name(@buffer_list, buffername)
@@ -104,16 +96,6 @@ module Mrbmacs
           @current_buffer.mode.set_style(view_win, @theme)
           view_win.sci_goto_pos(@current_buffer.pos)
         end
-        #echo_win.sci_set_focus(false)
-        #echo_win.refresh
-        #view_win.sci_set_focus(true)
-        
-#        mode = Mrbmacs::Mode.set_mode_by_filename(filename)
-#        view_win.set_lexer_language(mode.name)
-#        mode.set_style(view_win)
-#        view_win.set_sel_back(true, 0xff0000)
-        #view_win.refresh
-
       end
     end
 
@@ -139,7 +121,6 @@ module Mrbmacs
       # delete buffer
       target_buffer = Mrbmacs::get_buffer_from_name(@buffer_list, buffername)
       @buffer_list.delete(target_buffer)
-#      @frame.view_win.sci_release_document(target_buffer.docpointer)
       if @prev_buffer == target_buffer
         @pref_buffer = @buffer_list[0]
       end
