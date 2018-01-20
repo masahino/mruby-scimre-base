@@ -23,6 +23,8 @@ module Mrbmacs
         'M-w' => "copy-region",
         'M-<' => "beginning-of-buffer",
         'M->' => "end-of-buffer",
+        'M-d' => SCI_DELWORDRIGHT,
+#        'M-DEL' => SCI_DELWORDLEFT,
       }
       set_keymap(win, keymap)
     end
@@ -49,16 +51,20 @@ module Mrbmacs
         ctrl_code = Scintilla::SCMOD_META
       end
       keydef = 0
-      if key =~ /^(\w)-(\w)$/
+      if key =~ /^(\w+)-(\w+)$/
         if $1 == "C"
           keydef += ctrl_code << 16
         elsif $1 == "M"
           keydef += meta_code << 16
         end
-        if Scintilla::PLATFORM == :GTK_MACOSX
-          keydef += $2.upcase.ord
+        if $2 == "DEL"
+          keydef += Scintilla::SCK_DELETE
         else
-          keydef += $2.ord
+          if Scintilla::PLATFORM == :GTK_MACOSX
+            keydef += $2.upcase.ord
+          else
+            keydef += $2.ord
+          end
         end
       end
       win.sci_assign_cmdkey(keydef, cmd)
@@ -83,6 +89,8 @@ module Mrbmacs
         'C-x b' => "switch-to-buffer",
         'C-x i' => "insert-file",
         'C-x k' => "kill-buffer",
+#        'C-x 2' => "split-window-vertically",
+#        'C-x  ' => "rectangle-mark-mode",
         'C-x C-c' => "save_buffers_kill-terminal",
         'C-x C-f' => "find-file",
         'C-x C-s' => "save-buffer",
