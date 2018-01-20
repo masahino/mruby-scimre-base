@@ -15,6 +15,7 @@ module Mrbmacs
     ".erb" => "html",
     ".sh" => "bash",
     ".go" => "go",
+    ".py" => "python",
     "" => "fundamental",
   }
     
