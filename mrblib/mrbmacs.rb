@@ -10,9 +10,11 @@ module Mrbmacs
       @current_buffer = Buffer.new("*scratch*")
       @frame = Mrbmacs::Frame.new(@current_buffer)
       @current_buffer.docpointer = @frame.view_win.sci_get_docpointer
-      @keymap = ViewKeyMap.new(@frame.view_win)
+      @keymap = ViewKeyMap.new()
+      @keymap.set_keymap(@frame.view_win)
       @command_list = @keymap.command_list
-      @echo_keymap = EchoWinKeyMap.new(@frame.echo_win)
+      @echo_keymap = EchoWinKeyMap.new()
+      @keymap.set_keymap(@frame.echo_win)
 
       @theme = SolarizedDarkTheme.new
 #      if @theme.respond_to?(:set_pallete)

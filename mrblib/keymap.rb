@@ -2,9 +2,9 @@ module Mrbmacs
   class KeyMap
     include Scintilla
     attr_accessor :command_list
-    def initialize(win)
+    def initialize()
       @command_list = {}
-      keymap = {
+      @default_keymap = {
         'C-a' => SCI_HOME,
         'C-b' => SCI_CHARLEFT,
         'C-d' => SCI_CLEAR,
@@ -26,11 +26,10 @@ module Mrbmacs
         'M-d' => SCI_DELWORDRIGHT,
 #        'M-DEL' => SCI_DELWORDLEFT,
       }
-      set_keymap(win, keymap)
     end
-    
-    def set_keymap(win, keymap)
-      keymap.each do |k, v|
+
+    def set_keymap(win)
+      @keymap.each do |k, v|
         strokes = k.split(" ").size
         #      case v.class.to_s
         if strokes == 1 and v.class.to_s == "Fixnum" 
@@ -72,8 +71,8 @@ module Mrbmacs
   end
 
   class ViewKeyMap < KeyMap
-    def initialize(win)
-      super.initialize(win)
+    def initialize()
+      super.initialize()
       keymap = {
         'Enter' => "newline",
         'Tab' => "indent",
@@ -89,7 +88,11 @@ module Mrbmacs
         'C-x b' => "switch-to-buffer",
         'C-x i' => "insert-file",
         'C-x k' => "kill-buffer",
-#        'C-x 2' => "split-window-vertically",
+        'C-x o' => "other-window",
+        'C-x 0' => "delete-window",
+        'C-x 1' => "delete-other-window",
+        'C-x 2' => "split-window-vertically",
+        'C-x 3' => "split-window-horizontally",
 #        'C-x  ' => "rectangle-mark-mode",
         'C-x C-c' => "save_buffers_kill-terminal",
         'C-x C-f' => "find-file",
@@ -101,17 +104,19 @@ module Mrbmacs
         'M-x' => "execute-extended-command",
         'M-%' => "query-replace",
       }
-      set_keymap(win, keymap)
+      @keymap = @default_keymap.merge(keymap)
+#      set_keymap(win, keymap)
     end
   end
   
   class EchoWinKeyMap < KeyMap
-    def initialize(win)
-      super.initialize(win)
+    def initialize()
+      super.initialize()
       keymap = {
         'Tab' => "completion",
       }
-      set_keymap(win, keymap)
+#      set_keymap(win, keymap)
+      @keymap = @default_keymap.merge(keymap)
     end
   end
 end
