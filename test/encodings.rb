@@ -17,7 +17,7 @@ def setup
   case Scintilla::PLATFORM
   when :CURSES
     Curses::initscr
-    sci = Scintilla::ScinTerm.new
+    sci = Scintilla::ScintillaCurses.new
   when :GTK
     sci = nil
   else
