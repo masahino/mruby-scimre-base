@@ -83,5 +83,15 @@ module Mrbmacs
       @frame.view_win.sci_autoc_cancel
       @mark_pos = nil
     end
+
+    def delete_rectangle()
+      win = @frame.view_win
+      win.sci_set_selection_mode(1)
+      if @mark_pos != nil
+        win.sci_set_anchor(@mark_pos)
+        win.sci_replace_sel(nil, "")
+        @mark_pos = nil
+      end
+    end
   end
 end
