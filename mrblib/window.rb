@@ -20,6 +20,16 @@ module Mrbmacs
     def refresh
     end
 
+    def focus_in()
+      @sci.sci_set_focus(true)
+      @sci.sci.refresh
+    end
+
+    def focus_out()
+      @sci.sci_set_focus(false)
+      @sci.sci.refresh
+    end
+
     def set_default_style(theme)
       @sci.sci_style_set_fore(Scintilla::STYLE_DEFAULT, theme.foreground_color)
       @sci.sci_style_set_back(Scintilla::STYLE_DEFAULT, theme.background_color)
@@ -41,15 +51,7 @@ module Mrbmacs
 
   class Application
     def other_window
-      current_view_win = @frame.view_win
-      current_view_win.sci_set_focus(false)
-      current_view_win.refresh()
-      new_win = @frame.edit_win_list.rotate!().first
-      @frame.edit_win = new_win
-      @frame.view_win = new_win.sci
-      @frame.mode_win = new_win.modeline
-      @frame.view_win.sci_set_focus(true)
-      @frame.view_win.refresh()
+      @frame.switch_window(@frame.edit_win_list.rotate!().first)
     end
 
     def delete_window
@@ -61,17 +63,18 @@ module Mrbmacs
     end
 
     def split_window_vertically
-#      Curses::erase
-#      Curses::refresh
       active_win = @frame.edit_win
       y = (active_win.y2 + active_win.y1) / 2
       x = active_win.x1
       width = active_win.x2 - active_win.x1
       height = active_win.y2 - y
+      if height < 3
+        @frame.echo_puts("too small for splitting")
+        return
+      end
       active_win.y2 = y;
       active_win.compute_area
       active_win.refresh
-
       new_win = EditWindow.new(@frame, @current_buffer, x, y, width, height)
 #      new_win = EditWindow.new(@frame, Buffer.new(), x, y, width, height)
       @keymap.set_keymap(new_win.sci)
@@ -81,7 +84,8 @@ module Mrbmacs
       @frame.edit_win_list.each do |win|
         win.refresh()
       end
-      new_win.sci.refresh
+      @frame.modeline(self, new_win.modeline)
+      new_win.focus_out
 #      e = edit_new(s->b, s->x1, y,
 #                     s->x2 - s->x1, s->y2 - y,
 #                     WF_MODELINE | (s->flags & WF_RSEPARATOR));
