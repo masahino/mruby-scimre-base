@@ -59,7 +59,7 @@ module Mrbmacs
     end
 
     def delete_other_window
-      $stderr.puts "delete other window"
+      @frame.delete_other_window
     end
 
     def split_window(horizon)
