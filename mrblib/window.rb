@@ -62,37 +62,46 @@ module Mrbmacs
       $stderr.puts "delete other window"
     end
 
-    def split_window_vertically
+    def split_window(horizon)
       active_win = @frame.edit_win
-      y = (active_win.y2 + active_win.y1) / 2
-      x = active_win.x1
-      width = active_win.x2 - active_win.x1
-      height = active_win.y2 - y
-      if height < 3
+      if horizon == true
+        x = (active_win.x2 + active_win.x1) / 2
+        y = active_win.y1
+        width = active_win.x2 - x
+        height = active_win.y2 - active_win.y1
+        active_win.x2 = x;
+      else
+        y = (active_win.y2 + active_win.y1) / 2
+        x = active_win.x1
+        width = active_win.x2 - active_win.x1
+        height = active_win.y2 - y
+        active_win.y2 = y;
+      end
+
+      if width < 10 or height < 3
         @frame.echo_puts("too small for splitting")
         return
       end
-      active_win.y2 = y;
+
       active_win.compute_area
       active_win.refresh
       new_win = EditWindow.new(@frame, @current_buffer, x, y, width, height)
-#      new_win = EditWindow.new(@frame, Buffer.new(), x, y, width, height)
       @keymap.set_keymap(new_win.sci)
-    new_win.set_default_style(@theme)
-#      @current_buffer.mode.set_style(new_win.sci, @theme)
+      new_win.set_default_style(@theme)
       @frame.edit_win_list.push(new_win)
       @frame.edit_win_list.each do |win|
         win.refresh()
       end
       @frame.modeline(self, new_win.modeline)
       new_win.focus_out
-#      e = edit_new(s->b, s->x1, y,
-#                     s->x2 - s->x1, s->y2 - y,
-#                     WF_MODELINE | (s->flags & WF_RSEPARATOR));
+    end
+
+    def split_window_vertically
+      split_window(false)
     end
 
     def split_window_horizontally
-      $stderr.puts "split window horizontally"
+      split_window(true)
     end
   end
 end
