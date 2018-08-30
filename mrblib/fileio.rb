@@ -25,6 +25,18 @@ module Mrbmacs
         end
         view_win.sci_set_codepage(Scintilla::SC_CP_UTF8)
         view_win.sci_set_text(text)
+        eolmode = view_win.sci_get_eolmode()
+        cr = text.scan(/\r/).length
+        lf = text.scan(/\n/).length
+        crlf = text.scan(/\r\n/).length
+        if crlf > 0
+          eolmode = Scintilla::SC_EOL_CRLF
+        elsif lf > cr
+          eolmode = Scintilla::SC_EOL_LF
+        elsif cr > 0
+          eolmode = Scintilla::SC_EOL_CR
+        end
+        view_win.sci_set_eolmode(eolmode)
         view_win.sci_set_savepoint
       rescue
         # new file
