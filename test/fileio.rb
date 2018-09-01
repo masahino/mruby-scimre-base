@@ -7,6 +7,15 @@ end
 
 class TestFrame
   attr_accessor :view_win, :echo_win, :tk
+  def echo_puts(msg)
+    $stderr.puts msg
+  end
+
+  def set_buffer_name(name)
+  end
+
+  def modeline(app)
+  end
 end
 
 def setup
@@ -30,6 +39,8 @@ def setup
   frame.view_win = sci
   app.frame = frame
   app.current_buffer = Mrbmacs::Buffer.new
+  app.buffer_list = [app.current_buffer]
+  app.file_encodings = []
   app
 end
 
@@ -62,4 +73,17 @@ assert('write-file') do
   app.write_file(test_file)
   test_text = File.open(test_file).read
   assert_equal(org_text, test_text)
+end
+
+assert('eolmode') do
+  app = setup
+  test_file = File.dirname(__FILE__) + "/test-utf8.input"
+  app.find_file(test_file)
+  assert_equal(Scintilla::SC_EOL_LF, app.frame.view_win.sci_get_eolmode)
+  test_file = File.dirname(__FILE__) + "/test-utf8-dos.input"
+  app.find_file(test_file)
+  assert_equal(Scintilla::SC_EOL_CRLF, app.frame.view_win.sci_get_eolmode)
+  test_file = File.dirname(__FILE__) + "/test-utf8-mac.input"
+  app.find_file(test_file)
+  assert_equal(Scintilla::SC_EOL_CR, app.frame.view_win.sci_get_eolmode)
 end

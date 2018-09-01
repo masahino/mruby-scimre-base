@@ -12,7 +12,6 @@ module Mrbmacs
         'C-f' => SCI_CHARRIGHT,
         'C-g' => "keyboard-quit",
         'C-h' => SCI_DELETEBACK,
-        'C-k' => "kill-line",
         'C-w' => "cut-region",
         'C-y' => SCI_PASTE,
         'C-@' => "set-mark", # C-SPC
@@ -77,6 +76,7 @@ module Mrbmacs
         'Enter' => "newline",
         'Tab' => "indent",
 #        'C-j' => "eval-last_exp",
+        'C-k' => "kill-line",
         'C-m' => SCI_NEWLINE,
         'C-n' => SCI_LINEDOWN,
         'C-p' => SCI_LINEUP,
@@ -90,6 +90,7 @@ module Mrbmacs
         'C-x i' => "insert-file",
         'C-x k' => "kill-buffer",
         'C-x o' => "other-window",
+        'C-x r c' => "clear-rectangle",
         'C-x r d' => "delete-rectangle",
         'C-x 0' => "delete-window",
         'C-x 1' => "delete-other-window",
