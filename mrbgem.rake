@@ -12,4 +12,5 @@ MRuby::Gem::Specification.new('mruby-mrbmacs-base') do |spec|
   spec.add_test_dependency 'mruby-io'
   spec.add_test_dependency 'mruby-eval'
   spec.add_test_dependency 'mruby-iconv'
+  spec.add_test_dependency 'mruby-metaprog'
 end
