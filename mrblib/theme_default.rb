@@ -1,4 +1,20 @@
 module Mrbmacs
+  COLOR_BASE03 = 0
+  COLOR_BASE02 = 0
+  COLOR_BASE01 = 0
+  COLOR_BASE00 = 0
+  COLOR_BASE0  = 0
+  COLOR_BASE1  = 0
+  COLOR_BASE2  = 0
+  COLOR_BASE3  = 0
+  COLOR_YELLOW = 0
+  COLOR_ORANGE = 0
+  COLOR_RED    = 0
+  COLOR_MAGENTA = 0
+  COLOR_VIOLET = 0
+  COLOR_BLUE   = 0
+  COLOR_CYAN   = 0
+  COLOR_GREEN  = 0
   class Theme
     attr_accessor :style_list, :foreground_color, :background_color, :font_color
     def initialize

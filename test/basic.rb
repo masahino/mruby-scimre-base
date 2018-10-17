@@ -1,40 +1,7 @@
-module Mrbmacs
-  class TestApp < Application
-    def initialize
-    end
-  end
-end
-
-class TestFrame
-  attr_accessor :view_win, :echo_win, :tk
-end
-
-def setup
-  app = Mrbmacs::TestApp.new
-  sci = nil
-  test_text = File.open(File.dirname(__FILE__) + "/test.input").read
-
-  case Scintilla::PLATFORM
-  when :CURSES
-    Curses::initscr
-    sci = Scintilla::ScintillaCurses.new
-  when :GTK
-    sci = nil
-  else
-    sci = nil
-  end
-  if sci != nil
-    sci.sci_set_text(test_text)
-  end
-  frame = TestFrame.new
-  frame.view_win = sci
-  app.frame = frame
-  app.current_buffer = Mrbmacs::Buffer.new
-  app
-end
+require File.dirname(__FILE__) + '/test_helper.rb'
 
 assert('set-mark') do
-  app = setup
+  app = Mrbmacs::Application.new("")
   assert_equal(nil, app.mark_pos)
   app.set_mark()
   assert_equal(0, app.mark_pos)
@@ -43,84 +10,53 @@ assert('set-mark') do
 end
 
 assert('copy-region') do
-  app = setup
-  org_text = app.frame.view_win.sci_get_text(app.frame.view_win.sci_get_length+1)
+  app = Mrbmacs::Application.new("")
+  app.set_mark()
   app.copy_region()
-  text = app.frame.view_win.sci_get_text(app.frame.view_win.sci_get_length+1)
-  assert_equal(org_text, text)
+  assert_equal(Scintilla::SCI_COPYRANGE, app.frame.view_win.messages.pop)
+  assert_equal(nil, app.mark_pos)
 end
 
 assert('cut-region') do
-  app = setup
-  win = app.frame.view_win
-  org_text = win.sci_get_text(win.sci_get_length + 1)
+  app = Mrbmacs::Application.new("")
   app.cut_region()
-  text = win.sci_get_text(win.sci_get_length + 1)
-  assert_equal(org_text, text)
-
+  assert_equal(nil, app.mark_pos)
   # cut all text
   app.set_mark()
-  win.sci_set_current_pos(win.sci_get_length + 1)
   app.cut_region()
-  text = win.sci_get_text(win.sci_get_length + 1)
-  assert_equal("", text)
+  assert_equal(nil, app.mark_pos)
 end
 
-assert('kill-line 1') do
-  app = setup
-  win = app.frame.view_win
-  org_text = win.sci_get_text(win.sci_get_length + 1)
+assert('kill-line') do
+  app = Mrbmacs::Application.new("")
   app.kill_line()
-  text = win.sci_get_text(win.sci_get_length + 1)
-  assert_equal("", text.split("\n")[0])
-  assert_equal(org_text.split("\n")[1], text.split("\n")[1])
+  assert_equal(Scintilla::SCI_DELETERANGE, app.frame.view_win.messages.pop)
+  app.frame.view_win.test_return[Scintilla::SCI_GETLINE] = "\n"
+  app.kill_line()
+  assert_equal(Scintilla::SCI_LINECUT, app.frame.view_win.messages.pop)
 end  
 
-assert('kill-line 2') do
-  app = setup
-  win = app.frame.view_win
-  org_text = win.sci_get_text(win.sci_get_length + 1)
-
-  win.sci_set_current_pos(5)
-  app.kill_line()
-  text = win.sci_get_text(win.sci_get_length + 1)
-  assert_equal(org_text.split("\n")[0][0..4], text.split("\n")[0])
-end
-
 assert('beginning-of-buffer') do
-  app = setup
-  win = app.frame.view_win
-
+  app = Mrbmacs::Application.new("")
   app.beginning_of_buffer()
-  assert_equal(0, win.sci_get_current_pos)
-  win.sci_set_current_pos(win.sci_get_length + 1)  
-  app.beginning_of_buffer()
-  assert_equal(0, win.sci_get_current_pos)
+  assert_equal(Scintilla::SCI_DOCUMENTSTART, app.frame.view_win.messages.pop)
 end
 
 assert('end-of-buffer') do
-  app = setup
-  win = app.frame.view_win
-
+  app = Mrbmacs::Application.new("")
   app.end_of_buffer()
-  assert_equal(win.sci_get_length, win.sci_get_current_pos)
+  assert_equal(Scintilla::SCI_DOCUMENTEND, app.frame.view_win.messages.pop)
 end
   
 assert('newline') do
-  app = setup
+  app = Mrbmacs::Application.new("")
   win = app.frame.view_win
-  org_text = win.sci_get_text(win.sci_get_length + 1)
-
   app.newline()
-  text = win.sci_get_text(win.sci_get_length + 1)
-
-  assert_equal("\n" + org_text, text)
+  assert_equal(Scintilla::SCI_NEWLINE, win.messages.pop)
 end
 
 assert('keyboard-quit') do
-  app = setup
-  win = app.frame.view_win
-  org_text = win.sci_get_text(win.sci_get_length + 1)
+  app = Mrbmacs::Application.new("")
   app.set_mark()
   assert_equal(0, app.mark_pos)
   app.keyboard_quit()

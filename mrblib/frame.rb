@@ -83,5 +83,12 @@ module Mrbmacs
       @view_win.sci_annotation_set_style(line-1, 254)
     end
 
+    def echo_gets(prompt, text = "", &block)
+      raise NotImplementedError
+    end
+
+    def echo_puts(text)
+      raise NotImplementedError
+    end
   end
 end

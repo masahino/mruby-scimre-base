@@ -98,8 +98,12 @@ module Mrbmacs
         end
       end
       if file_path != nil
-        text = File.open(file_path).read
-        view_win.sci_insert_text(view_win.sci_get_current_pos, text)
+        if File.exist?(file_path) == true and FileTest.file?(file_path) == true
+          text = File.open(file_path).read
+          view_win.sci_insert_text(view_win.sci_get_current_pos, text)
+        else
+          message("no match")
+        end
       end
     end
 
