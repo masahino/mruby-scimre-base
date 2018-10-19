@@ -13,6 +13,7 @@ module Mrbmacs
     def cut_region()
       win = @frame.view_win
       if @mark_pos != nil
+        win.sci_goto_pos(win.sci_get_current_pos - 1)
         win.sci_copy_range(@mark_pos, win.sci_get_current_pos)
         win.sci_delete_range(@mark_pos,
                              win.sci_get_current_pos - @mark_pos)
@@ -82,6 +83,16 @@ module Mrbmacs
     def keyboard_quit()
       @frame.view_win.sci_autoc_cancel
       @mark_pos = nil
+    end
+
+    def clear_rectangle()
+      win = @frame.view_win
+      win.sci_set_selection_mode(1)
+      if @mark_pos != nil
+        win.sci_set_anchor(@mark_pos)
+        win.sci_replace_sel(nil, " ")
+        @mark_pos = nil
+        end
     end
 
     def delete_rectangle()
