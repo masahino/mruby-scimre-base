@@ -30,8 +30,17 @@ module Mrbmacs
 
       @auto_completion = false
       set_default_style
+      register_extensions()
       load_init_file(init_filename)
       @frame.modeline(self)
+    end
+
+    def register_extensions
+      Extension.singleton_methods(false).each do |m|
+        if m.to_s =~ /^register_/
+          Extension.send(m, self)
+        end
+      end
     end
 
     def set_default_style
