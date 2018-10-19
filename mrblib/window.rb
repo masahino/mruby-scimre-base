@@ -95,18 +95,22 @@ module Mrbmacs
           # left border
           e.x2 = x2
           count += 1
+          break
         elsif x2 == ex1 && y1 == ey1 && y2 == ey2
           # right border
           e.x1 = x1
           count += 1
+          break
         elsif y1 == ey2 && x1 == ex1 && x2 == ex2
           #  top border
           e.y2 = y2
           count += 1
+          break
         elsif y2 == ey1 && x1 == ex1 && x2 == ex2
           # bottom border
           e.y1 = y1
           count += 1
+          break
         elsif x1 == ex2
           expand_wins[:left].push e
         elsif x2 == ex1
@@ -118,25 +122,34 @@ module Mrbmacs
         end
       end
       if count == 0
-        expand_wins.each_key do |d|
-          count = expand_wins[d].size
-          expand_wins[d].each do |w|
-            case d
-            when :left
-              w.x2 = x2
-            when :right
-              w.x1 =x1
-            when :top
-              w.y2 = y2
-            when :bottom
-              w.y1 = y1
-            end
+        if expand_wins[:left].size > 1
+          count = expand_wins[:left].size
+          expand_wins[:left].each do |w|
+            w.x2 = x2
             w.compute_area
           end
-          if count > 1
-            new_win = expand_wins[d].first
-            break
+          new_win = expand_wins[:left].first
+        elsif expand_wins[:right].size > 1
+          count = expand_wins[:right].size
+          expand_wins[:right].each do |w|
+            w.x1 = x1
+            w.compute_area
           end
+          new_win = expand_wins[:right].first
+        elsif expand_wins[:top].size > 1
+          count = expand_wins[:top].size
+          expand_wins[:top].each do |w|
+            w.y2 = y2
+            w.compute_area
+          end
+          new_win = expand_wins[:top].first
+        elsif expand_wins[:bottom].size > 1
+          count = expand_wins[:bottom].size
+          expand_wins[:bottom].each do |w|
+            w.y1 = y1
+            w.compute_area
+          end
+          new_win = expand_wins[:bottom].first
         end
       end
       if count > 0
@@ -147,7 +160,10 @@ module Mrbmacs
         @frame.edit_win_list.each do |w|
           w.refresh
         end
+      else
+        $stderr.puts "can't find any window"
       end
+      $stderr.puts "window number is #{@frame.edit_win_list.size}"
     end
 
     def delete_other_window
@@ -157,22 +173,25 @@ module Mrbmacs
     def split_window(horizon)
       active_win = @frame.edit_win
       if horizon == true
-        x = (active_win.x2 + active_win.x1) / 2
+        x = ((active_win.x2 + active_win.x1) / 2).to_i
         y = active_win.y1
         width = active_win.x2 - x
         height = active_win.y2 - active_win.y1
-        active_win.x2 = x;
+        if width < 10
+          @frame.echo_puts("too small for splitting")
+          return
+        end
+        active_win.x2 = x
       else
-        y = (active_win.y2 + active_win.y1) / 2
+        y = ((active_win.y2 + active_win.y1) / 2).to_i
         x = active_win.x1
         width = active_win.x2 - active_win.x1
         height = active_win.y2 - y
-        active_win.y2 = y;
-      end
-
-      if width < 10 or height < 3
-        @frame.echo_puts("too small for splitting")
-        return
+        if height < 3
+          @frame.echo_puts("too small for splitting")
+          return
+        end
+        active_win.y2 = y
       end
 
       active_win.compute_area
