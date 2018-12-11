@@ -6,7 +6,36 @@ module Mrbmacs
     attr_accessor :current_buffer, :buffer_list, :prev_buffer
     attr_accessor :theme
     attr_accessor :file_encodings, :system_encodings
-    def initialize(init_filename, opts = nil)
+    attr_accessor :lsp
+    def parse_args(argv)
+      op = OptionParser.new
+      opts = {
+        no_init_file: false,
+        load: '',
+      }
+      op.on('-q', '--[no-]init-file', "do not load ~/.mrbmacs") do |v|
+        opts[:no_init_file] = v
+      end
+      op.on('-l', '--load FILE', "load ruby file") do |v|
+        opts[:load] = v
+      end
+     op.on("-h", "--help", "Prints this help") do
+        puts op.to_s
+        exit
+      end
+      op.banner = "Usage: mrbmacs-curses OPTION-OR-FILENAME]..."
+      begin 
+        args = op.parse(argv)
+      rescue => e
+        puts e.message
+        puts op.to_s
+        exit
+      end
+      [opts, args]
+    end
+
+    def initialize(argv = [])
+      opts, argv = parse_args(argv)
       @current_buffer = Buffer.new("*scratch*")
       @frame = Mrbmacs::Frame.new(@current_buffer)
       @current_buffer.docpointer = @frame.view_win.sci_get_docpointer
@@ -29,9 +58,19 @@ module Mrbmacs
       @system_encodings = Mrbmacs::get_encoding_list()
 
       @auto_completion = false
-      set_default_style
+      @lsp = {}
+      set_default_style()
       register_extensions()
-      load_init_file(init_filename)
+      if opts[:no_init_file] == false
+        init_filename = ENV['HOME'] + "/.mrbmacsrc"
+        load_file(init_filename)
+      end
+      if argv.size > 0
+        find_file(argv[0])
+      end
+      if opts[:load] != ''
+        load_file(opts[:load])
+      end
       @frame.modeline(self)
     end
 
@@ -61,14 +100,14 @@ module Mrbmacs
 #      @frame.view_win.refresh
     end
 
-    def load_init_file(init_filename)
+    def load_file(filename)
       begin
-        File.open(init_filename, "r") do |f|
-          init_str = f.read()
-          eval(init_str)
+        File.open(filename, "r") do |f|
+          str = f.read()
+          eval(str)
         end
       rescue
-        $stderr.puts $!
+        $stderr.puts  $!
       end
     end
 
