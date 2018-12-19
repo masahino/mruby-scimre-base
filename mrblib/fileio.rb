@@ -1,6 +1,6 @@
 module Mrbmacs
   class Application
-    def load_file(filename)
+    def open_file(filename)
       view_win = @frame.view_win
       file_encodings = @file_encodings
       current_buffer = @current_buffer
@@ -129,12 +129,16 @@ module Mrbmacs
           @buffer_list.push(new_buffer)
           @prev_buffer = @current_buffer
           @current_buffer = new_buffer
-          load_file(filename)
+          open_file(filename)
           view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
           @current_buffer.mode.set_style(view_win, @theme)
           view_win.sci_set_sel_back(true, 0xff0000)
           @frame.set_buffer_name(@current_buffer.name)
           @frame.modeline(self)
+          # lsp
+#          if @lsp[@current_buffer.mode.name] != nil
+#            @lsp[@current_buffer.mode.name].send_initialize(@current_buffer.directory)
+#          end
           error = @current_buffer.mode.syntax_check(@frame.view_win)
           if error.size > 0
             @frame.show_annotation(error[0], error[1], error[2])
