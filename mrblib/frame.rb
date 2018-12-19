@@ -70,6 +70,9 @@ module Mrbmacs
       mode_text += sprintf("%-10s", "["+app.current_buffer.mode.name+"]")
     end
 
+    def set_buffer_name(name)
+    end
+
     def echo_set_prompt(prompt)
     end
 
@@ -88,6 +91,10 @@ module Mrbmacs
     end
 
     def echo_puts(text)
+      raise NotImplementedError
+    end
+
+    def exit()
       raise NotImplementedError
     end
   end
