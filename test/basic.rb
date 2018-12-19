@@ -70,3 +70,47 @@ end
 assert('isearch-backward') do
   assert_equal(true, Mrbmacs::Application.instance_methods.include?(:isearch_backward))
 end
+
+assert('indent') do
+  app = Mrbmacs::Application.new
+  win = app.frame.view_win
+  win.test_return[Scintilla::SCI_AUTOCACTIVE] = 1
+  app.indent
+  assert_equal(Scintilla::SCI_TAB, app.frame.view_win.messages.pop)
+  win.test_return[Scintilla::SCI_AUTOCACTIVE] = 0
+  app.indent
+  assert_equal(Scintilla::SCI_GETCOLUMN, app.frame.view_win.messages.pop)
+end
+
+assert('sava-buffers-kill-terminal') do
+  app = Mrbmacs::Application.new
+  assert_nil(app.save_buffers_kill_terminal)
+end
+
+assert('keyboard-quit') do
+  app = Mrbmacs::Application.new
+  app.keyboard_quit
+  assert_nil(app.mark_pos)
+end
+
+assert('clear-rectangle') do
+  app = Mrbmacs::Application.new
+  app.mark_pos = nil
+  app.clear_rectangle
+  assert_equal(Scintilla::SCI_SETSELECTIONMODE, app.frame.view_win.messages.pop)
+  app.mark_pos = 1
+  app.clear_rectangle
+  assert_equal(Scintilla::SCI_REPLACESEL, app.frame.view_win.messages.pop)
+  assert_nil(app.mark_pos)
+end
+
+assert('clear-rectangle') do
+  app = Mrbmacs::Application.new
+  app.mark_pos = nil
+  app.delete_rectangle
+  assert_equal(Scintilla::SCI_SETSELECTIONMODE, app.frame.view_win.messages.pop)
+  app.mark_pos = 1
+  app.delete_rectangle
+  assert_equal(Scintilla::SCI_REPLACESEL, app.frame.view_win.messages.pop)
+  assert_nil(app.mark_pos)
+end

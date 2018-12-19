@@ -35,6 +35,9 @@ module Mrbmacs
 
     def modeline(app)
     end
+
+    def exit
+    end
   end
 end
 
@@ -147,4 +150,7 @@ class TermKey
   def buffer_size
     0
   end
+end
+
+def exit
 end
