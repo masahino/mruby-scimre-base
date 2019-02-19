@@ -2,7 +2,7 @@ module Mrbmacs
   class << self
     def get_encoding_list()
       list = []
-      if Iconv.methods.include?(:list)
+      if Iconv.method_defined?(:list)
         Iconv.list do |name|
           list.push(name)
         end
