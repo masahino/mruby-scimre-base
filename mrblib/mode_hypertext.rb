@@ -21,6 +21,12 @@ module Mrbmacs
         :color_foreground, #define SCE_H_TAGEND 11
         ]
     end
+
+    def set_style(view_win, theme)
+      super
+      view_win.sci_set_property("fold.html", "1")
+    end
+
     def get_indent_level(view_win)
       line = view_win.sci_line_from_position(view_win.sci_get_current_pos())
       level = view_win.sci_get_fold_level(line) & Scintilla::SC_FOLDLEVELNUMBERMASK - Scintilla::SC_FOLDLEVELBASE
@@ -28,7 +34,7 @@ module Mrbmacs
       if $DEBUG
         $stderr.puts "level = #{level}"
       end
-      if level > 0 and cur_line =~/^\s+}.*$/
+      if level > 0 and cur_line =~/^\s*<\/.*>\s*$/
         level -= 1
       end
       return level
