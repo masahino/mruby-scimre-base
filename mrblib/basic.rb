@@ -43,10 +43,13 @@ module Mrbmacs
     def indent()
       win = @frame.view_win
       if win.sci_autoc_active == 1
-        win.sci_tab
+        current = win.sci_autoc_get_current
+        win.sci_linedown
+        if current == win.sci_autoc_get_current
+          win.sci_vchome
+        end
       else
         line = win.sci_line_from_position(win.sci_get_current_pos())
-        level = win.sci_get_fold_level(line) & Scintilla::SC_FOLDLEVELNUMBERMASK - Scintilla::SC_FOLDLEVELBASE
         level = @current_buffer.mode.get_indent_level(win)
         indent = win.sci_get_indent()*level
         win.sci_set_line_indentation(line, indent)
@@ -69,10 +72,11 @@ module Mrbmacs
     def newline()
       win = @frame.view_win
       if win.sci_autoc_active == 1
-        win.sci_autoc_cancel
+#        win.sci_autoc_cancel
+        win.sci_tab
+      else
+        win.sci_new_line
       end
-      win.sci_new_line
-#      indent()
     end
 
     def save_buffers_kill_terminal()
