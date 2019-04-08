@@ -50,15 +50,13 @@ module Mrbmacs
 #        :color_foreground, # SCE_RB_UPPER_BOUND 41
         ]
     end
-    
-    def get_indent_level(view_win)
-      line = view_win.sci_line_from_position(view_win.sci_get_current_pos())
-      level = view_win.sci_get_fold_level(line) & Scintilla::SC_FOLDLEVELNUMBERMASK - Scintilla::SC_FOLDLEVELBASE
-      cur_line = view_win.sci_get_curline()[0]
-      if level > 0 and cur_line =~/^\s*(end|else|then|elsif|when|rescue|ensure|}).*$/
-        level -= 1
+
+    def is_end_of_block(line)
+      if line =~/^\s*(end|else|then|elsif|when|rescue|ensure|}).*$/
+        true
+      else
+        false
       end
-      return level
     end
 
     def syntax_check(view_win)
@@ -66,25 +64,11 @@ module Mrbmacs
       Mrbmacs::mrb_check_syntax(all_text)
     end
 
-    def get_completion_list(view_win)
-      pos = view_win.sci_get_current_pos()
-      col = view_win.sci_get_column(pos)
-      if col > 0
-        line = view_win.sci_line_from_position(pos)
-        line_text = view_win.sci_get_line(line).chomp[0..col]
-        input = line_text.split(" ").pop
-        if input != nil and input.length > 0
-          candidates = get_candidates(input)
-          [input.length, candidates.join(" ")]
-        else
-          [0, []]
-        end
-      else
-        [0, []]
-      end
+    def get_candidates(input)
+      get_candidates_a(input).join(" ")
     end
 
-    def get_candidates(input)
+    def get_candidates_a(input)
       case input
       when /^((["'`]).*\2)\.([^.]*)$/
         # String

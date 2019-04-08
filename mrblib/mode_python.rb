@@ -31,31 +31,9 @@ module Mrbmacs
         :color_foreground, # SCE_P_FTRIPLEDOUBLE 19
         ]
     end
-    def get_indent_level(view_win)
-      line = view_win.sci_line_from_position(view_win.sci_get_current_pos())
-      level = view_win.sci_get_fold_level(line) & Scintilla::SC_FOLDLEVELNUMBERMASK - Scintilla::SC_FOLDLEVELBASE
-      cur_line = view_win.sci_get_curline()[0]
-      if level > 0 and cur_line =~/^\s+}.*$/
-        level -= 1
-      end
-      return level
-    end
 
-    def get_completion_list(view_win)
-      pos = view_win.sci_get_current_pos()
-      col = view_win.sci_get_column(pos)
-      if col > 0
-        line = view_win.sci_line_from_position(pos)
-        line_text = view_win.sci_get_line(line).chomp[0..col]
-        input = line_text.split(" ").pop
-        if input != nil and input.length > 0
-          [input.length, @keyword_list]
-        else
-          [0, []]
-        end
-      else
-        [0, []]
-      end
+    def is_end_of_block(line)
+      false
     end
 
   end

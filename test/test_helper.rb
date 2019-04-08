@@ -92,6 +92,10 @@ module Scintilla
 #   def sci_get_current_pos()
 #      @pos
 #    end
+
+    def sci_get_curline()
+      []
+    end
   end
 end
 
