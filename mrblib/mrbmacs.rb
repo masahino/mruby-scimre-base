@@ -3,7 +3,7 @@ module Mrbmacs
     include Scintilla
 
     attr_accessor :frame, :mark_pos
-    attr_accessor :current_buffer, :buffer_list, :prev_buffer
+    attr_accessor :current_buffer, :buffer_list
     attr_accessor :theme
     attr_accessor :file_encodings, :system_encodings
     attr_accessor :lsp
@@ -37,6 +37,7 @@ module Mrbmacs
     def initialize(argv = [])
       opts, argv = parse_args(argv)
       @current_buffer = Buffer.new("*scratch*")
+      @buffer_list = [@current_buffer]
       @frame = Mrbmacs::Frame.new(@current_buffer)
       @current_buffer.docpointer = @frame.view_win.sci_get_docpointer
       @keymap = ViewKeyMap.new()
@@ -50,7 +51,6 @@ module Mrbmacs
 #        @theme.set_pallete
 #      end
       @mark_pos = nil
-      @buffer_list = [@current_buffer]
       @filename = nil
       @target_start_pos = nil
 

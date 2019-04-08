@@ -74,12 +74,15 @@ module Mrbmacs
   class Application
     def switch_to_buffer(buffername = nil)
       view_win = @frame.view_win
+      if @buffer_list.size <= 1
+        return
+      end
       if buffername == nil
-        buffername = @frame.select_buffer(@prev_buffer.name, @buffer_list.collect{|b| b.name})
+        buffername = @frame.select_buffer(@buffer_list[-2].name, @buffer_list.collect{|b| b.name})
       end
       if buffername != nil
         if buffername == ""
-          buffername = @prev_buffer.name
+          buffername = @buffer_list[-2].name
         end
         if buffername == @current_buffer.name
           return
@@ -90,8 +93,8 @@ module Mrbmacs
           tmp_p = view_win.sci_get_docpointer
           view_win.sci_add_refdocument(@current_buffer.docpointer)
           view_win.sci_set_docpointer(new_buffer.docpointer)
-          @prev_buffer = @current_buffer
           @current_buffer = new_buffer
+          @buffer_list.push(@buffer_list.delete(new_buffer))
           view_win.sci_set_lexer_language(@current_buffer.mode.name)
           @current_buffer.mode.set_style(view_win, @theme)
           view_win.sci_goto_pos(@current_buffer.pos)
@@ -103,10 +106,12 @@ module Mrbmacs
       if @buffer_list.size <= 1
         return
       end
-      echo_text = "kill-buffer (default #{@current_buffer.name}): "
-      buffername = @frame.echo_gets(echo_text, "") do |input_text|
-        buffer_list = @buffer_list.collect{|b| b.name}.select{|b| b =~ /^#{input_text}/}
-        [buffer_list.join(" "), input_text.length]
+      if buffername == nil
+        echo_text = "kill-buffer (default #{@current_buffer.name}): "
+        buffername = @frame.echo_gets(echo_text, "") do |input_text|
+          buffer_list = @buffer_list.collect{|b| b.name}.select{|b| b =~ /^#{input_text}/}
+          [buffer_list.join(" "), input_text.length]
+        end
       end
       if buffername == ""
         buffername = @current_buffer.name
@@ -121,10 +126,8 @@ module Mrbmacs
       # delete buffer
       target_buffer = Mrbmacs::get_buffer_from_name(@buffer_list, buffername)
       @buffer_list.delete(target_buffer)
-      if @prev_buffer == target_buffer
-        @pref_buffer = @buffer_list[0]
-      end
-      switch_to_buffer(@buffer_list[0].name)
+      switch_to_buffer(@buffer_list.last.name)
     end
+
   end
 end

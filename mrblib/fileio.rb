@@ -127,7 +127,6 @@ module Mrbmacs
           view_win.sci_set_docpointer(nil)
           new_buffer.docpointer = view_win.sci_get_docpointer
           @buffer_list.push(new_buffer)
-          @prev_buffer = @current_buffer
           @current_buffer = new_buffer
           open_file(filename)
           view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
