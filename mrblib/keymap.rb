@@ -16,6 +16,8 @@ module Mrbmacs
         'C-y' => SCI_PASTE,
         'C-@' => "set-mark", # C-SPC
         'C-x u' => SCI_UNDO,
+        'C-_' => SCI_UNDO,
+        'C-/' => SCI_UNDO,
         'Escape' => 'prefix',
         'M-b' => SCI_WORDLEFT,
         'M-f' => SCI_WORDRIGHT,
@@ -23,6 +25,7 @@ module Mrbmacs
         'M-<' => "beginning-of-buffer",
         'M->' => "end-of-buffer",
         'M-d' => SCI_DELWORDRIGHT,
+        'M-/' => SCI_REDO,
 #        'M-DEL' => SCI_DELWORDLEFT,
       }
     end
