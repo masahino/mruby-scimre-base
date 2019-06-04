@@ -23,5 +23,13 @@ module Mrbmacs
         end
       end
     end
+
+    def method_missing(method, *args)
+      if @command_handler[method.to_sym] != nil
+        @command_handler[method.to_sym].each do |m|
+          m.call(*args)
+        end
+      end
+    end
   end
 end

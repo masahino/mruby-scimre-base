@@ -23,6 +23,8 @@ module Mrbmacs
           text = Iconv.conv("utf-8", file_encoding, text)
           current_buffer.encoding = file_encoding
         end
+        mod_mask = view_win.sci_get_mod_event_mask
+        view_win.sci_set_mod_event_mask(0)
         view_win.sci_set_codepage(Scintilla::SC_CP_UTF8)
         view_win.sci_set_text(text)
         eolmode = view_win.sci_get_eolmode()
@@ -38,6 +40,8 @@ module Mrbmacs
         end
         view_win.sci_set_eolmode(eolmode)
         view_win.sci_set_savepoint
+        view_win.sci_empty_undo_buffer
+        view_win.sci_set_mod_event_mask(mod_mask)
       rescue
         # new file
         message "error load file"
@@ -134,16 +138,13 @@ module Mrbmacs
           view_win.sci_set_sel_back(true, 0xff0000)
           @frame.set_buffer_name(@current_buffer.name)
           @frame.modeline(self)
-          # lsp
-#          if @lsp[@current_buffer.mode.name] != nil
-#            @lsp[@current_buffer.mode.name].send_initialize(@current_buffer.directory)
-#          end
           error = @current_buffer.mode.syntax_check(@frame.view_win)
           if error.size > 0
             @frame.show_annotation(error[0], error[1], error[2])
           end
         end
       end
+      after_find_file(self, filename)
     end
   end
 end

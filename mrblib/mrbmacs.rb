@@ -6,7 +6,7 @@ module Mrbmacs
     attr_accessor :current_buffer, :buffer_list
     attr_accessor :theme
     attr_accessor :file_encodings, :system_encodings
-    attr_accessor :lsp
+    attr_accessor :sci_handler, :ext
     def parse_args(argv)
       op = OptionParser.new
       opts = {
@@ -19,7 +19,10 @@ module Mrbmacs
       op.on('-l', '--load FILE', "load ruby file") do |v|
         opts[:load] = v
       end
-     op.on("-h", "--help", "Prints this help") do
+      op.on('-d', '--debug', "set debugging flags (set $DEBUG to true)") do |v|
+        $DEBUG = true
+      end
+      op.on("-h", "--help", "Prints this help") do
         puts op.to_s
         exit
       end
@@ -36,6 +39,12 @@ module Mrbmacs
 
     def initialize(argv = [])
       opts, argv = parse_args(argv)
+      @io_handler = {}
+      @readings = []
+      @sci_handler = {}
+      @ext = Extension.new
+      @command_handler = {}
+
       @current_buffer = Buffer.new("*scratch*")
       @buffer_list = [@current_buffer]
       @frame = Mrbmacs::Frame.new(@current_buffer)
@@ -58,7 +67,6 @@ module Mrbmacs
       @system_encodings = Mrbmacs::get_encoding_list()
 
       @auto_completion = false
-      @lsp = {}
       set_default_style()
       register_extensions()
       if opts[:no_init_file] == false
@@ -72,6 +80,22 @@ module Mrbmacs
         load_file(opts[:load])
       end
       @frame.modeline(self)
+    end
+
+    def add_io_read_event(io, &proc)
+      @readings.push io
+      @io_handler[io] = proc
+    end
+
+    def add_sci_event(event_id, &proc)
+      @sci_handler[event_id] = proc
+    end
+
+    def add_command_event(method, &proc)
+      if @command_handler[method] == nil
+        @command_handler[method] = []
+      end
+      @command_handler[method].push proc
     end
 
     def register_extensions

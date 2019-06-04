@@ -2,7 +2,7 @@
 module Mrbmacs
   class Frame
     include Scintilla
-    attr_accessor :view_win, :echo_win, :tk
+    attr_accessor :view_win, :echo_win, :tk, :sci_notifications
 
     def init_keysyms
       @keysyms = [0,
