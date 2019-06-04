@@ -108,5 +108,21 @@ module Mrbmacs
         @mark_pos = nil
       end
     end
+
+    def get_current_line_col()
+      view_win = @frame.view_win
+      pos = view_win.sci_get_current_pos()
+      col = view_win.sci_get_column(pos)
+      line = view_win.sci_line_from_position(pos)
+      [line, col]
+    end
+
+    def get_current_line_text()
+      view_win = @frame.view_win
+      pos = view_win.sci_get_current_pos()
+      line = view_win.sci_line_from_position(pos)
+      view_win.sci_get_line(line)
+    end
+
   end
 end
