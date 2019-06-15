@@ -1,23 +1,26 @@
 module Mrbmacs
   class Buffer
-    attr_accessor :filename, :directory
+    attr_accessor :filename, :directory, :basename
     attr_accessor :docpointer, :name, :encoding, :mode, :pos
-    def initialize(filename = nil, buffer_list = [])
+    attr_accessor :additional_info
+    def initialize(filename = nil)
       if filename != nil
         if filename =~ /^\*.*\*$/ # special buffer
           @filename = ""
+          @basename = ""
           @name = filename
           @directory = Dir.getwd
           @mode = Mrbmacs::Mode.new
         else
           @filename = File.expand_path(filename)
-          @name = create_new_buffer_name(@filename, buffer_list)
-          #@name = File.basename(@filename)
+          @name = File.basename(@filename)
+          @basename = File.basename(@filename)
           @directory = File.dirname(@filename)
           @mode = Mrbmacs::Mode.set_mode_by_filename(filename)
         end
       else
         @filename = ""
+        @basename = ""
         @name = ""
         @directory = Dir.getwd
         @mode = Mrbmacs::Mode.new
@@ -26,26 +29,7 @@ module Mrbmacs
       @encoding = "utf-8"
       @docpointer = nil
       @pos = 0
-    end
-
-    def create_new_buffer_name(filename, buffer_list)
-      buffer_name = File.basename(filename)
-      dir = File.dirname(filename)
-      dir_a = File.dirname(filename).split("/")
-      tmp_str = ""
-      buffer_name_list = buffer_list.collect{|b| b.name}
-      while buffer_name_list.include?(buffer_name)
-        if Mrbmacs::get_buffer_from_name(buffer_list, buffer_name).directory == dir
-          return buffer_name
-        end
-        if tmp_str == ""
-          tmp_str = dir_a.pop
-        else
-          tmp_str = dir_a.pop + "/" + tmp_str
-        end
-        buffer_name = File.basename(filename) + "<" + tmp_str + ">"
-      end
-      return buffer_name
+      @additional_info = ""
     end
 
   end
@@ -69,6 +53,7 @@ module Mrbmacs
       end
       return nil
     end
+
   end
 
   class Application
@@ -129,5 +114,34 @@ module Mrbmacs
       switch_to_buffer(@buffer_list.last.name)
     end
 
+    def add_new_buffer(new_buffer)
+      @buffer_list.push(new_buffer)
+      duplicates = @buffer_list.select {|b| b.basename == new_buffer.basename}
+      if duplicates.size > 1
+        n = 1
+        loop do
+          dirs = duplicates.map do |b|
+            tmp_str = b.directory.gsub(/^\//, '')
+            if tmp_str.count('/') < n
+              tmp_str
+            else
+              tmp_str.split('/')[-n, n].join('/')
+            end
+          end
+          break if dirs.uniq == dirs
+          n += 1
+        end
+        @buffer_list.each do |b|
+          if b.basename == new_buffer.basename
+            tmp_str = b.directory.gsub(/^\//, '')
+            if tmp_str.count('/') < n
+              b.name = b.basename + "<" + tmp_str + ">"
+            else
+              b.name = b.basename + "<" + tmp_str.split('/')[-n, n].join('/') + ">"
+            end
+          end
+        end
+      end
+    end
   end
 end

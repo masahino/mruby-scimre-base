@@ -2,12 +2,12 @@ require File.dirname(__FILE__) + '/test_helper.rb'
 
 def setup_buffers
   app = Mrbmacs::Application.new
-  buf1 = Mrbmacs::Buffer.new("/foo/bar/foo.rb", [])
-  app.buffer_list.push(buf1)
-  buf2 = Mrbmacs::Buffer.new("/foo/bar/bar.rb", app.buffer_list)
-  app.buffer_list.push(buf2)
-  buf3 = Mrbmacs::Buffer.new("/foo/bar/baz.rb", app.buffer_list)
-  app.buffer_list.push(buf3)
+  buf1 = Mrbmacs::Buffer.new("/foo/bar/foo.rb")
+  app.add_new_buffer(buf1)
+  buf2 = Mrbmacs::Buffer.new("/foo/bar/bar.rb")
+  app.add_new_buffer(buf2)
+  buf3 = Mrbmacs::Buffer.new("/foo/bar/baz.rb")
+  app.add_new_buffer(buf3)
   app.current_buffer = buf3
   app
 end
@@ -20,30 +20,31 @@ end
 
 assert('new buffer name') do
   app = Mrbmacs::Application.new()
-  buffer1 = Mrbmacs::Buffer.new("/foo/bar/hoge.rb", [])
+  buffer1 = Mrbmacs::Buffer.new("/foo/bar/hoge.rb")
   assert_equal("hoge.rb", buffer1.name)
-  buffer_list = [buffer1]
+  app.add_new_buffer(buffer1)
 
-  buffer2 = Mrbmacs::Buffer.new("/aaa/bbb/hoge.rb", buffer_list)
-  assert_equal("hoge.rb<bbb>", buffer2.name)
-  buffer_list.push(buffer2)
+  buffer2 = Mrbmacs::Buffer.new("/aaa/bbb/hoge.rb")
+  app.add_new_buffer(buffer2)
+  assert_equal("hoge.rb<bbb>", app.buffer_list.last.name)
 
-  buffer3 = Mrbmacs::Buffer.new("/ccc/bbb/hoge.rb", buffer_list)
-  assert_equal("hoge.rb<ccc/bbb>", buffer3.name)
+  buffer3 = Mrbmacs::Buffer.new("/ccc/bbb/hoge.rb")
+  app.add_new_buffer(buffer3)
+  assert_equal("hoge.rb<ccc/bbb>", app.buffer_list.last.name)
 end
 
 assert('Buffer.get_buffer_from_name') do
   assert_nil(Mrbmacs::get_buffer_from_name([], "hoge"))
-  buf1 = Mrbmacs::Buffer.new("/foo/bar/hoge.rb", [])
-  buf2 = Mrbmacs::Buffer.new("/foo/bar/huga.rb", [])
+  buf1 = Mrbmacs::Buffer.new("/foo/bar/hoge.rb")
+  buf2 = Mrbmacs::Buffer.new("/foo/bar/huga.rb")
   buffer_list = [buf1, buf2]
   assert_equal(buf2, Mrbmacs::get_buffer_from_name(buffer_list, "huga.rb"))
 end
 
 assert('Buffer.get_buffer_from_path') do
   assert_nil(Mrbmacs::get_buffer_from_path([], "hoge"))
-  buf1 = Mrbmacs::Buffer.new("/foo/bar/hoge.rb", [])
-  buf2 = Mrbmacs::Buffer.new("/foo/bar/huga.rb", [])
+  buf1 = Mrbmacs::Buffer.new("/foo/bar/hoge.rb")
+  buf2 = Mrbmacs::Buffer.new("/foo/bar/huga.rb")
   buffer_list = [buf1, buf2]
   assert_equal(buf2, Mrbmacs::get_buffer_from_path(buffer_list, "/foo/bar/huga.rb"))
 end
@@ -91,4 +92,15 @@ assert('kill-buffer (not exist)') do
   app = setup_buffers
   app.kill_buffer("xxx")
   assert_equal(4, app.buffer_list.size)
+end
+
+assert('buffer_list') do
+  app = Mrbmacs::Application.new
+  buf1 = Mrbmacs::Buffer.new("/foo/bar/foo.rb")
+  app.add_new_buffer(buf1)
+  assert_equal "foo.rb", app.buffer_list.last.name
+  app.add_new_buffer(Mrbmacs::Buffer.new("/bar/foo.rb"))
+  assert_equal "foo.rb<bar>", app.buffer_list.last.name
+  assert_equal "foo.rb<foo/bar>", app.buffer_list[-2].name
+
 end

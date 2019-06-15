@@ -109,9 +109,11 @@ module Mrbmacs
       end
     end
 
-    def get_current_line_col()
+    def get_current_line_col(pos = nil)
       view_win = @frame.view_win
-      pos = view_win.sci_get_current_pos()
+      if pos == nil
+        pos = view_win.sci_get_current_pos()
+      end
       col = view_win.sci_get_column(pos)
       line = view_win.sci_line_from_position(pos)
       [line, col]
