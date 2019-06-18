@@ -65,6 +65,7 @@ module Mrbmacs
       if error.size > 0
         @frame.show_annotation(error[0], error[1], error[2])
       end
+      after_save_buffer(self, @current_buffer.filename)
     end
 
     def write_file(filename = nil)
@@ -124,13 +125,13 @@ module Mrbmacs
           switch_to_buffer(Mrbmacs::get_buffer_from_path(@buffer_list, filename).name)
         else
           @current_buffer.pos = view_win.sci_get_current_pos
-          new_buffer = Buffer.new(filename, @buffer_list)
+          new_buffer = Buffer.new(filename)
           if @current_buffer.docpointer != nil
             view_win.sci_add_refdocument(@current_buffer.docpointer)
           end
           view_win.sci_set_docpointer(nil)
           new_buffer.docpointer = view_win.sci_get_docpointer
-          @buffer_list.push(new_buffer)
+          add_new_buffer(new_buffer)
           @current_buffer = new_buffer
           open_file(filename)
           view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
