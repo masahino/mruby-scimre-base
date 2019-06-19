@@ -60,6 +60,7 @@ module Mrbmacs
         end
         @frame.switch_window(@frame.edit_win_list[index])
 #      @frame.switch_window(@frame.edit_win_list.rotate!().first)
+        @current_buffer = @frame.edit_win.buffer
       end
     end
 

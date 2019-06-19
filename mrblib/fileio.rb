@@ -138,6 +138,7 @@ module Mrbmacs
           @current_buffer.mode.set_style(view_win, @theme)
           view_win.sci_set_sel_back(true, 0xff0000)
           @frame.set_buffer_name(@current_buffer.name)
+          @frame.edit_win.buffer = @current_buffer
           @frame.modeline(self)
           error = @current_buffer.mode.syntax_check(@frame.view_win)
           if error.size > 0
