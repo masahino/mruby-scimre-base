@@ -50,7 +50,8 @@ module Mrbmacs
       @file_encodings = []
       @auto_completion = false
 
-      @logger = Logger.new(Dir.tmpdir + "mrbmacs-" + $$.to_s + ".log")
+      logfile = Dir.tmpdir + "mrbmacs-" + $$.to_s + ".log"
+      @logger = Logger.new(logfile)
       @logger.info "Logging start"
       @current_buffer = Buffer.new("*scratch*")
       @buffer_list = [@current_buffer]
@@ -75,6 +76,8 @@ module Mrbmacs
       set_default_style()
       register_extensions()
 
+      create_message_buffer(logfile)
+
       if argv.size > 0
         find_file(argv[0])
       end
@@ -82,6 +85,14 @@ module Mrbmacs
         load_file(opts[:load])
       end
       @frame.modeline(self)
+    end
+
+    def create_message_buffer(logfile)
+      find_file(logfile)
+      @current_buffer.name = "*Messages*"
+      @frame.view_win.sci_set_readonly(1)
+      @frame.view_win.sci_document_end
+      switch_to_buffer "*scratch*"
     end
 
     def add_io_read_event(io, &proc)
