@@ -44,7 +44,14 @@ module Mrbmacs
       @sci_handler = {}
       @ext = Extension.new
       @command_handler = {}
+      @mark_pos = nil
+      @filename = nil
+      @target_start_pos = nil
+      @file_encodings = []
+      @auto_completion = false
 
+      @logger = Logger.new(Dir.tmpdir + "mrbmacs-" + $$.to_s + ".log")
+      @logger.info "Logging start"
       @current_buffer = Buffer.new("*scratch*")
       @buffer_list = [@current_buffer]
       @frame = Mrbmacs::Frame.new(@current_buffer)
@@ -59,20 +66,15 @@ module Mrbmacs
 #      if @theme.respond_to?(:set_pallete)
 #        @theme.set_pallete
 #      end
-      @mark_pos = nil
-      @filename = nil
-      @target_start_pos = nil
-
-      @file_encodings = []
       @system_encodings = Mrbmacs::get_encoding_list()
 
-      @auto_completion = false
-      set_default_style()
-      register_extensions()
       if opts[:no_init_file] == false
         init_filename = ENV['HOME'] + "/.mrbmacsrc"
         load_file(init_filename)
       end
+      set_default_style()
+      register_extensions()
+
       if argv.size > 0
         find_file(argv[0])
       end
@@ -149,9 +151,7 @@ module Mrbmacs
 
     def doin()
       key, command = doscan("")
-      if $DEBUG
-        $stderr.puts command
-      end
+      @logger.debug command
       if command == nil
         @frame.send_key(key)
       else

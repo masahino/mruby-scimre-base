@@ -10,6 +10,8 @@ MRuby::Gem::Specification.new('mruby-mrbmacs-base') do |spec|
   spec.add_dependency 'mruby-symbol-ext'
   spec.add_dependency 'mruby-objectspace'
   spec.add_dependency 'mruby-optparse', :github => 'fastly/mruby-optparse'
+  spec.add_dependency 'mruby-logger'
+  spec.add_dependency 'mruby-tempfile'
   spec.add_test_dependency 'mruby-io'
   spec.add_test_dependency 'mruby-eval'
   spec.add_test_dependency 'mruby-iconv'
