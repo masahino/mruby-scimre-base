@@ -90,6 +90,7 @@ module Mrbmacs
     def create_message_buffer(logfile)
       find_file(logfile)
       @current_buffer.name = "*Messages*"
+      @current_buffer.directory = Dir.getwd
       @frame.view_win.sci_set_readonly(1)
       @frame.view_win.sci_document_end
       switch_to_buffer "*scratch*"
