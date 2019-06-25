@@ -157,6 +157,7 @@ module Mrbmacs
       if @current_buffer.name == "*Messages*"
         @frame.view_win.sci_set_read_only(1)
         @frame.view_win.sci_document_end
+        @frame.view_win.sci_set_savepoint
       end
     end
   end
