@@ -50,7 +50,7 @@ module Mrbmacs
       @file_encodings = []
       @auto_completion = false
 
-      logfile = Dir.tmpdir + "mrbmacs-" + $$.to_s + ".log"
+      logfile = Dir.tmpdir + "/mrbmacs-" + $$.to_s + ".log"
       @logger = Logger.new(logfile)
       @logger.info "Logging start"
       @current_buffer = Buffer.new("*scratch*")

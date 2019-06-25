@@ -59,9 +59,9 @@ module Mrbmacs
   class Application
     def switch_to_buffer(buffername = nil)
       view_win = @frame.view_win
-      if @buffer_list.size <= 1
-        return
-      end
+#      if @buffer_list.size <= 1
+#        return
+#      end
       if buffername == nil
         buffername = @frame.select_buffer(@buffer_list[-2].name, @buffer_list.collect{|b| b.name})
       end
@@ -102,6 +102,10 @@ module Mrbmacs
         buffername = @current_buffer.name
       end
       # if buffer is modified
+      if buffername =~ /^\*.*\*$/ # special buffer
+        @logger.info "can't delete special buffer"
+        return
+      end
       if @frame.view_win.sci_get_modify != 0
         ret = @frame.y_or_n("Buffer #{buffername} modified; kill anyway? (y or n) ")
         if ret == false

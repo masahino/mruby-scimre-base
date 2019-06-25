@@ -66,15 +66,17 @@ end
 
 assert('kill-buffer (current_buffer)') do
   app = setup_buffers
+  bufs = app.buffer_list.size
   app.kill_buffer("baz.rb")
-  assert_equal(3, app.buffer_list.size)
+  assert_equal(bufs - 1, app.buffer_list.size)
   assert_equal("bar.rb", app.buffer_list.last.name)
 end
 
 assert('kill-buffer (not current_buffer)') do
   app = setup_buffers
+  bufs = app.buffer_list.size
   app.kill_buffer("foo.rb")
-  assert_equal(3, app.buffer_list.size)
+  assert_equal(bufs - 1, app.buffer_list.size)
   assert_equal("baz.rb", app.buffer_list.last.name)
 end
 
@@ -84,14 +86,16 @@ assert('kill-buffer (all buffers)') do
   app.kill_buffer("bar.rb")
   app.kill_buffer("baz.rb")
   app.kill_buffer("*scratch*")
-  assert_equal(1, app.buffer_list.size)
+  app.kill_buffer("*Messages*")
+  assert_equal(2, app.buffer_list.size)
   assert_equal("*scratch*", app.buffer_list.last.name)
 end
 
 assert('kill-buffer (not exist)') do
   app = setup_buffers
+  bufs = app.buffer_list.size
   app.kill_buffer("xxx")
-  assert_equal(4, app.buffer_list.size)
+  assert_equal(bufs, app.buffer_list.size)
 end
 
 assert('buffer_list') do
