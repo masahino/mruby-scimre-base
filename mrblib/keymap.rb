@@ -109,6 +109,7 @@ module Mrbmacs
         'M-v' => SCI_PAGEUP,
         'M-x' => "execute-extended-command",
         'M-%' => "query-replace",
+        'M-r' => "revert-buffer",
       }
       @keymap = @default_keymap.merge(keymap)
 #      set_keymap(win, keymap)
