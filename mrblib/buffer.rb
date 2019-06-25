@@ -59,9 +59,9 @@ module Mrbmacs
   class Application
     def switch_to_buffer(buffername = nil)
       view_win = @frame.view_win
-      if @buffer_list.size <= 1
-        return
-      end
+#      if @buffer_list.size <= 1
+#        return
+#      end
       if buffername == nil
         buffername = @frame.select_buffer(@buffer_list[-2].name, @buffer_list.collect{|b| b.name})
       end
@@ -94,7 +94,7 @@ module Mrbmacs
       if buffername == nil
         echo_text = "kill-buffer (default #{@current_buffer.name}): "
         buffername = @frame.echo_gets(echo_text, "") do |input_text|
-          buffer_list = @buffer_list.collect{|b| b.name}.select{|b| b =~ /^#{input_text}/}
+          buffer_list = @buffer_list.collect{|b| b.name}.select{|b| b[0, input_text.length] == input_text}
           [buffer_list.join(" "), input_text.length]
         end
       end
@@ -102,6 +102,10 @@ module Mrbmacs
         buffername = @current_buffer.name
       end
       # if buffer is modified
+      if buffername =~ /^\*.*\*$/ # special buffer
+        @logger.info "can't delete special buffer"
+        return
+      end
       if @frame.view_win.sci_get_modify != 0
         ret = @frame.y_or_n("Buffer #{buffername} modified; kill anyway? (y or n) ")
         if ret == false
@@ -141,6 +145,18 @@ module Mrbmacs
             end
           end
         end
+      end
+    end
+
+    def revert_buffer
+      if @current_buffer.name == "*Messages*"
+        @frame.view_win.sci_set_read_only(0)
+      end
+      @frame.view_win.sci_clear_all
+      insert_file(@current_buffer.filename)
+      if @current_buffer.name == "*Messages*"
+        @frame.view_win.sci_set_read_only(1)
+        @frame.view_win.sci_document_end
       end
     end
   end
