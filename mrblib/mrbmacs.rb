@@ -145,7 +145,8 @@ module Mrbmacs
           eval(str)
         end
       rescue
-        $stderr.puts  $!
+        @logger.error $!
+        @frame.echo_puts $!
       end
     end
 
@@ -156,7 +157,8 @@ module Mrbmacs
         begin
           eval("#{command.gsub("-", "_")}()")
         rescue
-          $stderr.puts $!
+          @logger.error $!
+          @frame.echo_puts $!
         end
       end
     end
