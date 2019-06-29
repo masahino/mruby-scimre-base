@@ -20,7 +20,7 @@ module Mrbmacs
   }
     
   class Mode
-    attr_accessor :name, :lexer
+    attr_accessor :name, :lexer, :indent, :use_tab
 #    def name
 #      @name
 #    end
