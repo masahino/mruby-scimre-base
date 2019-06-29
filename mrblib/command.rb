@@ -25,6 +25,10 @@ module Mrbmacs
     end
 
     def method_missing(method, *args)
+      if method.to_s[0..3].upcase == "SCI_"
+        @logger.debug "call: #{method}"
+        @frame.view_win.send(method, *args)
+      end
       if @command_handler[method.to_sym] != nil
         @command_handler[method.to_sym].each do |m|
           m.call(*args)
