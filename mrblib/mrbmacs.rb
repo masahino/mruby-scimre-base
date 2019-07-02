@@ -7,6 +7,7 @@ module Mrbmacs
     attr_accessor :theme
     attr_accessor :file_encodings, :system_encodings
     attr_accessor :sci_handler, :ext
+    attr_accessor :use_builtin_completion
     def parse_args(argv)
       op = OptionParser.new
       opts = {
@@ -48,7 +49,7 @@ module Mrbmacs
       @filename = nil
       @target_start_pos = nil
       @file_encodings = []
-      @auto_completion = false
+      @use_builtin_completion = false
 
       logfile = Dir.tmpdir + "/mrbmacs-" + $$.to_s + ".log"
       @logger = Logger.new(logfile)
@@ -75,6 +76,11 @@ module Mrbmacs
       end
       set_default_style()
       register_extensions()
+      if @use_builtin_completion == true
+        add_sci_event(Scintilla::SCN_CHARADDED) do |app, scn|
+          builtin_completion(scn)
+        end
+      end
 
       create_message_buffer(logfile)
 
