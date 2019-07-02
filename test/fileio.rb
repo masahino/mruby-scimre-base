@@ -13,6 +13,13 @@ assert('insert-file') do
   assert_equal(Scintilla::SCI_INSERTTEXT, app.frame.view_win.messages.pop)
 end
 
+assert('insert-file new buffer') do
+  app = Mrbmacs::Application.new()
+  app.find_file("hoge")
+  test_file = File.dirname(__FILE__) + "/test.input"
+  app.insert_file(test_file)
+  assert_equal(Scintilla::SCI_INSERTTEXT, app.frame.view_win.messages.pop)
+end
 
 assert('write-file') do
   app = Mrbmacs::Application.new()
