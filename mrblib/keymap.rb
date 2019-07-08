@@ -5,15 +5,12 @@ module Mrbmacs
     def initialize()
       @command_list = {}
       @default_keymap = {
-        'C-a' => SCI_HOME,
         'C-b' => SCI_CHARLEFT,
         'C-d' => SCI_CLEAR,
-        'C-e' => SCI_LINEEND,
         'C-f' => SCI_CHARRIGHT,
         'C-g' => "keyboard-quit",
         'C-h' => SCI_DELETEBACK,
         'C-w' => "cut-region",
-        'C-y' => SCI_PASTE,
         'C-@' => "set-mark", # C-SPC
         'C-x u' => SCI_UNDO,
         'C-_' => SCI_UNDO,
@@ -52,7 +49,7 @@ module Mrbmacs
         ctrl_code = Scintilla::SCMOD_META
       end
       keydef = 0
-      if key =~ /^(\w+)-(\w+)$/
+      if key =~ /^(\w)-(\S)$/
         if $1 == "C"
           keydef += ctrl_code << 16
         elsif $1 == "M"
@@ -79,6 +76,8 @@ module Mrbmacs
         'Enter' => "newline",
         'Tab' => "indent",
 #        'C-j' => "eval-last_exp",
+        'C-a' => "beginning-of-line",
+        'C-e' => "end-of-line",
         'C-k' => "kill-line",
         'C-m' => SCI_NEWLINE,
         'C-n' => SCI_LINEDOWN,
@@ -88,7 +87,7 @@ module Mrbmacs
         'C-v' => SCI_PAGEDOWN,
         'C-x' => "prefix",
         'C-x r' => "prefix",
-        'C-y' => SCI_PASTE,
+        'C-y' => "yank",
         'C-x b' => "switch-to-buffer",
         'C-x i' => "insert-file",
         'C-x k' => "kill-buffer",
@@ -120,6 +119,9 @@ module Mrbmacs
     def initialize()
       super.initialize()
       keymap = {
+        'C-a' => SCI_HOME,
+        'C-e' => SCI_LINEEND,
+        'C-y' => SCI_PASTE,
         'Tab' => "completion",
       }
 #      set_keymap(win, keymap)

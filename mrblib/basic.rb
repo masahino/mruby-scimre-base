@@ -21,6 +21,11 @@ module Mrbmacs
       end
     end
 
+    def yank()
+      win = @frame.view_win
+      win.sci_paste
+    end
+
     def kill_line()
       win = @frame.view_win
       current_pos = win.sci_get_current_pos
@@ -57,6 +62,16 @@ module Mrbmacs
           win.sci_vchome
         end
       end
+    end
+
+    def beginning_of_line()
+      win = @frame.view_win
+      win.sci_home
+    end
+
+    def end_of_line()
+      win = @frame.view_win
+      win.sci_lineend
     end
 
     def beginning_of_buffer()

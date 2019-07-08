@@ -62,7 +62,7 @@ module Mrbmacs
       @keymap.set_keymap(@frame.view_win)
       @command_list = @keymap.command_list
       @echo_keymap = EchoWinKeyMap.new()
-      @keymap.set_keymap(@frame.echo_win)
+      @echo_keymap.set_keymap(@frame.echo_win)
 
       @theme = SolarizedDarkTheme.new
 #      if @theme.respond_to?(:set_pallete)
