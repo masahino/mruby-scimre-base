@@ -50,6 +50,7 @@ module Mrbmacs
       @target_start_pos = nil
       @file_encodings = []
       @use_builtin_completion = false
+      @last_search_text = ""
 
       logfile = Dir.tmpdir + "/mrbmacs-" + $$.to_s + ".log"
       @logger = Logger.new(logfile)
