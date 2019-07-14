@@ -148,6 +148,10 @@ module Mrbmacs
       end
     end
 
+    def add_buffer_to_frame(buffer)
+      raise NotImplementedError
+    end
+
     def revert_buffer
       if @current_buffer.name == "*Messages*"
         @frame.view_win.sci_set_read_only(0)

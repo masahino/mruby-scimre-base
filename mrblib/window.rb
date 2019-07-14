@@ -2,6 +2,7 @@
 module Mrbmacs
   class EditWindow
     attr_accessor :sci, :modeline, :frame
+    attr_accessor :command_list
     attr_accessor :buffer
     attr_accessor :x1, :y1, :x2, :y2, :width, :height
     def initialize(frame, buffer, x1, y1, width, height)
