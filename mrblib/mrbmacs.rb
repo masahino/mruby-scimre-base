@@ -149,13 +149,13 @@ module Mrbmacs
 
     def load_file(filename)
       begin
-        File.open(filename, "r") do |f|
+        File.open(File.expand_path(filename), "r") do |f|
           str = f.read()
           eval(str)
         end
       rescue
         @logger.error $!
-        @frame.echo_puts $!
+#        @frame.echo_puts $!
       end
     end
 
