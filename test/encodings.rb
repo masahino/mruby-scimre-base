@@ -1,13 +1,4 @@
-module Mrbmacs
-  class TestApp < Application
-    def initialize
-    end
-  end
-end
-
-class TestFrame
-  attr_accessor :view_win, :echo_win, :tk
-end
+require File.dirname(__FILE__) + '/test_helper.rb'
 
 def setup
   app = Mrbmacs::TestApp.new
@@ -27,7 +18,7 @@ def setup
   if sci != nil
     sci.sci_set_text(test_text)
   end
-  frame = TestFrame.new
+  frame = app.frame
   frame.view_win = sci
   app.frame = frame
   app.current_buffer = Mrbmacs::Buffer.new
