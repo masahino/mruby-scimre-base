@@ -58,6 +58,7 @@ module Mrbmacs
       @current_buffer = Buffer.new("*scratch*")
       @buffer_list = [@current_buffer]
       @frame = Mrbmacs::Frame.new(@current_buffer)
+      @frame.set_buffer_name(@current_buffer.name)
       @current_buffer.docpointer = @frame.view_win.sci_get_docpointer
       @keymap = ViewKeyMap.new()
       @keymap.set_keymap(@frame.view_win)
@@ -97,6 +98,7 @@ module Mrbmacs
     def create_message_buffer(logfile)
       find_file(logfile)
       @current_buffer.name = "*Messages*"
+      @frame.set_buffer_name(@current_buffer.name)
       @current_buffer.directory = Dir.getwd
       @frame.view_win.sci_set_readonly(1)
       @frame.view_win.sci_document_end
@@ -147,13 +149,13 @@ module Mrbmacs
 
     def load_file(filename)
       begin
-        File.open(filename, "r") do |f|
+        File.open(File.expand_path(filename), "r") do |f|
           str = f.read()
           eval(str)
         end
       rescue
         @logger.error $!
-        @frame.echo_puts $!
+#        @frame.echo_puts $!
       end
     end
 

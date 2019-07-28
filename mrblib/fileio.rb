@@ -113,8 +113,6 @@ module Mrbmacs
     end
 
     def find_file(filename = nil)
-      view_win = @frame.view_win
-
       if filename == nil
         dir = @current_buffer.directory
         filename = read_file_name("find file: ", dir)
@@ -124,19 +122,20 @@ module Mrbmacs
         if Mrbmacs::get_buffer_from_path(@buffer_list, filename) != nil
           switch_to_buffer(Mrbmacs::get_buffer_from_path(@buffer_list, filename).name)
         else
-          @current_buffer.pos = view_win.sci_get_current_pos
+          @current_buffer.pos = @frame.view_win.sci_get_current_pos
           new_buffer = Buffer.new(filename)
           if @current_buffer.docpointer != nil
-            view_win.sci_add_refdocument(@current_buffer.docpointer)
+            @frame.view_win.sci_add_refdocument(@current_buffer.docpointer)
           end
-          view_win.sci_set_docpointer(nil)
-          new_buffer.docpointer = view_win.sci_get_docpointer
+          @frame.view_win.sci_set_docpointer(nil)
+          new_buffer.docpointer = @frame.view_win.sci_get_docpointer
           add_new_buffer(new_buffer)
           @current_buffer = new_buffer
+          add_buffer_to_frame(@current_buffer)
           open_file(filename)
-          view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
-          @current_buffer.mode.set_style(view_win, @theme)
-          view_win.sci_set_sel_back(true, 0xff0000)
+          @frame.view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
+          @current_buffer.mode.set_style(@frame.view_win, @theme)
+          @frame.view_win.sci_set_sel_back(true, 0xff0000)
           @frame.set_buffer_name(@current_buffer.name)
           @frame.edit_win.buffer = @current_buffer
           @frame.modeline(self)

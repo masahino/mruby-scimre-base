@@ -19,7 +19,8 @@ module Mrbmacs
         begin
           eval("#{command.gsub('-', '_')}(#{args})")
         rescue
-          $stderr.puts $!
+          @logger.error $!
+          @frame.message $!
         end
       end
     end

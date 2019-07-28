@@ -57,6 +57,19 @@ module Mrbmacs
   end
 
   class Application
+    def update_buffer_window(new_buffer)
+      @current_buffer.pos = @frame.view_win.sci_get_current_pos
+      @frame.view_win.sci_add_refdocument(@current_buffer.docpointer)
+      @frame.view_win.sci_set_docpointer(new_buffer.docpointer)
+      @current_buffer = new_buffer
+      @buffer_list.push(@buffer_list.delete(new_buffer))
+      @frame.view_win.sci_set_lexer_language(@current_buffer.mode.name)
+      @current_buffer.mode.set_style(@frame.view_win, @theme)
+      @frame.view_win.sci_goto_pos(@current_buffer.pos)
+      @frame.sync_tab(@current_buffer.name)
+      @frame.modeline(self)
+    end
+
     def switch_to_buffer(buffername = nil)
       view_win = @frame.view_win
 #      if @buffer_list.size <= 1
@@ -74,15 +87,7 @@ module Mrbmacs
         end
         new_buffer = Mrbmacs::get_buffer_from_name(@buffer_list, buffername)
         if new_buffer != nil
-          @current_buffer.pos = view_win.sci_get_current_pos
-          tmp_p = view_win.sci_get_docpointer
-          view_win.sci_add_refdocument(@current_buffer.docpointer)
-          view_win.sci_set_docpointer(new_buffer.docpointer)
-          @current_buffer = new_buffer
-          @buffer_list.push(@buffer_list.delete(new_buffer))
-          view_win.sci_set_lexer_language(@current_buffer.mode.name)
-          @current_buffer.mode.set_style(view_win, @theme)
-          view_win.sci_goto_pos(@current_buffer.pos)
+          update_buffer_window(new_buffer)
         end
       end
     end
@@ -120,6 +125,9 @@ module Mrbmacs
 
     def add_new_buffer(new_buffer)
       @buffer_list.push(new_buffer)
+      if new_buffer.basename == ""
+        return
+      end
       duplicates = @buffer_list.select {|b| b.basename == new_buffer.basename}
       if duplicates.size > 1
         n = 1
@@ -146,6 +154,10 @@ module Mrbmacs
           end
         end
       end
+    end
+
+    def add_buffer_to_frame(buffer)
+      raise NotImplementedError
     end
 
     def revert_buffer

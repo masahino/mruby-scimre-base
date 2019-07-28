@@ -1,11 +1,17 @@
-# test module for mruby-mrbmacs-curses
+# test module for mruby-mrbmacs-base
 module Mrbmacs
   class TestApp < Application
     def initialize
       @current_buffer = Buffer.new("*scratch*")
       @frame = Mrbmacs::Frame.new(@current_buffer)
       @buffer_list = []
+      @theme = Theme.new
+      @command_handler = {}
     end
+
+    def add_buffer_to_frame(buffer)
+    end
+
   end
 
   class Frame
@@ -48,17 +54,18 @@ module Mrbmacs
   end
 end
 
-class << Curses
-  [
-    :initscr, :raw, :curs_set, :newwin, :wbkgd, :wrefresh
-    ].each do |name|
-    undef_method name
-    define_method(name) do |*args|
-    end
-  end
-end
+#class << Curses
+#  [
+#    :initscr, :raw, :curs_set, :newwin, :wbkgd, :wrefresh
+#    ].each do |name|
+#    undef_method name
+#    define_method(name) do |*args|
+#    end
+#  end
+#end
 
 module Scintilla
+  Scintilla::PLATFORM = :TEST
   class TestScintilla < ScintillaBase
     attr_accessor :pos
     attr_accessor :messages
@@ -103,6 +110,7 @@ module Scintilla
     def sci_get_curline()
       []
     end
+
   end
 end
 
