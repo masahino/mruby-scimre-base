@@ -15,6 +15,12 @@ assert('get_mode_by_suffix') do
   assert_equal("fundamental", Mrbmacs::Mode.get_mode_by_suffix(".hoge"))
 end
 
+assert('set_mode_by_filename') do
+  assert_equal("ruby", Mrbmacs::Mode.set_mode_by_filename("hoge.rb").name)
+  assert_equal("ruby", Mrbmacs::Mode.set_mode_by_filename("foo.bar.rb").name)
+  assert_equal("ruby", Mrbmacs::Mode.set_mode_by_filename(".hogehoge.rb").name)
+end
+
 assert('mode Class') do
   Mrbmacs::Mode.set_mode_by_filename("a.rb").class == Mrbmacs::RubyMode
 end
