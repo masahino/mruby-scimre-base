@@ -95,6 +95,9 @@ module Mrbmacs
       raise NotImplementedError
     end
 
+    def sync_tab(buffername)
+    end
+
     def exit()
       raise NotImplementedError
     end
