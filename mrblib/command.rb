@@ -33,6 +33,14 @@ module Mrbmacs
         @command_handler[method.to_sym].each do |m|
           m.call(*args)
         end
+      elsif method.to_s[-5, 5] == "_mode"
+        mode_name = method.to_s[0..-6]
+        mode_class_name = mode_name.capitalize+"Mode"
+        if Mrbmacs.const_defined?(mode_class_name)
+          @current_buffer.mode = Mrbmacs.const_get(mode_class_name).new
+          @frame.view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
+          @current_buffer.mode.set_style(@frame.view_win, @theme)
+        end
       end
     end
   end
