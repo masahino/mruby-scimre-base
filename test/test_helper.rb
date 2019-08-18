@@ -7,6 +7,8 @@ module Mrbmacs
       @buffer_list = []
       @theme = Theme.new
       @command_handler = {}
+      logfile = Tempfile.new("mrbmacs-test")
+      @logger = Logger.new(logfile)
     end
 
     def add_buffer_to_frame(buffer)

@@ -55,6 +55,7 @@ module Mrbmacs
       logfile = Dir.tmpdir + "/mrbmacs-" + $$.to_s + ".log"
       @logger = Logger.new(logfile)
       @logger.info "Logging start"
+      @logger.info logfile
       @current_buffer = Buffer.new("*scratch*")
       @buffer_list = [@current_buffer]
       @frame = Mrbmacs::Frame.new(@current_buffer)

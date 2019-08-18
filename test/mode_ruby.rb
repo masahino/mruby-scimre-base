@@ -18,11 +18,6 @@ assert('get_candidates Hash or Proc') do
   assert_equal(['{:a => 1, :b => 2}.each_key'], mode.get_candidates_a('{:a => 1, :b => 2}.each_k'))
 end
 
-assert('get_candidates Symbol') do
-  mode = Mrbmacs::RubyMode.new
-#  assert_equal([':MRUBY_VERSION'], mode.get_candidates_a(':MRUBY_V'))
-end
-
 assert('get_candidates Absolute Constant or class methods') do
   mode = Mrbmacs::RubyMode.new
   assert_equal(['::MRUBY_VERSION'], mode.get_candidates_a('::MRUBY_V'))
