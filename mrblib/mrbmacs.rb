@@ -52,7 +52,8 @@ module Mrbmacs
       @use_builtin_completion = false
       @last_search_text = ""
 
-      logfile = Dir.tmpdir + "/mrbmacs-" + $$.to_s + ".log"
+      tmpdir = ENV['TMPDIR'] || ENV['TMP'] || ENV['TEMP'] || ENV['USERPROFILE'] || "/tmp"
+      logfile = tmpdir + "/mrbmacs-" + $$.to_s + ".log"
       @logger = Logger.new(logfile)
       @logger.info "Logging start"
       @logger.info logfile
