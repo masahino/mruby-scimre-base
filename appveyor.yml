@@ -4,7 +4,7 @@ environment:
   - CYG_ROOT: C:\cygwin64
     BASH: C:\cygwin64\bin\bash
     CC: gcc
-    CYG_PACKAGES: libncurses-devel,ruby,libiconv-devel
+    CYG_PACKAGES: libncurses-devel,ruby,libiconv-devel,libonig-devel
     CYG_SETUP: C:\cygwin64\setup-x86_64.exe
   - MSYSTEM: MINGW64
     BASH: C:\msys64\usr\bin\bash
