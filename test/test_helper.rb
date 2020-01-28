@@ -7,7 +7,8 @@ module Mrbmacs
       @buffer_list = []
       @theme = Theme.new
       @command_handler = {}
-      logfile = Tempfile.new("mrbmacs-test")
+      tmpdir = ENV['TMPDIR'] || ENV['TMP'] || ENV['TEMP'] || ENV['USERPROFILE'] || "/tmp"
+      logfile = tmpdir + "/mrbmacs-test-" + $$.to_s + ".log"
       @logger = Logger.new(logfile)
     end
 
