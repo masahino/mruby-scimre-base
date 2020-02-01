@@ -95,6 +95,7 @@ module Mrbmacs
     end
 
     def save_buffers_kill_terminal()
+      before_save_buffers_kill_terminal(self)
       @frame.exit
       exit
     end
