@@ -11,7 +11,7 @@ module Mrbmacs
         'C-g' => "keyboard-quit",
         'C-h' => SCI_DELETEBACK,
         'C-w' => "cut-region",
-        'C-Space' => "set-mark", # C-SPC
+        'C- ' => "set-mark", # C-SPC
         'C-x u' => SCI_UNDO,
         'C-_' => SCI_UNDO,
         'C-/' => SCI_UNDO,
