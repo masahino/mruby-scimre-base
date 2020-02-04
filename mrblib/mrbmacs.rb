@@ -7,7 +7,8 @@ module Mrbmacs
     attr_accessor :theme
     attr_accessor :file_encodings, :system_encodings
     attr_accessor :sci_handler, :ext
-    attr_accessor :use_builtin_completion
+    attr_accessor :command_list
+    attr_accessor :use_builtin_completion, :use_builtin_indent
     def parse_args(argv)
       op = OptionParser.new
       opts = {
@@ -50,7 +51,10 @@ module Mrbmacs
       @target_start_pos = nil
       @file_encodings = []
       @use_builtin_completion = false
+      @use_builtin_indent = false
       @last_search_text = ""
+      @theme = nil
+      @themes = Theme::create_theme_list
 
       tmpdir = ENV['TMPDIR'] || ENV['TMP'] || ENV['TEMP'] || ENV['USERPROFILE'] || "/tmp"
       logfile = tmpdir + "/mrbmacs-" + $$.to_s + ".log"
@@ -68,15 +72,17 @@ module Mrbmacs
       @echo_keymap = EchoWinKeyMap.new()
       @echo_keymap.set_keymap(@frame.echo_win)
 
-      @theme = SolarizedDarkTheme.new
-#      if @theme.respond_to?(:set_pallete)
-#        @theme.set_pallete
-#      end
       @system_encodings = Mrbmacs::get_encoding_list()
 
       if opts[:no_init_file] == false
         init_filename = ENV['HOME'] + "/.mrbmacsrc"
         load_file(init_filename)
+      end
+      if @theme == nil
+        @theme = SolarizedDarkTheme.new
+      end
+      if @theme.respond_to?(:set_pallete)
+       @theme.set_pallete
       end
       set_default_style()
       register_extensions()
@@ -132,9 +138,9 @@ module Mrbmacs
     end
 
     def set_default_style
+      @frame.view_win.sci_style_clear_all
       @frame.view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, @theme.foreground_color)
       @frame.view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, @theme.background_color)
-      @frame.view_win.sci_style_clear_all
       if @theme.font_color[:color_brace_highlight]
         @frame.view_win.sci_style_set_fore(Scintilla::STYLE_BRACELIGHT,
           @theme.font_color[:color_brace_highlight][0])
@@ -146,6 +152,12 @@ module Mrbmacs
         @frame.view_win.sci_style_set_back(254, @theme.font_color[:color_annotation][1])
         @frame.view_win.sci_annotation_set_visible(Scintilla::ANNOTATION_BOXED)
       end
+      if @theme.font_color[:color_linenumber]
+        @frame.view_win.sci_style_set_fore(Scintilla::STYLE_LINENUMBER,
+          @theme.font_color[:color_linenumber][0])
+        @frame.view_win.sci_style_set_back(Scintilla::STYLE_LINENUMBER,
+          @theme.font_color[:color_linenumber][1])
+      end
 #      @frame.view_win.refresh
     end
 
@@ -155,9 +167,8 @@ module Mrbmacs
           str = f.read()
           eval(str)
         end
-      rescue
-        @logger.error $!
-#        @frame.echo_puts $!
+      rescue => err
+        @logger.error err
       end
     end
 
@@ -167,9 +178,9 @@ module Mrbmacs
       else
         begin
           eval("#{command.gsub("-", "_")}()")
-        rescue
-          @logger.error $!
-          @frame.echo_puts $!
+        rescue => err
+          @logger.error err
+          @frame.echo_puts err
         end
       end
     end

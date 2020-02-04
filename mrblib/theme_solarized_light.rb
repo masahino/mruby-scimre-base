@@ -1,7 +1,7 @@
 module Mrbmacs
-  class SolarizedLightTheme
-    attr_accessor :style_list, :foreground_color, :background_color, :font_color
+  class SolarizedLightTheme < Theme
     def initialize
+      @name = "solarized-light"
       @foreground_color = Mrbmacs::COLOR_BASE00
       @background_color = Mrbmacs::COLOR_BASE3
       @font_color = {
@@ -28,8 +28,10 @@ module Mrbmacs
         :color_exit => [Mrbmacs::COLOR_RED, Mrbmacs::COLOR_BASE3, nil, nil],
         :color_other_emphasized => [Mrbmacs::COLOR_VIOLET, Mrbmacs::COLOR_BASE3, true, true],
         :color_regexp_grouping_backslash => [Mrbmacs::COLOR_YELLOW, Mrbmacs::COLOR_BASE3, nil, nil],
+        #
         :color_brace_highlight => [@background_color, @foreground_color, nil, nil],
         :color_annotation => [Mrbmacs::COLOR_BASE03, Mrbmacs::COLOR_RED, true, nil],
+        :color_linenumber => [Mrbmacs::COLOR_BASE00, Mrbmacs::COLOR_BASE2, nil, nil],
       }
     end
   end

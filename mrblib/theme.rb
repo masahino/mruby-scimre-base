@@ -1,23 +1,37 @@
 module Mrbmacs
-  COLOR_BASE03 = 0
-  COLOR_BASE02 = 0
-  COLOR_BASE01 = 0
-  COLOR_BASE00 = 0
-  COLOR_BASE0  = 0
-  COLOR_BASE1  = 0
-  COLOR_BASE2  = 0
-  COLOR_BASE3  = 0
-  COLOR_YELLOW = 0
-  COLOR_ORANGE = 0
-  COLOR_RED    = 0
-  COLOR_MAGENTA = 0
-  COLOR_VIOLET = 0
-  COLOR_BLUE   = 0
-  COLOR_CYAN   = 0
-  COLOR_GREEN  = 0
+  class Application
+    def select_theme(theme_name = nil)
+      $stderr.puts "select theme"
+      if theme_name == nil
+        theme_name = @frame.echo_gets("theme:",) do |input_text|
+          comp_list = []
+          @themes.each do |name, klass|
+            if name.start_with?(input_text)
+              comp_list.push name
+            end
+          end
+          if $DEBUG
+            $stderr.puts comp_list
+          end
+          [comp_list.join(" "), input_text.length]
+        end
+      end
+      $stderr.puts theme_name
+      if theme_name != nil
+        @theme = @themes[theme_name].new
+        if @theme.respond_to?(:set_pallete)
+          @theme.set_pallete
+        end
+        set_default_style()
+        @current_buffer.mode.set_style(@frame.view_win, @theme)
+      end
+    end
+  end
+
   class Theme
-    attr_accessor :style_list, :foreground_color, :background_color, :font_color
+    attr_accessor :style_list, :foreground_color, :background_color, :font_color, :name
     def initialize
+      @name = "default"
       @foregronud_color = 0xffffff
       @background_color = 0
       @style_list = {}
@@ -45,9 +59,21 @@ module Mrbmacs
         :color_exit => [@foreground_color, @background_color, nil, nil],
         :color_other_emphasized => [@foreground_color, @background_color, nil, nil],
         :color_regexp_grouping_backslash => [@foreground_color, @background_color, nil, nil],
+        # 
         :color_brace_highlight => [@background_color, @foreground_color, nil, nil],
         :color_annotation => [@background_color, @foreground_color, true, nil],
+        :color_linenumber => [@foreground_color, @background_color, nil, nil],
       }
+    end
+
+    def self.create_theme_list
+      list = Hash.new
+      ObjectSpace.each_object(Class) do |klass|
+        if klass < self
+          list[klass.new.name] = klass
+        end
+      end
+      list
     end
   end
 end

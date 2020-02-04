@@ -1,7 +1,7 @@
 module Mrbmacs
-  class SolarizedDarkTheme
-    attr_accessor :style_list, :foreground_color, :background_color, :font_color
+  class SolarizedDarkTheme < Theme
     def initialize
+      @name = "solarized-dark"
       @foreground_color = Mrbmacs::COLOR_BASE0
       @background_color = Mrbmacs::COLOR_BASE03
       @font_color = {
@@ -13,7 +13,7 @@ module Mrbmacs
         :color_function_name => [Mrbmacs::COLOR_BLUE, Mrbmacs::COLOR_BASE03, nil, nil],
         :color_keyword => [Mrbmacs::COLOR_GREEN, Mrbmacs::COLOR_BASE03, nil, true],
         :color_string => [Mrbmacs::COLOR_CYAN, Mrbmacs::COLOR_BASE03, nil, nil],
-        :color_type => [Mrbmacs::COLOR_YELLOW, Mrbmacs::COLOR_BASE03, nil, nil],
+        :color_type => [Mrbmacs::COLOR_YELLOW, Mrbmacs::COLOR_BASE03, nil, true],
         :color_variable_name => [Mrbmacs::COLOR_BLUE, Mrbmacs::COLOR_BASE03, nil, nil],
         :color_warning => [Mrbmacs::COLOR_RED, Mrbmacs::COLOR_BASE03, nil, true],
         :color_doc => [Mrbmacs::COLOR_BASE01, Mrbmacs::COLOR_BASE03, true, nil],
@@ -28,8 +28,10 @@ module Mrbmacs
         :color_exit => [Mrbmacs::COLOR_RED, Mrbmacs::COLOR_BASE03, nil, nil],
         :color_other_emphasized => [Mrbmacs::COLOR_VIOLET, Mrbmacs::COLOR_BASE03, true, true],
         :color_regexp_grouping_backslash => [Mrbmacs::COLOR_YELLOW, Mrbmacs::COLOR_BASE03, nil, nil],
+        #
         :color_brace_highlight => [@background_color, @foreground_color, nil, nil],
         :color_annotation => [Mrbmacs::COLOR_BASE3, Mrbmacs::COLOR_RED, true, nil],
+        :color_linenumber => [Mrbmacs::COLOR_BASE0, Mrbmacs::COLOR_BASE02, nil, nil],
       }
     end
   end
