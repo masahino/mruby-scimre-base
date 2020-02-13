@@ -138,6 +138,7 @@ module Mrbmacs
     end
 
     def set_default_style
+      @logger.info @theme.name
       @frame.view_win.sci_style_clear_all
       @frame.view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, @theme.foreground_color)
       @frame.view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, @theme.background_color)
@@ -179,8 +180,8 @@ module Mrbmacs
         begin
           eval("#{command.gsub("-", "_")}()")
         rescue => err
-          @logger.error err
-          @frame.echo_puts err
+          @logger.error err.to_s
+          @frame.echo_puts err.to_s
         end
       end
     end
