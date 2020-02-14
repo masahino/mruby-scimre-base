@@ -16,6 +16,7 @@ module Mrbmacs
     ".sh" => "bash",
     ".go" => "go",
     ".py" => "python",
+    ".yml" => "yaml",
     "" => "fundamental",
   }
     
@@ -42,7 +43,7 @@ module Mrbmacs
     def initialize
       @name = "default"
       @keyword_list = ""
-      @style = []
+      @style = [:color_foreground]
       @indent = 2
       @use_tab = false
       @tab_indent = 0
@@ -129,6 +130,7 @@ module Mrbmacs
       super.initialize
       @name = "fundamental"
       @lexer = "indent"
+      @style = [:color_foreground]
     end
   end
 end
