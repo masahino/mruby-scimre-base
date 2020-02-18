@@ -85,6 +85,8 @@ module Mrbmacs
        @theme.set_pallete
       end
       set_default_style()
+      @current_buffer.mode.set_style(@frame.view_win, @theme)
+
       register_extensions()
       if @use_builtin_completion == true
         add_sci_event(Scintilla::SCN_CHARADDED) do |app, scn|
