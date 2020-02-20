@@ -144,8 +144,8 @@ module Mrbmacs
             @frame.show_annotation(error[0], error[1], error[2])
           end
         end
+        after_find_file(self, filename)
       end
-      after_find_file(self, filename)
     end
   end
 end
