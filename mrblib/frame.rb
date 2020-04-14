@@ -46,22 +46,32 @@ module Mrbmacs
       @echo_win.sci_auto_cset_auto_hide(false)
     end
 
+    # (ENCODING-EOL):---____FILENAME____________(X,Y)_____[MODE____][ADDITIONAL-INFO__]
     def get_mode_str(app)
       newline = case @view_win.sci_get_eol_mode
       when 0
-        "dos"
+#        "dos"
+        "CRLF"
       when 1
-        "mac"
+#        "mac"
+        "CR"
       when 2
-        "unix"
+#        "unix"
+        "LF"
       else
         ""
       end
       mode_text = " (#{app.current_buffer.encoding}-#{newline}):"
       if @view_win.sci_get_modify != 0
-        mode_text += "**-"
+        if @view_win.sci_get_readonly != 0
+          mode_text += "%*"
+        else
+          mode_text += "**"
+        end
+      elsif @view_win.sci_get_readonly != 0
+        mode_text += "%%"
       else
-        mode_text += "---"
+        mode_text += "--"
       end
       mode_text += sprintf("    %-20s", app.current_buffer.name)
       x = @view_win.sci_get_column(@view_win.sci_get_current_pos)+1
