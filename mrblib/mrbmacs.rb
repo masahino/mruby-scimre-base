@@ -190,11 +190,13 @@ module Mrbmacs
 
     def doin()
       key, command = doscan("")
-      @logger.debug command
-      if command == nil
-        @frame.send_key(key)
-      else
-        extend(command)
+      if key != nil
+        @logger.debug command
+        if command == nil
+          @frame.send_key(key)
+        else
+          extend(command)
+        end
       end
     end
 
