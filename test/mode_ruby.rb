@@ -36,7 +36,7 @@ end
 assert('get_candidates Numeric') do
   mode = Mrbmacs::RubyMode.new
   candidates = 1.methods.collect{|m| m.to_s}.sort
-  assert_equal(['1.abs'], mode.get_candidates_a('1.ab'))
+  assert_equal(true, mode.get_candidates_a('1.ab').include?('1.abs'))
 end
 
 assert('get_candidates Numeric(0xFFFF)') do
