@@ -13,5 +13,6 @@ MRuby::Gem::Specification.new('mruby-mrbmacs-base') do |spec|
   spec.add_dependency 'mruby-optparse', :github => 'fastly/mruby-optparse'
   spec.add_dependency 'mruby-logger'
   spec.add_dependency 'mruby-iconv'
+  spec.add_dependency 'mruby-process'
   spec.add_test_dependency 'mruby-require', :github => 'mattn/mruby-require'
 end
