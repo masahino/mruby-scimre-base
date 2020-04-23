@@ -165,7 +165,6 @@ module Mrbmacs
       else
         $stderr.puts "can't find any window"
       end
-      $stderr.puts "window number is #{@frame.edit_win_list.size}"
     end
 
     def delete_other_window
