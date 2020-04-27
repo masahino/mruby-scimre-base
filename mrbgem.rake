@@ -4,7 +4,7 @@ MRuby::Gem::Specification.new('mruby-mrbmacs-base') do |spec|
   spec.version = '0.2.0'
   spec.add_dependency 'mruby-scintilla-base', :github => 'masahino/mruby-scintilla-base'
   spec.add_dependency 'mruby-io', :core => 'mruby-io'
-  spec.add_dependency 'mruby-dir'
+  spec.add_dependency 'mruby-dir', :github => 'bamchoh/mruby-dir'
   spec.add_dependency 'mruby-eval'
   spec.add_dependency 'mruby-onig-regexp'
   spec.add_dependency 'mruby-array-ext'
