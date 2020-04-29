@@ -2,8 +2,6 @@ module Mrbmacs
   def self.dir_glob(input_text)
     file_list = []
     len = 0
-$stderr.puts "["+input_text+"]"
-$stderr.puts input_text[-1]
     if input_text[-1] == File::SEPARATOR
       file_list = (Dir.entries(input_text) - ['.', '..']).sort
     else
