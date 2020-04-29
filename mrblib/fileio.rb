@@ -2,7 +2,8 @@ module Mrbmacs
   def self.dir_glob(input_text)
     file_list = []
     len = 0
-    if input_text[-1] == "/"
+    separator = File::ALT_SEPARATOR || File::SEPARATOR
+    if input_text[-1] == separator
       file_list = (Dir.entries(input_text) - ['.', '..']).sort
     else
       dir = File.dirname(input_text)
@@ -91,7 +92,8 @@ module Mrbmacs
       
       if filename == nil
         dir = @current_buffer.directory
-        prefix_text = dir + "/"
+        separator = File::ALT_SEPARATOR || File::SEPARATOR
+        prefix_text = dir + separator
         
         filename = @frame.echo_gets("Write file: ", prefix_text) do |input_text|
           file_list, len = Mrbmacs::dir_glob(input_text)
@@ -108,7 +110,8 @@ module Mrbmacs
       view_win = @frame.view_win
       if file_path == nil
         dir = @current_buffer.directory
-        prefix_text = dir + "/"
+        separator = File::ALT_SEPARATOR || File::SEPARATOR
+        prefix_text = dir + separator
 
         file_path = @frame.echo_gets("insert file: ", prefix_text) do |input_text|
           file_list, len = Mrbmacs::dir_glob(input_text)
