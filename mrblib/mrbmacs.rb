@@ -75,7 +75,14 @@ module Mrbmacs
       @system_encodings = Mrbmacs::get_encoding_list()
 
       if opts[:no_init_file] == false
-        init_filename = ENV['HOME'] + "/.mrbmacsrc"
+        homedir = if ENV['HOME'] != nil
+          ENV['HOME']
+        elsif ENV['HOMEDRIVE'] != nil
+          ENV['HOMEDRIVE']+ENV['HOMEPATH']
+        else 
+          ""
+        end
+        init_filename = homedir + "/.mrbmacsrc"
         load_file(init_filename)
       end
       if @theme == nil
