@@ -1,4 +1,9 @@
 # test module for mruby-mrbmacs-base
+$test_echo_gets = {
+  :call_block => false,
+  :input_text => "test",
+  :output_text => "test"
+}
 module Mrbmacs
   class TestApp < Application
     def initialize
@@ -37,7 +42,12 @@ module Mrbmacs
     end
 
     def echo_gets(prompt, text = "", &block)
-      "test"
+      if $test_echo_gets[:call_block] == true
+        list, len = block.call($test_echo_gets[:input_text])
+        $test_echo_gets[:output_text]
+      else
+        $test_echo_gets[:output_text]
+      end
     end
 
     def echo_puts(text)

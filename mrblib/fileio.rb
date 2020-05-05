@@ -1,4 +1,22 @@
 module Mrbmacs
+  def self.dir_glob(input_text)
+    file_list = []
+    len = 0
+    if input_text[-1] == File::SEPARATOR
+      file_list = (Dir.entries(input_text) - ['.', '..']).sort
+    else
+      dir = File.dirname(input_text)
+      fname = File.basename(input_text)
+      Dir.foreach(dir) do |item|
+        if item =~ /^#{fname}/
+          file_list.push(item)
+        end
+      end
+      len = fname.length
+    end
+    [file_list, len]
+  end
+
   class Application
     def open_file(filename)
       view_win = @frame.view_win
@@ -73,16 +91,11 @@ module Mrbmacs
       
       if filename == nil
         dir = @current_buffer.directory
-        prefix_text = dir + "/"
+        prefix_text = dir + File::SEPARATOR
         
         filename = @frame.echo_gets("Write file: ", prefix_text) do |input_text|
-          file_list = Dir.glob(input_text + "*")
-          len = if input_text[-1] == "/"
-                  0
-                else
-                  input_text.length - File.dirname(input_text).length - 1
-                end
-          [file_list.map{|f| File.basename(f)}.join(" "), len]
+          file_list, len = Mrbmacs::dir_glob(input_text)
+          [file_list.join(" "), len]
         end
       end
       if filename != nil
@@ -95,11 +108,11 @@ module Mrbmacs
       view_win = @frame.view_win
       if file_path == nil
         dir = @current_buffer.directory
-        prefix_text = dir + "/"
+        prefix_text = dir + File::SEPARATOR
 
         file_path = @frame.echo_gets("insert file: ", prefix_text) do |input_text|
-          file_list = Dir.glob(input_text+"*")
-          file_list.map{|f| File.basename(f)}.join(" ")
+          file_list, len = Mrbmacs::dir_glob(input_text)
+          [file_list.join(" "), len]
         end
       end
       if file_path != nil
