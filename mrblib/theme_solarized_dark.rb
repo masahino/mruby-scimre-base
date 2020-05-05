@@ -1,4 +1,21 @@
 module Mrbmacs
+  #  COLOR_BASE03
+  #  COLOR_BASE02
+  #  COLOR_BASE01
+  #  COLOR_BASE00
+  #  COLOR_BASE0
+  #  COLOR_BASE1
+  #  COLOR_BASE2
+  #  COLOR_BASE3
+  #  COLOR_YELLOW
+  #  COLOR_ORANGE
+  #  COLOR_RED
+  #  COLOR_MAGENTA
+  #  COLOR_VIOLET
+  #  COLOR_BLUE
+  #  COLOR_CYAN
+  #  COLOR_GREEN
+
   class SolarizedDarkTheme < Theme
     def initialize
       @name = "solarized-dark"
