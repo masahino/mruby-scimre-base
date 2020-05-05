@@ -2,6 +2,7 @@ MRuby::Gem::Specification.new('mruby-mrbmacs-base') do |spec|
   spec.license = 'MIT'
   spec.authors = 'masahino'
   spec.version = '0.2.0'
+  spec.add_dependency 'mruby-class-ext'
   spec.add_dependency 'mruby-scintilla-base', :github => 'masahino/mruby-scintilla-base'
   spec.add_dependency 'mruby-io', :core => 'mruby-io'
   spec.add_dependency 'mruby-dir'

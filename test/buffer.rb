@@ -1,18 +1,14 @@
 require File.dirname(__FILE__) + '/test_helper.rb'
 
 def setup_buffers
-  app = Mrbmacs::TestApp.new
-  buf1 = Mrbmacs::Buffer.new("*scratch*")
+  app = Mrbmacs::TestApp.new()
+  buf1 = Mrbmacs::Buffer.new("/foo/bar/foo.rb")
   app.add_new_buffer(buf1)
-  buf2 = Mrbmacs::Buffer.new("*Messages*")
+  buf2 = Mrbmacs::Buffer.new("/foo/bar/bar.rb")
   app.add_new_buffer(buf2)
-  buf3 = Mrbmacs::Buffer.new("/foo/bar/foo.rb")
+  buf3 = Mrbmacs::Buffer.new("/foo/bar/baz.rb")
   app.add_new_buffer(buf3)
-  buf4 = Mrbmacs::Buffer.new("/foo/bar/bar.rb")
-  app.add_new_buffer(buf4)
-  buf5 = Mrbmacs::Buffer.new("/foo/bar/baz.rb")
-  app.add_new_buffer(buf5)
-  app.current_buffer = buf5
+  app.current_buffer = buf3
   app
 end
 
@@ -91,8 +87,8 @@ assert('kill-buffer (all buffers)') do
   app.kill_buffer("*scratch*")
   app.kill_buffer("*Messages*")
   assert_equal(2, app.buffer_list.size)
-  assert_equal("*scratch*", app.buffer_list.first.name)
-  assert_equal("*Messages*", app.buffer_list.last.name)
+  assert_equal("*scratch*", app.buffer_list.last.name)
+  assert_equal("*Messages*", app.buffer_list.first.name)
 end
 
 assert('kill-buffer (not exist)') do
