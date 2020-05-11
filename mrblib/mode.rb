@@ -8,6 +8,7 @@ module Mrbmacs
     ".cpp" => "cpp",
     ".cxx" => "cpp",
     ".js" => "cpp",
+    ".json" => "json",
     ".md" => "markdown",
     ".txt" => "fundamental",
     ".html" => "html",
