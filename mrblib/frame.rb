@@ -3,6 +3,7 @@ module Mrbmacs
   class Frame
     include Scintilla
     attr_accessor :view_win, :echo_win, :tk, :sci_notifications
+    attr_accessor :edit_win_list, :edit_win
 
     def init_keysyms
       @keysyms = [0,
@@ -26,24 +27,12 @@ module Mrbmacs
                   Scintilla::SCK_END]
     end
 
-    def set_default_style
-      @view_win.sci_set_codepage(Scintilla::SC_CP_UTF8)
-      @view_win.sci_set_margin_widthn(0, @view_win.sci_text_width(Scintilla::STYLE_LINENUMBER, "_99999"))
-      @view_win.sci_set_margin_maskn(0, ~Scintilla::SC_MASK_FOLDERS)
-#      @view_win.sci_set_margin_widthn(1, 10)
-#      @view_win.sci_set_margin_typen(1, 0)
-      @view_win.sci_set_margin_maskn(1, Scintilla::SC_MASK_FOLDERS)
-      @view_win.sci_set_marginsensitiven(1, 1)
-      @view_win.sci_set_automatic_fold(Scintilla::SC_AUTOMATICFOLD_CLICK)
-      @view_win.sci_set_viewws(2)
 
-      #@echo_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, Scintilla::COLOR_WHITE)
-      @echo_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, 0xffffff)
-      #@echo_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, Scintilla::COLOR_BLACK)
-      @echo_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, 0x000000)
-      @echo_win.sci_style_clear_all()
-      @echo_win.sci_auto_cset_choose_single(1)
-      @echo_win.sci_auto_cset_auto_hide(false)
+
+    def set_theme(theme)
+      @edit_win_list.each do |w|
+        w.set_theme(theme)
+      end
     end
 
     # (ENCODING-EOL):---____FILENAME____________(X,Y)_____[MODE____][ADDITIONAL-INFO__]

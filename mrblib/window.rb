@@ -31,10 +31,28 @@ module Mrbmacs
       @sci.sci.refresh
     end
 
-    def set_default_style(theme)
+    def set_margin()
+      @sci.sci_set_margin_widthn(0, @sci.sci_text_width(Scintilla::STYLE_LINENUMBER, "_99999"))
+      @sci.sci_set_margin_widthn(1, 1)
+      @sci.sci_set_margin_typen(1, 0)
+      @sci.sci_set_margin_maskn(1, Scintilla::SC_MASK_FOLDERS)
+      @sci.sci_set_marginsensitiven(1, 1)
+      @sci.sci_set_automatic_fold(Scintilla::SC_AUTOMATICFOLD_CLICK)
+    end
+
+    def set_sci_default()
+      @sci.sci_set_codepage(Scintilla::SC_CP_UTF8)
+      @sci.sci_set_viewws(3)
+      @sci.sci_auto_cset_choose_single(1)
+      @sci.sci_auto_cset_auto_hide(false)
+      @sci.sci_set_property("fold", "1")
+      @sci.sci_set_wrap_mode(Scintilla::SC_WRAP_CHAR)
+    end
+
+    def set_theme(theme)
+      @sci.sci_style_clear_all
       @sci.sci_style_set_fore(Scintilla::STYLE_DEFAULT, theme.foreground_color)
       @sci.sci_style_set_back(Scintilla::STYLE_DEFAULT, theme.background_color)
-      @sci.sci_style_clear_all
       if theme.font_color[:color_brace_highlight]
         @sci.sci_style_set_fore(Scintilla::STYLE_BRACELIGHT,
           theme.font_color[:color_brace_highlight][0])
@@ -46,8 +64,13 @@ module Mrbmacs
         @sci.sci_style_set_back(254, theme.font_color[:color_annotation][1])
         @sci.sci_annotation_set_visible(Scintilla::ANNOTATION_BOXED)
       end
-      @sci.sci_set_property("fold", "1")
-      @sci.sci_set_wrap_mode(Scintilla::SC_WRAP_CHAR)
+      if theme.font_color[:color_linenumber]
+        @sci.sci_style_set_fore(Scintilla::STYLE_LINENUMBER,
+          theme.font_color[:color_linenumber][0])
+        sci.sci_style_set_back(Scintilla::STYLE_LINENUMBER,
+          theme.font_color[:color_linenumber][1])
+      end
+
     end
 
   end

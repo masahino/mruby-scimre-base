@@ -56,9 +56,10 @@ module Mrbmacs
     attr_accessor :echo_message
     attr_accessor :edit_win
     def initialize(buffer)
-      @view_win = Scintilla::TestScintilla.new
       @echo_win = Scintilla::TestScintilla.new
       @edit_win = Mrbmacs::EditWindow.new(self, buffer, 0, 0, 0, 0)
+      @view_win = @edit_win.sci
+      @edit_win_list = [@edit_win]
     end
 
     def waitkey(win)
@@ -92,6 +93,7 @@ module Mrbmacs
 
   class EditWindow
     def initialize(frame, buffer, x1, y1, width, height)
+      @sci = Scintilla::TestScintilla.new
     end
   end
 end

@@ -147,28 +147,7 @@ module Mrbmacs
     end
 
     def set_default_style
-      @logger.info @theme.name
-      @frame.view_win.sci_style_clear_all
-      @frame.view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, @theme.foreground_color)
-      @frame.view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, @theme.background_color)
-      if @theme.font_color[:color_brace_highlight]
-        @frame.view_win.sci_style_set_fore(Scintilla::STYLE_BRACELIGHT,
-          @theme.font_color[:color_brace_highlight][0])
-        @frame.view_win.sci_style_set_back(Scintilla::STYLE_BRACELIGHT,
-          @theme.font_color[:color_brace_highlight][1])
-      end
-      if @theme.font_color[:color_annotation]
-        @frame.view_win.sci_style_set_fore(254, @theme.font_color[:color_annotation][0])
-        @frame.view_win.sci_style_set_back(254, @theme.font_color[:color_annotation][1])
-        @frame.view_win.sci_annotation_set_visible(Scintilla::ANNOTATION_BOXED)
-      end
-      if @theme.font_color[:color_linenumber]
-        @frame.view_win.sci_style_set_fore(Scintilla::STYLE_LINENUMBER,
-          @theme.font_color[:color_linenumber][0])
-        @frame.view_win.sci_style_set_back(Scintilla::STYLE_LINENUMBER,
-          @theme.font_color[:color_linenumber][1])
-      end
-#      @frame.view_win.refresh
+      @frame.set_theme(@theme)
     end
 
     def load_file(filename)

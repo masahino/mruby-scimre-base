@@ -55,7 +55,6 @@ end
 
 assert('Mrbmacs::dir_glob 1') do
   file_list, len = Mrbmacs::dir_glob(File.dirname(__FILE__) + File::SEPARATOR)
-  $stderr.puts File.dirname(__FILE__) + File::SEPARATOR
   n = `ls #{File.dirname(__FILE__)}`.split(/\R/).length
   assert_equal(n, file_list.length)
   assert_equal(0, len)

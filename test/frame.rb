@@ -5,3 +5,10 @@ assert('get_mode_str') do
   assert_equal " (utf-8-CRLF):--    *scratch*           (1,1)     [default] []                  ",
   app.frame.get_mode_str(app)
 end
+
+assert('set_theme') do
+  theme = Mrbmacs::SolarizedDarkTheme.new
+  frame = Mrbmacs::Frame.new(nil)
+  frame.set_theme(theme)
+  assert_equal Scintilla::SCI_STYLESETBACK, frame.view_win.messages.pop
+end
