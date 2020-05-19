@@ -73,7 +73,7 @@ module Mrbmacs
     end
 
     def set_theme(theme)
-      set_them_base(theme)
+      set_theme_base(theme)
     end
 
   end
