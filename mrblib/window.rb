@@ -33,8 +33,8 @@ module Mrbmacs
 
     def set_margin()
       @sci.sci_set_margin_widthn(0, @sci.sci_text_width(Scintilla::STYLE_LINENUMBER, "_99999"))
-      @sci.sci_set_margin_widthn(1, 1)
-      @sci.sci_set_margin_typen(1, 0)
+#      @sci.sci_set_margin_widthn(1, 1)
+#      @sci.sci_set_margin_typen(1, 0)
       @sci.sci_set_margin_maskn(1, Scintilla::SC_MASK_FOLDERS)
       @sci.sci_set_marginsensitiven(1, 1)
       @sci.sci_set_automatic_fold(Scintilla::SC_AUTOMATICFOLD_CLICK)
