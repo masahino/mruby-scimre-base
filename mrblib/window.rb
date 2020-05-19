@@ -49,7 +49,7 @@ module Mrbmacs
       @sci.sci_set_wrap_mode(Scintilla::SC_WRAP_CHAR)
     end
 
-    def set_theme(theme)
+    def set_theme_base(theme)
       @sci.sci_style_clear_all
       @sci.sci_style_set_fore(Scintilla::STYLE_DEFAULT, theme.foreground_color)
       @sci.sci_style_set_back(Scintilla::STYLE_DEFAULT, theme.background_color)
@@ -70,7 +70,10 @@ module Mrbmacs
         sci.sci_style_set_back(Scintilla::STYLE_LINENUMBER,
           theme.font_color[:color_linenumber][1])
       end
+    end
 
+    def set_theme(theme)
+      set_them_base(theme)
     end
 
   end
