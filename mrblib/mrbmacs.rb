@@ -54,7 +54,6 @@ module Mrbmacs
       @use_builtin_indent = false
       @last_search_text = ""
       @theme = nil
-      @themes = Theme::create_theme_list
 
       tmpdir = ENV['TMPDIR'] || ENV['TMP'] || ENV['TEMP'] || ENV['USERPROFILE'] || "/tmp"
       logfile = tmpdir + "/mrbmacs-" + $$.to_s + ".log"
@@ -71,8 +70,8 @@ module Mrbmacs
       @command_list = @keymap.command_list
       @echo_keymap = EchoWinKeyMap.new()
       @echo_keymap.set_keymap(@frame.echo_win)
-
       @system_encodings = Mrbmacs::get_encoding_list()
+      @themes = Theme::create_theme_list
 
       if opts[:no_init_file] == false
         homedir = if ENV['HOME'] != nil

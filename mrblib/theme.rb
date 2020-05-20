@@ -16,12 +16,16 @@ module Mrbmacs
         end
       end
       if theme_name != nil
-        @theme = @themes[theme_name].new
-        if @theme.respond_to?(:set_pallete)
-          @theme.set_pallete
+        if @themes.has_key?(theme_name)
+          @theme = @themes[theme_name].new
+#          if @theme.respond_to?(:set_pallete)
+#            @theme.set_pallete
+#          end
+          set_default_style()
+          @current_buffer.mode.set_style(@frame.view_win, @theme)
+        else
+          @frame.echo_puts "#{theme_name} not found"
         end
-        set_default_style()
-        @current_buffer.mode.set_style(@frame.view_win, @theme)
       end
     end
   end
@@ -68,7 +72,10 @@ module Mrbmacs
       list = Hash.new
       ObjectSpace.each_object(Class) do |klass|
         if klass < self
-          list[klass.new.name] = klass
+          name = klass.new.name
+          if name != nil
+             list[klass.new.name] = klass
+          end
         end
       end
       list
