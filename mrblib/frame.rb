@@ -97,6 +97,14 @@ module Mrbmacs
     def sync_tab(buffername)
     end
 
+    def switch_window(new_win)
+      @edit_win.focus_out()
+      @edit_win = new_win
+      @view_win = new_win.sci
+      @mode_win = new_win.modeline
+      new_win.focus_in()
+    end
+
     def exit()
       raise NotImplementedError
     end

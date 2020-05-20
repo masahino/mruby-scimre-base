@@ -8,14 +8,14 @@ assert('set_theme') do
 end
 
 assert('set_marign') do
-  edit_win = Mrbmacs::EditWindow.new(0, 0, 0, 0, 0, 0)
+  edit_win = Mrbmacs::EditWindowTest.new(0, 0, 0, 0, 0, 0)
   edit_win.set_margin
   assert_equal(Scintilla::SCI_SETAUTOMATICFOLD, edit_win.sci.messages.pop)
 end
 
 assert('set_sci_default') do
-  edit_win = Mrbmacs::EditWindow.new(0, 0, 0, 0, 0, 0)
+  edit_win = Mrbmacs::EditWindowTest.new(0, 0, 0, 0, 0, 0)
   edit_win.set_sci_default
   assert_equal(Scintilla::SCI_SETWRAPMODE, edit_win.sci.messages.pop)
 end
-  
+

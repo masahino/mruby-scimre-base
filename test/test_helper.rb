@@ -18,12 +18,17 @@ module Mrbmacs
   class Frame
     attr_accessor :view_win, :echo_win, :tk
     attr_accessor :echo_message
-    attr_accessor :edit_win
+    attr_accessor :edit_win, :mode_win
     def initialize(buffer)
       @echo_win = Scintilla::TestScintilla.new
-      @edit_win = Mrbmacs::EditWindow.new(self, buffer, 0, 0, 0, 0)
+      @edit_win = Mrbmacs::EditWindowTest.new(self, buffer, 0, 0, 40, 40)
       @view_win = @edit_win.sci
       @edit_win_list = [@edit_win]
+      @mode_win = @edit_win.modeline
+    end
+
+    def new_editwin(buffer, x, y, width, height)
+      Mrbmacs::EditWindowTest.new(self, buffer, x, y, width, height)
     end
 
     def waitkey(win)
@@ -48,16 +53,23 @@ module Mrbmacs
       @echo_message = text
     end
 
-    def modeline(app)
+    def modeline(app, win = @mode_win)
     end
 
     def exit
     end
   end
 
-  class EditWindow
+  class EditWindowTest < EditWindow
     def initialize(frame, buffer, x1, y1, width, height)
       @sci = Scintilla::TestScintilla.new
+      @buffer = buffer
+      @x1 = x1
+      @y1 = y1
+      @x2 = x1 + width
+      @y2 = y1 + height
+      @width = width
+      @height = height
     end
   end
 end
