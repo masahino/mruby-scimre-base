@@ -16,39 +16,40 @@ module Mrbmacs
   #  COLOR_CYAN
   #  COLOR_GREEN
 
-  class SolarizedDarkTheme < Theme
+  class SolarizedDarkTheme < SolarizedTheme
     def initialize
+      super
       @name = "solarized-dark"
-      @foreground_color = Mrbmacs::COLOR_BASE0
-      @background_color = Mrbmacs::COLOR_BASE03
+      @foreground_color = @@base0
+      @background_color = @@base03
       @font_color = {
         # [fore, back, italic_flag, bold_flag ]
-        :color_foreground => [Mrbmacs::COLOR_BASE0, Mrbmacs::COLOR_BASE03, nil, nil],
-        :color_builtin => [Mrbmacs::COLOR_GREEN, Mrbmacs::COLOR_BASE03, nil, nil],
-        :color_comment => [Mrbmacs::COLOR_BASE01, Mrbmacs::COLOR_BASE03, true, nil],
-        :color_constant => [Mrbmacs::COLOR_CYAN, Mrbmacs::COLOR_BASE03, nil, nil],
-        :color_function_name => [Mrbmacs::COLOR_BLUE, Mrbmacs::COLOR_BASE03, nil, nil],
-        :color_keyword => [Mrbmacs::COLOR_GREEN, Mrbmacs::COLOR_BASE03, nil, true],
-        :color_string => [Mrbmacs::COLOR_CYAN, Mrbmacs::COLOR_BASE03, nil, nil],
-        :color_type => [Mrbmacs::COLOR_YELLOW, Mrbmacs::COLOR_BASE03, nil, true],
-        :color_variable_name => [Mrbmacs::COLOR_BLUE, Mrbmacs::COLOR_BASE03, nil, nil],
-        :color_warning => [Mrbmacs::COLOR_RED, Mrbmacs::COLOR_BASE03, nil, true],
-        :color_doc => [Mrbmacs::COLOR_BASE01, Mrbmacs::COLOR_BASE03, true, nil],
-        :color_doc_string => [Mrbmacs::COLOR_BASE01, Mrbmacs::COLOR_BASE03, true, nil],
-        :color_color_constant => [Mrbmacs::COLOR_GREEN, Mrbmacs::COLOR_BASE03, nil, nil],
-        :color_comment_delimiter => [Mrbmacs::COLOR_BASE01, Mrbmacs::COLOR_BASE03, true, nil],
-        :color_preprocessor => [Mrbmacs::COLOR_ORANGE, Mrbmacs::COLOR_BASE03, nil, nil],
-        :color_negation_char => [Mrbmacs::COLOR_RED, Mrbmacs::COLOR_BASE03, nil, nil],
-        :color_other_type => [Mrbmacs::COLOR_BLUE, Mrbmacs::COLOR_BASE03, true, nil],
-        :color_regexp_grouping_construct => [Mrbmacs::COLOR_ORANGE, Mrbmacs::COLOR_BASE03, nil, nil],
-        :color_special_keyword => [Mrbmacs::COLOR_RED, Mrbmacs::COLOR_BASE03, nil, nil],
-        :color_exit => [Mrbmacs::COLOR_RED, Mrbmacs::COLOR_BASE03, nil, nil],
-        :color_other_emphasized => [Mrbmacs::COLOR_VIOLET, Mrbmacs::COLOR_BASE03, true, true],
-        :color_regexp_grouping_backslash => [Mrbmacs::COLOR_YELLOW, Mrbmacs::COLOR_BASE03, nil, nil],
+        :color_foreground => [@@base0, @@base03, nil, nil],
+        :color_builtin => [@@green, @@base03, nil, nil],
+        :color_comment => [@@base01, @@base03, true, nil],
+        :color_constant => [@@cyan, @@base03, nil, nil],
+        :color_function_name => [@@blue, @@base03, nil, nil],
+        :color_keyword => [@@green, @@base03, nil, true],
+        :color_string => [@@cyan, @@base03, nil, nil],
+        :color_type => [@@yellow, @@base03, nil, true],
+        :color_variable_name => [@@blue, @@base03, nil, nil],
+        :color_warning => [@@red, @@base03, nil, true],
+        :color_doc => [@@base01, @@base03, true, nil],
+        :color_doc_string => [@@base01, @@base03, true, nil],
+        :color_color_constant => [@@green, @@base03, nil, nil],
+        :color_comment_delimiter => [@@base01, @@base03, true, nil],
+        :color_preprocessor => [@@orange, @@base03, nil, nil],
+        :color_negation_char => [@@red, @@base03, nil, nil],
+        :color_other_type => [@@blue, @@base03, true, nil],
+        :color_regexp_grouping_construct => [@@orange, @@base03, nil, nil],
+        :color_special_keyword => [@@red, @@base03, nil, nil],
+        :color_exit => [@@red, @@base03, nil, nil],
+        :color_other_emphasized => [@@violet, @@base03, true, true],
+        :color_regexp_grouping_backslash => [@@yellow, @@base03, nil, nil],
         #
         :color_brace_highlight => [@background_color, @foreground_color, nil, nil],
-        :color_annotation => [Mrbmacs::COLOR_BASE3, Mrbmacs::COLOR_RED, true, nil],
-        :color_linenumber => [Mrbmacs::COLOR_BASE0, Mrbmacs::COLOR_BASE02, nil, nil],
+        :color_annotation => [@@base3, @@red, true, nil],
+        :color_linenumber => [@@base0, @@base02, nil, nil],
       }
     end
   end

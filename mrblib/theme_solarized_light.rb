@@ -1,37 +1,38 @@
 module Mrbmacs
-  class SolarizedLightTheme < Theme
+  class SolarizedLightTheme < SolarizedTheme
     def initialize
+      super
       @name = "solarized-light"
-      @foreground_color = Mrbmacs::COLOR_BASE00
-      @background_color = Mrbmacs::COLOR_BASE3
+      @foreground_color = @@base00
+      @background_color = @@base3
       @font_color = {
         #                                italic, bold
-        :color_foreground => [Mrbmacs::COLOR_BASE00, Mrbmacs::COLOR_BASE3, nil, nil],
-        :color_builtin => [Mrbmacs::COLOR_GREEN, Mrbmacs::COLOR_BASE3, nil, nil],
-        :color_comment => [Mrbmacs::COLOR_BASE1, Mrbmacs::COLOR_BASE3, true, nil],
-        :color_constant => [Mrbmacs::COLOR_CYAN, Mrbmacs::COLOR_BASE3, nil, nil],
-        :color_function_name => [Mrbmacs::COLOR_BLUE, Mrbmacs::COLOR_BASE3, nil, nil],
-        :color_keyword => [Mrbmacs::COLOR_GREEN, Mrbmacs::COLOR_BASE3, nil, nil],
-        :color_string => [Mrbmacs::COLOR_CYAN, Mrbmacs::COLOR_BASE3, nil, nil],
-        :color_type => [Mrbmacs::COLOR_YELLOW, Mrbmacs::COLOR_BASE3, nil, nil],
-        :color_variable_name => [Mrbmacs::COLOR_BLUE, Mrbmacs::COLOR_BASE3, nil, nil],
-        :color_warning => [Mrbmacs::COLOR_RED, Mrbmacs::COLOR_BASE3, nil, true],
-        :color_doc => [Mrbmacs::COLOR_BASE1, Mrbmacs::COLOR_BASE3, true, nil],
-        :color_doc_string => [Mrbmacs::COLOR_BASE1, Mrbmacs::COLOR_BASE3, true, nil],
-        :color_color_constant => [Mrbmacs::COLOR_GREEN, Mrbmacs::COLOR_BASE3, nil, nil],
-        :color_comment_delimiter => [Mrbmacs::COLOR_BASE1, Mrbmacs::COLOR_BASE3, true, nil],
-        :color_preprocessor => [Mrbmacs::COLOR_ORANGE, Mrbmacs::COLOR_BASE3, nil, nil],
-        :color_negation_char => [Mrbmacs::COLOR_RED, Mrbmacs::COLOR_BASE3, nil, nil],
-        :color_other_type => [Mrbmacs::COLOR_BLUE, Mrbmacs::COLOR_BASE3, true, nil],
-        :color_regexp_grouping_construct => [Mrbmacs::COLOR_ORANGE, Mrbmacs::COLOR_BASE3, nil, nil],
-        :color_special_keyword => [Mrbmacs::COLOR_RED, Mrbmacs::COLOR_BASE3, nil, nil],
-        :color_exit => [Mrbmacs::COLOR_RED, Mrbmacs::COLOR_BASE3, nil, nil],
-        :color_other_emphasized => [Mrbmacs::COLOR_VIOLET, Mrbmacs::COLOR_BASE3, true, true],
-        :color_regexp_grouping_backslash => [Mrbmacs::COLOR_YELLOW, Mrbmacs::COLOR_BASE3, nil, nil],
+        :color_foreground => [@@base00, @@base3, nil, nil],
+        :color_builtin => [@@green, @@base3, nil, nil],
+        :color_comment => [@@base1, @@base3, true, nil],
+        :color_constant => [@@cyan, @@base3, nil, nil],
+        :color_function_name => [@@blue, @@base3, nil, nil],
+        :color_keyword => [@@green, @@base3, nil, nil],
+        :color_string => [@@cyan, @@base3, nil, nil],
+        :color_type => [@@yellow, @@base3, nil, nil],
+        :color_variable_name => [@@blue, @@base3, nil, nil],
+        :color_warning => [@@red, @@base3, nil, true],
+        :color_doc => [@@base1, @@base3, true, nil],
+        :color_doc_string => [@@base1, @@base3, true, nil],
+        :color_color_constant => [@@green, @@base3, nil, nil],
+        :color_comment_delimiter => [@@base1, @@base3, true, nil],
+        :color_preprocessor => [@@orange, @@base3, nil, nil],
+        :color_negation_char => [@@red, @@base3, nil, nil],
+        :color_other_type => [@@blue, @@base3, true, nil],
+        :color_regexp_grouping_construct => [@@orange, @@base3, nil, nil],
+        :color_special_keyword => [@@red, @@base3, nil, nil],
+        :color_exit => [@@red, @@base3, nil, nil],
+        :color_other_emphasized => [@@violet, @@base3, true, true],
+        :color_regexp_grouping_backslash => [@@yellow, @@base3, nil, nil],
         #
         :color_brace_highlight => [@background_color, @foreground_color, nil, nil],
-        :color_annotation => [Mrbmacs::COLOR_BASE03, Mrbmacs::COLOR_RED, true, nil],
-        :color_linenumber => [Mrbmacs::COLOR_BASE00, Mrbmacs::COLOR_BASE2, nil, nil],
+        :color_annotation => [@@base03, @@red, true, nil],
+        :color_linenumber => [@@base00, @@base2, nil, nil],
       }
     end
   end
