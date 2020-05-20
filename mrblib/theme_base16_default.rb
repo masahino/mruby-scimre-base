@@ -17,6 +17,9 @@ module Mrbmacs
     @@base0E = 0xba8baf
     @@base0F = 0xa16946
     def initialize
+      if respond_to?(:set_pallete)
+        set_pallete
+      end
       @name = nil
       @foreground_color = @@base05
       @background_color = @@base00
