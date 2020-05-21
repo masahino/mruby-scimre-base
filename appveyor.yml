@@ -16,7 +16,9 @@ install:
 - cmd: >-
     if defined CYG_ROOT (%CYG_SETUP% --quiet-mode --no-shortcuts --only-site --root "%CYG_ROOT%" --packages "%CYG_PACKAGES%" --upgrade-also)
 
-    if defined MSYSTEM (%BASH% -lc "pacman -Sy --noconfirm mingw-w64-x86_64-zstd")
+    if defined MSYSTEM (%BASH% -lc "pacman -Sy --noconfirm zstd")
+
+    if defined MSYSTEM (%BASH% -lc "pacman -Su --noconfirm")
 
     if defined MSYSTEM (%BASH% -lc "pacman -Sy --noconfirm pacman")
 
