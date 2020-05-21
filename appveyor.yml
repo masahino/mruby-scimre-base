@@ -18,7 +18,7 @@ install:
 
     if defined MSYSTEM (%BASH% -lc "pacman -Sy --noconfirm zstd")
 
-    if defined MSYSTEM (%BASH% -lc "pacman -Su --noconfirm")
+    if defined MSYSTEM (%BASH% -lc "pacman -Uy --noconfirm http://repo.msys2.org/msys/x86_64/pacman-5.2.1-6-x86_64.pkg.tar.xz")
 
     if defined MSYSTEM (%BASH% -lc "pacman -Sy --noconfirm pacman")
 
