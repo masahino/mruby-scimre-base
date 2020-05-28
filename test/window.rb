@@ -4,7 +4,7 @@ assert('set_theme') do
   app = Mrbmacs::TestApp.new()
   edit_win = app.frame.edit_win
   edit_win.set_theme(app.theme)
-  assert_equal(Scintilla::SCI_STYLESETBACK, app.frame.view_win.messages.pop)
+  assert_equal(Scintilla::SCI_SETSELBACK, app.frame.view_win.messages.pop)
 end
 
 assert('set_marign') do

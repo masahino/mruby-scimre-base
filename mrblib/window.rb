@@ -73,6 +73,8 @@ module Mrbmacs
         sci.sci_style_set_back(Scintilla::STYLE_LINENUMBER,
           theme.font_color[:color_linenumber][1])
       end
+      @sci.sci_set_sel_fore(true, theme.background_color)
+      @sci.sci_set_sel_back(true, theme.foreground_color)
     end
 
     def set_theme(theme)
