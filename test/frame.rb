@@ -10,5 +10,5 @@ assert('set_theme') do
   theme = Mrbmacs::SolarizedDarkTheme.new
   frame = Mrbmacs::Frame.new(nil)
   frame.set_theme(theme)
-  assert_equal Scintilla::SCI_STYLESETBACK, frame.view_win.messages.pop
+  assert_equal Scintilla::SCI_SETSELBACK, frame.view_win.messages.pop
 end
