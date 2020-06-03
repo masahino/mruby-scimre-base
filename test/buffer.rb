@@ -18,6 +18,16 @@ assert('Buffer.new') do
   assert_kind_of(Mrbmacs::Buffer, buffer)
 end
 
+assert('Buffer.set_filename') do
+  app = Mrbmacs::TestApp.new
+  app.current_buffer.set_filename("/foo/bar/hoge.rb")
+  assert_equal("hoge.rb", app.current_buffer.name)
+  assert_equal("/foo/bar/hoge.rb", app.current_buffer.filename)
+  assert_equal("/foo/bar", app.current_buffer.directory)
+  assert_equal("hoge.rb", app.current_buffer.basename)
+  assert_equal("ruby", app.current_buffer.mode.name)
+end
+
 assert('new buffer name') do
   app = Mrbmacs::TestApp.new()
   buffer1 = Mrbmacs::Buffer.new("/foo/bar/hoge.rb")
