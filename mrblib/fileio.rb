@@ -99,8 +99,11 @@ module Mrbmacs
         end
       end
       if filename != nil
-        @current_buffer.filename = filename
+        @current_buffer.set_filename(filename)
         save_buffer()
+        @frame.view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
+        @current_buffer.mode.set_style(@frame.view_win, @theme)
+        @frame.set_buffer_name(@current_buffer.name)
       end
     end
 
