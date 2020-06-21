@@ -126,8 +126,23 @@ module Mrbmacs
       @io_handler[io] = proc
     end
 
-    def add_sci_event(event_id, &proc)
-      @sci_handler[event_id] = proc
+    def del_io_read_event(io)
+      @readings.delete io
+      @io_handler.delete(io)
+    end
+
+    def add_sci_event(event_id, priority = nil, &proc)
+      if @sci_handler[event_id] == nil
+        @sci_handler[event_id] = []
+        if priority == nil
+          priority = 100
+        end
+      end
+      if priority == nil
+        priority = @sci_handler[event_id].last.priority + 1
+      end
+      @sci_handler[event_id].push SciEvent.new(priority, proc)
+      @sci_handler[event_id].sort! {|a, b| a.priority <=> b.priority}
     end
 
     def add_command_event(method, &proc)
