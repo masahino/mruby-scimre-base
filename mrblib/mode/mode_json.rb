@@ -24,7 +24,7 @@ module Mrbmacs
     end
 
     def is_end_of_block(line)
-      if line =~/^\s*(]|}).*$/
+      if line =~/^\s*(\]|}).*$/
         true
       else
         false
