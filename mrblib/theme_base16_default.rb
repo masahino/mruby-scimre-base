@@ -50,7 +50,7 @@ module Mrbmacs
         :color_regexp_grouping_backslash => [@@base05, @background_color, nil, nil],
         #
         :color_brace_highlight => [@background_color, @foreground_color, nil, nil],
-        :color_annotation => [@@base03, @@base08, true, nil],
+        :color_annotation => [@@base06, @@base08, true, nil],
         :color_linenumber => [@@base04, @@base01, nil, nil],
       }
     end

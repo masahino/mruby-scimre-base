@@ -3,21 +3,34 @@ module Mrbmacs
 	# ruby-mode
     ".rb" => "ruby",
     ".rake" => "ruby",
+    "Rakefile" => "ruby",
     ".c" => "cpp",
     ".h" => "cpp",
     ".cpp" => "cpp",
     ".cxx" => "cpp",
-    ".js" => "cpp",
+    ".css" => "css",
+    ".diff" => "diff",
+    ".java" => "java",
+    ".js" => "javascript",
     ".json" => "json",
     ".md" => "markdown",
     ".txt" => "fundamental",
+    ".hs" => "haskell",
     ".html" => "html",
     ".htm" => "html",
+    ".lisp" => "lisp",
     ".erb" => "html",
     ".sh" => "bash",
     ".go" => "go",
+    ".pl" => "perl",
     ".py" => "python",
+    ".r" => "r",
+    ".rs" => "rust",
+    ".tex" => "latex",
     ".yml" => "yaml",
+    ".yaml" => "yaml",
+    "Makefile" => "make",
+    "makefile" => "make",
     "" => "fundamental",
   }
     
@@ -35,8 +48,20 @@ module Mrbmacs
       end
     end
 
+    def self.get_mode_by_filename(filename)
+      key = File.extname(filename)
+      if key == ""
+        key = File.basename(filename)
+      end
+      if $mode_list.has_key?(key)
+        $mode_list[key]
+      else
+        "fundamental"
+      end
+    end
+
     def self.set_mode_by_filename(filename)
-      cur_mode = get_mode_by_suffix(File.extname(filename))
+      cur_mode = get_mode_by_filename(filename)
       mode = Mrbmacs.const_get(cur_mode.capitalize+"Mode").new
       return mode
     end
