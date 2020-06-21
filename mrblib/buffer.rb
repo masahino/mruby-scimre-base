@@ -12,11 +12,7 @@ module Mrbmacs
           @directory = Dir.getwd
           @mode = Mrbmacs::Mode.new
         else
-          @filename = File.expand_path(filename)
-          @name = File.basename(@filename)
-          @basename = File.basename(@filename)
-          @directory = File.dirname(@filename)
-          @mode = Mrbmacs::Mode.set_mode_by_filename(filename)
+          set_filename(filename)
         end
       else
         @filename = ""
@@ -32,6 +28,13 @@ module Mrbmacs
       @additional_info = ""
     end
 
+    def set_filename(filename)
+      @filename = File.expand_path(filename)
+      @name = File.basename(@filename)
+      @basename = File.basename(@filename)
+      @directory = File.dirname(@filename)
+      @mode = Mrbmacs::Mode.set_mode_by_filename(filename)
+    end
   end
 
   class << self

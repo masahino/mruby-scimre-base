@@ -35,6 +35,7 @@ assert('write-file') do
   test_file = File.dirname(__FILE__) + File::SEPARATOR + "test.output"
   app.write_file(test_file)
   assert_equal(test_file, app.current_buffer.filename)
+  assert_equal(File.basename(test_file), app.current_buffer.name)
 end
 
 assert('write-file 2') do
