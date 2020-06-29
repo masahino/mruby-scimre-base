@@ -133,16 +133,21 @@ module Mrbmacs
 
     def add_sci_event(event_id, priority = nil, &proc)
       if @sci_handler[event_id] == nil
-        @sci_handler[event_id] = []
         if priority == nil
           priority = 100
         end
+        @sci_handler[event_id] = [SciEvent.new(priority, proc)]
+      else
+        if priority == nil
+          if @sci_handler[event_id].last.priority < 100
+            priority = 100
+          else
+            priority = @sci_handler[event_id].last.priority + 1
+          end
+        end
+        @sci_handler[event_id].push SciEvent.new(priority, proc)
+        @sci_handler[event_id].sort! {|a, b| a.priority <=> b.priority}
       end
-      if priority == nil
-        priority = @sci_handler[event_id].last.priority + 1
-      end
-      @sci_handler[event_id].push SciEvent.new(priority, proc)
-      @sci_handler[event_id].sort! {|a, b| a.priority <=> b.priority}
     end
 
     def add_command_event(method, &proc)
@@ -153,9 +158,11 @@ module Mrbmacs
     end
 
     def register_extensions
-      Extension.singleton_methods(false).each do |m|
-        if m.to_s =~ /^register_/
-          Extension.send(m, self)
+      Extension.subclasses.each do |k|
+        k.singleton_methods(false).each do |m|
+          if m.to_s =~ /^register_/
+            k.send(m, self)
+          end
         end
       end
     end
