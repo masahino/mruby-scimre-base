@@ -100,7 +100,7 @@ module Mrbmacs
         end
       end
 
-      create_message_buffer(logfile)
+      create_messages_buffer(logfile)
 
       if argv.size > 0
         find_file(argv[0])
@@ -109,16 +109,6 @@ module Mrbmacs
         load_file(opts[:load])
       end
       @frame.modeline(self)
-    end
-
-    def create_message_buffer(logfile)
-      find_file(logfile)
-      @current_buffer.name = "*Messages*"
-      @frame.set_buffer_name(@current_buffer.name)
-      @current_buffer.directory = Dir.getwd
-      @frame.view_win.sci_set_readonly(1)
-      @frame.view_win.sci_document_end
-      switch_to_buffer "*scratch*"
     end
 
     def add_io_read_event(io, &proc)
