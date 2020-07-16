@@ -71,8 +71,7 @@ module Mrbmacs
 
     def self.set_mode_by_filename(filename)
       cur_mode = get_mode_by_filename(filename)
-      mode = Mrbmacs.const_get(cur_mode.capitalize+"Mode").instance
-      return mode
+      Mrbmacs.const_get(cur_mode.capitalize+"Mode").instance
     end
       
     def initialize

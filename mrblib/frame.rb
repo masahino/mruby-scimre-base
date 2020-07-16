@@ -27,8 +27,6 @@ module Mrbmacs
                   Scintilla::SCK_END]
     end
 
-
-
     def set_theme(theme)
       @edit_win_list.each do |w|
         w.set_theme(theme)

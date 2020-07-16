@@ -41,6 +41,19 @@ module Mrbmacs
       [opts, args]
     end
 
+    def load_init_file()
+      homedir = if ENV['HOME'] != nil
+        ENV['HOME']
+      elsif ENV['HOMEDRIVE'] != nil
+        ENV['HOMEDRIVE']+ENV['HOMEPATH']
+      else
+        ""
+      end
+      init_filename = homedir + "/.mrbmacsrc"
+      @logger.debug "load initfile"
+      load_file(init_filename)
+    end
+
     def initialize(argv = [])
       opts, argv = parse_args(argv)
       @io_handler = {}
@@ -76,16 +89,7 @@ module Mrbmacs
       @themes = Theme::create_theme_list
 
       if opts[:no_init_file] == false
-        homedir = if ENV['HOME'] != nil
-          ENV['HOME']
-        elsif ENV['HOMEDRIVE'] != nil
-          ENV['HOMEDRIVE']+ENV['HOMEPATH']
-        else 
-          ""
-        end
-        init_filename = homedir + "/.mrbmacsrc"
-        @logger.debug "load initfile"
-        load_file(init_filename)
+        load_init_file
       end
 
       @theme = @config.theme.new
@@ -112,52 +116,6 @@ module Mrbmacs
         load_file(opts[:load])
       end
       @frame.modeline(self)
-    end
-
-    def add_io_read_event(io, &proc)
-      @readings.push io
-      @io_handler[io] = proc
-    end
-
-    def del_io_read_event(io)
-      @readings.delete io
-      @io_handler.delete(io)
-    end
-
-    def add_sci_event(event_id, priority = nil, &proc)
-      if @sci_handler[event_id] == nil
-        if priority == nil
-          priority = 100
-        end
-        @sci_handler[event_id] = [SciEvent.new(priority, proc)]
-      else
-        if priority == nil
-          if @sci_handler[event_id].last.priority < 100
-            priority = 100
-          else
-            priority = @sci_handler[event_id].last.priority + 1
-          end
-        end
-        @sci_handler[event_id].push SciEvent.new(priority, proc)
-        @sci_handler[event_id].sort! {|a, b| a.priority <=> b.priority}
-      end
-    end
-
-    def add_command_event(method, &proc)
-      if @command_handler[method] == nil
-        @command_handler[method] = []
-      end
-      @command_handler[method].push proc
-    end
-
-    def register_extensions
-      Extension.subclasses.each do |k|
-        k.singleton_methods(false).each do |m|
-          if m.to_s =~ /^register_/
-            k.send(m, self)
-          end
-        end
-      end
     end
 
     def set_default_style

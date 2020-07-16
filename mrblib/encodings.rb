@@ -15,7 +15,6 @@ module Mrbmacs
     
   class Application
     def set_buffer_file_coding_system(code = nil)
-      view_win = @frame.view_win
       if code == nil
         code = @frame.echo_gets("Coding system for saving file:",) do |input_text|
           tmp_str = input_text.upcase

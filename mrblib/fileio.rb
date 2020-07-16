@@ -68,8 +68,8 @@ module Mrbmacs
 
     def save_buffer()
       all_text = @frame.view_win.sci_get_text(@frame.view_win.sci_get_length+1)
-      if @current_buffer.encoding != "utf-8"
-        all_text = Iconv.conv(@current_buffer.encoding, "utf-8", all_text)
+      if @current_buffer.encoding != 'utf-8'
+        all_text = Iconv.conv(@current_buffer.encoding, 'utf-8', all_text)
       end
       #    $stderr.print all_text
       #      File.open(app.filename, "w") do |f|

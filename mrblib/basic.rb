@@ -5,8 +5,7 @@ module Mrbmacs
     end
     
     def copy_region()
-      win = @frame.view_win
-      win.sci_copy_range(@mark_pos, win.sci_get_current_pos)
+      @frame.view_win.sci_copy_range(@mark_pos, @frame.view_win.sci_get_current_pos)
       @mark_pos = nil
     end
 
@@ -22,8 +21,7 @@ module Mrbmacs
     end
 
     def yank()
-      win = @frame.view_win
-      win.sci_paste
+      @frame.view_win.sci_paste
     end
 
     def kill_line()

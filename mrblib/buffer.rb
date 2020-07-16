@@ -74,7 +74,6 @@ module Mrbmacs
     end
 
     def switch_to_buffer(buffername = nil)
-      view_win = @frame.view_win
 #      if @buffer_list.size <= 1
 #        return
 #      end
