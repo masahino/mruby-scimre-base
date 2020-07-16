@@ -52,3 +52,13 @@ end
 assert('mode Class') do
   assert_equal Mrbmacs::RubyMode, Mrbmacs::Mode.set_mode_by_filename("a.rb").class
 end
+
+assert('Mode.add_keybind') do
+  mode = Mrbmacs::Mode.new
+  mode.add_keybind('x', 'hoge')
+end
+
+assert('get_mode_by_name') do
+  assert_equal Mrbmacs::RubyMode.instance, Mrbmacs::Mode.get_mode_by_name('ruby')
+  assert_equal nil, Mrbmacs::Mode.get_mode_by_name('default')
+end

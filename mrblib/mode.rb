@@ -35,11 +35,12 @@ module Mrbmacs
   }
     
   class Mode
-    attr_accessor :name, :lexer, :indent, :use_tab
+    include Singleton
+    attr_accessor :name, :lexer, :indent, :use_tab, :keymap
 #    def name
 #      @name
 #    end
-    
+
     def self.get_mode_by_suffix(suffix)
       if $mode_list.has_key?(suffix)
         $mode_list[suffix]
@@ -60,9 +61,17 @@ module Mrbmacs
       end
     end
 
+    def self.get_mode_by_name(mode_name)
+      if Mrbmacs.const_defined?(mode_name.capitalize + "Mode")
+        Mrbmacs.const_get(mode_name.capitalize + "Mode").instance
+      else
+        nil
+      end
+    end
+
     def self.set_mode_by_filename(filename)
       cur_mode = get_mode_by_filename(filename)
-      mode = Mrbmacs.const_get(cur_mode.capitalize+"Mode").new
+      mode = Mrbmacs.const_get(cur_mode.capitalize+"Mode").instance
       return mode
     end
       
@@ -74,6 +83,7 @@ module Mrbmacs
       @use_tab = false
       @tab_indent = 0
       @lexer = @name
+      @keymap = {}
     end
 
     def set_style(view_win, theme)
@@ -148,6 +158,10 @@ module Mrbmacs
       else
         [0, []]
       end
+    end
+
+    def add_keybind(key_str, command)
+      @keymap[key_str] = command
     end
   end
 

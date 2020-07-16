@@ -1,7 +1,7 @@
 module Mrbmacs
   class KeyMap
     include Scintilla
-    attr_accessor :command_list
+    attr_accessor :command_list, :keymap
     def initialize()
       @command_list = {}
       @default_keymap = {
@@ -25,20 +25,25 @@ module Mrbmacs
         'M-/' => SCI_REDO,
 #        'M-DEL' => SCI_DELWORDLEFT,
       }
+      @keymap = {}
+    end
+
+    def set_keymap_with_key(k, v, win)
+      strokes = k.split(" ").size
+      #      case v.class.to_s
+      if strokes == 1 and v.class.to_s == "Fixnum"
+        set_keybind(win, k, v)
+      else
+        #      when "String"
+        @command_list[k] = v
+        #      else
+        #        $stderr.puts v.class
+      end
     end
 
     def set_keymap(win)
       @keymap.each do |k, v|
-        strokes = k.split(" ").size
-        #      case v.class.to_s
-        if strokes == 1 and v.class.to_s == "Fixnum" 
-          set_keybind(win, k, v)
-        else
-          #      when "String"
-          @command_list[k] = v
-          #      else
-          #        $stderr.puts v.class
-        end
+        set_keymap_with_key(k, v, win)
       end
     end
 
@@ -128,4 +133,5 @@ module Mrbmacs
       @keymap = @default_keymap.merge(keymap)
     end
   end
+
 end

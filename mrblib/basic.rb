@@ -142,5 +142,13 @@ module Mrbmacs
       view_win.sci_get_line(line)
     end
 
+    def get_current_col()
+      @frame.view_win.sci_get_column(@frame.view_win.sci_get_current_pos())
+    end
+
+    def get_current_line()
+      @frame.view_win.sci_line_from_position(@frame.view_win.sci_get_current_pos())
+    end
+
   end
 end

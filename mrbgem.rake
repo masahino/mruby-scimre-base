@@ -15,5 +15,6 @@ MRuby::Gem::Specification.new('mruby-mrbmacs-base') do |spec|
   spec.add_dependency 'mruby-logger'
   spec.add_dependency 'mruby-iconv'
   spec.add_dependency 'mruby-process', :mgem => 'mruby-process2'
+  spec.add_dependency 'mruby-singleton'
   spec.add_test_dependency 'mruby-require', :github => 'mattn/mruby-require'
 end

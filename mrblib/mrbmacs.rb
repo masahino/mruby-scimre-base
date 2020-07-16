@@ -9,6 +9,8 @@ module Mrbmacs
     attr_accessor :sci_handler, :ext
     attr_accessor :command_list
     attr_accessor :use_builtin_completion, :use_builtin_indent
+    attr_accessor :config
+
     def parse_args(argv)
       op = OptionParser.new
       opts = {
@@ -44,14 +46,14 @@ module Mrbmacs
       @io_handler = {}
       @readings = []
       @sci_handler = {}
+      # TODO: data of extension
       @ext = Extension.new
+      @config = Config.new
       @command_handler = {}
       @mark_pos = nil
       @filename = nil
       @target_start_pos = nil
       @file_encodings = []
-      @use_builtin_completion = false
-      @use_builtin_indent = false
       @last_search_text = ""
       @theme = nil
 
@@ -82,11 +84,12 @@ module Mrbmacs
           ""
         end
         init_filename = homedir + "/.mrbmacsrc"
+        @logger.debug "load initfile"
         load_file(init_filename)
       end
-      if @theme == nil
-        @theme = SolarizedDarkTheme.new
-      end
+
+      @theme = @config.theme.new
+
       if @theme.respond_to?(:set_pallete)
        @theme.set_pallete
       end
@@ -94,7 +97,7 @@ module Mrbmacs
       @current_buffer.mode.set_style(@frame.view_win, @theme)
 
       register_extensions()
-      if @use_builtin_completion == true
+      if @config.use_builtin_completion == true
         add_sci_event(Scintilla::SCN_CHARADDED) do |app, scn|
           builtin_completion(scn)
         end
@@ -173,7 +176,7 @@ module Mrbmacs
     end
 
     def extend(command)
-      if command.class.to_s == "Fixnum"
+      if command.is_a?(Integer)
         @frame.view_win.send_message(command)
       else
         begin
@@ -198,6 +201,7 @@ module Mrbmacs
     end
 
     def run(file = nil)
+      @logger.debug "run"
       if file != nil
         find_file(file)
       end

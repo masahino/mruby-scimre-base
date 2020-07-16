@@ -10,5 +10,5 @@ end
 
 assert("subclasses") do
   app = Mrbmacs::TestApp.new
-  assert_equal(4, Mrbmacs::Extension.subclasses.size)
+  assert_equal(3, Mrbmacs::Extension.subclasses.size)
 end

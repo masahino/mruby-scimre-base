@@ -25,7 +25,7 @@ end
 
 assert('get_candidates Constant or class methods') do
   mode = Mrbmacs::RubyMode.new
-  assert_equal(['Mrbmacs::Mode::get_mode_by_filename', 'Mrbmacs::Mode::get_mode_by_suffix'],
+  assert_equal(['Mrbmacs::Mode::get_mode_by_filename', 'Mrbmacs::Mode::get_mode_by_name', 'Mrbmacs::Mode::get_mode_by_suffix'],
     mode.get_candidates_a('Mrbmacs::Mode::get_'))
 end
 

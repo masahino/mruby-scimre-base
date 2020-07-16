@@ -10,7 +10,7 @@ module Mrbmacs
           @basename = ""
           @name = filename
           @directory = Dir.getwd
-          @mode = Mrbmacs::Mode.new
+          @mode = Mrbmacs::Mode.instance
         else
           set_filename(filename)
         end
@@ -19,7 +19,7 @@ module Mrbmacs
         @basename = ""
         @name = ""
         @directory = Dir.getwd
-        @mode = Mrbmacs::Mode.new
+        @mode = Mrbmacs::Mode.instance
       end
       text = ""
       @encoding = "utf-8"
