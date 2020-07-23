@@ -148,5 +148,8 @@ module Mrbmacs
       @frame.view_win.sci_line_from_position(@frame.view_win.sci_get_current_pos())
     end
 
+    def get_current_pos()
+      @frame.view_win.sci_get_current_pos()
+    end
   end
 end
