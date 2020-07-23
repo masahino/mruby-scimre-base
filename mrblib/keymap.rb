@@ -82,6 +82,8 @@ module Mrbmacs
         'Tab' => "indent",
 #        'C-j' => "eval-last_exp",
         'C-a' => "beginning-of-line",
+        'C-c' => 'prefix',
+        'C-c r' => "revert-buffer",
         'C-e' => "end-of-line",
         'C-k' => "kill-line",
         'C-m' => SCI_NEWLINE,
@@ -113,7 +115,6 @@ module Mrbmacs
         'M-v' => SCI_PAGEUP,
         'M-x' => "execute-extended-command",
         'M-%' => "query-replace",
-        'M-r' => "revert-buffer",
       }
       @keymap = @default_keymap.merge(keymap)
 #      set_keymap(win, keymap)
