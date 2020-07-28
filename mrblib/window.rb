@@ -1,7 +1,7 @@
 # coding: utf-8
 module Mrbmacs
   class EditWindow
-    attr_accessor :sci, :modeline, :frame
+    attr_accessor :sci, :mode_win, :frame
     attr_accessor :command_list
     attr_accessor :buffer
     attr_accessor :x1, :y1, :x2, :y2, :width, :height
@@ -81,5 +81,19 @@ module Mrbmacs
       set_theme_base(theme)
     end
 
+    def newline()
+      case @sci.sci_get_eol_mode
+      when 0
+        "CRLF"
+      when 1
+#        "mac"
+        "CR"
+      when 2
+#        "unix"
+        "LF"
+      else
+        ""
+      end
+    end
   end
 end

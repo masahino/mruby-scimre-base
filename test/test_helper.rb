@@ -24,7 +24,7 @@ module Mrbmacs
       @edit_win = Mrbmacs::EditWindowTest.new(self, buffer, 0, 0, 40, 40)
       @view_win = @edit_win.sci
       @edit_win_list = [@edit_win]
-      @mode_win = @edit_win.modeline
+      @mode_win = @edit_win.mode_win
     end
 
     def new_editwin(buffer, x, y, width, height)

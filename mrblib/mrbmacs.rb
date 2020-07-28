@@ -10,6 +10,7 @@ module Mrbmacs
     attr_accessor :command_list
     attr_accessor :use_builtin_completion, :use_builtin_indent
     attr_accessor :config
+    attr_accessor :modeline
 
     def parse_args(argv)
       op = OptionParser.new
@@ -69,6 +70,7 @@ module Mrbmacs
       @file_encodings = []
       @last_search_text = ""
       @theme = nil
+      @modeline = Modeline.new
 
       tmpdir = ENV['TMPDIR'] || ENV['TMP'] || ENV['TEMP'] || ENV['USERPROFILE'] || "/tmp"
       logfile = tmpdir + "/mrbmacs-" + $$.to_s + ".log"

@@ -153,7 +153,7 @@ module Mrbmacs
       @frame.edit_win_list.each do |win|
         win.refresh()
       end
-      @frame.modeline(self, new_win.modeline)
+      @frame.modeline(self, new_win.mode_win)
       new_win.focus_out
     end
 

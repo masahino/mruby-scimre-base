@@ -33,21 +33,13 @@ module Mrbmacs
       end
     end
 
-    # (ENCODING-EOL):---____FILENAME____________(X,Y)_____[MODE____][ADDITIONAL-INFO__]
     def get_mode_str(app)
-      newline = case @view_win.sci_get_eol_mode
-      when 0
-#        "dos"
-        "CRLF"
-      when 1
-#        "mac"
-        "CR"
-      when 2
-#        "unix"
-        "LF"
-      else
-        ""
-      end
+      app.modeline_str
+    end
+
+    # (ENCODING-EOL):---____FILENAME____________(X,Y)_____[MODE____][ADDITIONAL-INFO__]
+    def get_mode_str_builtin(app)
+      newline = @edit_win.newline
       mode_text = " (#{app.current_buffer.encoding}-#{newline}):"
       if @view_win.sci_get_modify != 0
         if @view_win.sci_get_readonly != 0
@@ -99,7 +91,7 @@ module Mrbmacs
       @edit_win.focus_out()
       @edit_win = new_win
       @view_win = new_win.sci
-      @mode_win = new_win.modeline
+      @mode_win = new_win.mode_win
       new_win.focus_in()
     end
 
