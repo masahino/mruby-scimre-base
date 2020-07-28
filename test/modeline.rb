@@ -2,12 +2,12 @@ require File.dirname(__FILE__) + '/test_helper.rb'
 
 assert('Modeline.new') do
   modeline = Mrbmacs::Modeline.new
-  assert_equal 'hoge', modeline.format
+  assert_equal '(#{modeline_encoding}-#{modeline_eol}):#{modeline_modified} #{modeline_buffername} #{modeline_pos}    (#{modeline_vcinfo})    [#{modeline_modename}]    [#{modeline_additional_info}]', modeline.format
 end
 
 assert('modeline_str') do
   app = Mrbmacs::TestApp.new
-  assert_equal 'hoge', app.modeline_str
+  assert_equal '(', app.modeline_str[0]
 end
 
 assert('modeline_format') do
@@ -50,5 +50,5 @@ end
 
 assert('modeline_vcinfo') do
   app = Mrbmacs::TestApp.new
-  assert_equal 'a', app.modeline_vcinfo
+  assert_equal '', app.modeline_vcinfo
 end
