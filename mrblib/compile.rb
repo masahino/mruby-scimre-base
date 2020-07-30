@@ -2,12 +2,13 @@ module Mrbmacs
   class Application
     def compile()
       #      IO.popen("make", :err => [:child, :out]) do |pipe|
-      result_buffer = Mrbmacs::get_buffer_from_name(@buffer_list, "*compilation*")
+      buffer_name = "*compilation*"
+      result_buffer = Mrbmacs::get_buffer_from_name(@buffer_list, buffer_name)
       if result_buffer == nil
-        result_buffer = Mrbmacs::Buffer.new("*compilation*", @buffer_list)
+        result_buffer = Mrbmacs::Buffer.new(buffer_name, @buffer_list)
         @buffer_list.push(result_buffer)
       end
-      switch_to_buffer("*compilation*")
+      switch_to_buffer(buffer_name)
       @current_buffer.docpointer = @frame.view_win.sci_get_docpointer()
       o, e, s = Open3.capture3("make")
       @frame.view_win.sci_set_text(e)

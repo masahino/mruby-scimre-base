@@ -21,7 +21,6 @@ module Mrbmacs
         @directory = Dir.getwd
         @mode = Mrbmacs::Mode.instance
       end
-      text = ""
       @encoding = "utf-8"
       @docpointer = nil
       @pos = 0

@@ -26,8 +26,7 @@ module Mrbmacs
           end
           [comp_list.join(" "), input_text.length]
         end
-      end
-      if code != nil
+      else
         if @system_encodings.include?(code.upcase) == true
           @current_buffer.encoding = code
         end
