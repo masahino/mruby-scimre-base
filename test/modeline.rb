@@ -50,5 +50,5 @@ end
 
 assert('modeline_vcinfo') do
   app = Mrbmacs::TestApp.new
-  assert_equal '', app.modeline_vcinfo
+  assert_equal 'Git:', app.modeline_vcinfo[0..3]
 end

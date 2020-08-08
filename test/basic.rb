@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/test_helper.rb'
 
 assert('set-mark') do
-  app = Mrbmacs::TestApp.new(['-q'])
+  app = Mrbmacs::TestApp.new()
   assert_equal(nil, app.mark_pos)
   app.set_mark()
   assert_equal(0, app.mark_pos)
