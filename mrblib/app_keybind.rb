@@ -5,6 +5,8 @@ module Mrbmacs
         @current_buffer.mode.keymap[key_str]
       elsif @command_list.has_key? key_str
         @command_list[key_str]
+      elsif @keymap.keymap.has_key? key_str
+        @keymap.keymap[key_str]
       else
         nil
       end
