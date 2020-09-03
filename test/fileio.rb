@@ -34,7 +34,7 @@ assert('write-file') do
   app = Mrbmacs::TestApp.new()
   test_file = File.dirname(__FILE__) + File::SEPARATOR + "test.output"
   app.write_file(test_file)
-  assert_equal(test_file, app.current_buffer.filename)
+  assert_equal(File.expand_path(test_file), app.current_buffer.filename)
   assert_equal(File.basename(test_file), app.current_buffer.name)
 end
 
@@ -42,7 +42,7 @@ assert('write-file 2') do
   app = Mrbmacs::TestApp.new()
   $test_echo_gets[:output_text] = File.dirname(__FILE__) + File::SEPARATOR + "test2.output"
   app.write_file()
-  assert_equal($test_echo_gets[:output_text], app.current_buffer.filename)
+  assert_equal(File.expand_path($test_echo_gets[:output_text]), app.current_buffer.filename)
 end
 
 assert('write-file 3') do
@@ -51,7 +51,7 @@ assert('write-file 3') do
   $test_echo_gets[:input_text] = File.dirname(__FILE__) + File::SEPARATOR + "hoge"
   $test_echo_gets[:output_text] = File.dirname(__FILE__) + File::SEPARATOR + "test3.output"
   app.write_file()
-  assert_equal($test_echo_gets[:output_text], app.current_buffer.filename)
+  assert_equal(File.expand_path($test_echo_gets[:output_text]), app.current_buffer.filename)
 end
 
 assert('Mrbmacs::dir_glob 1') do
