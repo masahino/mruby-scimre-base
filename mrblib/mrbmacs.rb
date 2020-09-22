@@ -31,7 +31,7 @@ module Mrbmacs
         puts op.to_s
         exit
       end
-      op.banner = "Usage: mrbmacs-curses OPTION-OR-FILENAME]..."
+      op.banner = "Usage: #{$0} [OPTION-OR-FILENAME]..."
       begin 
         args = op.parse(argv)
       rescue => e
