@@ -31,7 +31,7 @@ module Mrbmacs
     def set_keymap_with_key(k, v, win)
       strokes = k.split(" ").size
       #      case v.class.to_s
-      if strokes == 1 and v.class.to_s == "Fixnum"
+      if strokes == 1 and v.is_a?(Integer)
         set_keybind(win, k, v)
       else
         #      when "String"
