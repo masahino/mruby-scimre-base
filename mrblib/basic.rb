@@ -2,6 +2,10 @@ module Mrbmacs
   class Application
     def set_mark()
       @mark_pos = @frame.view_win.sci_get_current_pos
+      @frame.view_win.sci_set_anchor(@mark_pos)
+      if @frame.view_win.sci_get_move_extends_selection == 0
+        @frame.view_win.sci_set_selection_mode(0)
+      end
     end
     
     def copy_region()
@@ -99,6 +103,7 @@ module Mrbmacs
     end
 
     def keyboard_quit()
+      @frame.view_win.sci_set_empty_selection(get_current_pos)
       @frame.view_win.sci_autoc_cancel
       @mark_pos = nil
     end

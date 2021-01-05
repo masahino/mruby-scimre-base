@@ -25,7 +25,7 @@ module Mrbmacs
     def display_selection_range(scn)
       if scn['updated'] & Scintilla::SC_UPDATE_SELECTION
         if @mark_pos != nil
-          @frame.view_win.sci_set_anchor(@mark_pos)
+#          @frame.view_win.sci_set_anchor(@mark_pos)
         end
       end
     end
