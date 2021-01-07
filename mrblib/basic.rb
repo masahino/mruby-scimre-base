@@ -16,7 +16,7 @@ module Mrbmacs
     def cut_region()
       win = @frame.view_win
       if @mark_pos != nil
-        win.sci_goto_pos(win.sci_get_current_pos - 1)
+        win.sci_goto_pos(win.sci_get_current_pos)
         win.sci_copy_range(@mark_pos, win.sci_get_current_pos)
         win.sci_delete_range(@mark_pos,
                              win.sci_get_current_pos - @mark_pos)
