@@ -22,6 +22,15 @@ module Mrbmacs
       end
     end
 
+    def set_brace_highlight(scn)
+      pos = @frame.view_win.sci_bracematch(get_current_pos, 0)
+      if pos != nil
+        @frame.view_win.sci_brace_highlight(pos, get_current_pos)
+      else
+        @frame.view_win.sci_brace_highlight(-1, -1)
+      end
+    end
+
     def display_selection_range(scn)
       if scn['updated'] & Scintilla::SC_UPDATE_SELECTION
         if @mark_pos != nil

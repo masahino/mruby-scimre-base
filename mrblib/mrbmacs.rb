@@ -109,6 +109,9 @@ module Mrbmacs
         end
       end
       add_sci_event(Scintilla::SCN_UPDATEUI) do |app, scn|
+        set_brace_highlight(scn)
+      end
+      add_sci_event(Scintilla::SCN_UPDATEUI) do |app, scn|
         display_selection_range(scn)
       end
       create_messages_buffer(logfile)
