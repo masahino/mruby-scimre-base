@@ -20,6 +20,7 @@ mrb_mrbmacs_check_syntax(mrb_state *mrb, mrb_value self)
 
   mrb_get_args(mrb, "z", &buffer_text);
   c = mrbc_context_new(mrb);
+  mrbc_filename(mrb, c, "(mrbmacs)");
   c->no_exec = TRUE;
   c->capture_errors = TRUE;
   
