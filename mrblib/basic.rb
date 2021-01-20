@@ -10,6 +10,7 @@ module Mrbmacs
     
     def copy_region()
       @frame.view_win.sci_copy_range(@mark_pos, @frame.view_win.sci_get_current_pos)
+      @frame.view_win.sci_set_empty_selection(get_current_pos)
       @mark_pos = nil
     end
 
