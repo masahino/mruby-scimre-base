@@ -24,7 +24,7 @@ module Mrbmacs
 
     def set_brace_highlight(scn)
       pos = @frame.view_win.sci_bracematch(get_current_pos, 0)
-      if pos != nil
+      if pos != -1
         @frame.view_win.sci_brace_highlight(pos, get_current_pos)
       else
         @frame.view_win.sci_brace_highlight(-1, -1)
