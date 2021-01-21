@@ -23,10 +23,8 @@ module Mrbmacs
     end
 
     def set_style(view_win, theme)
-$stderr.puts "r mode"
       super
       view_win.sci_set_property("fold.compact", "1")
-$stderr.puts "r mode end"
     end
 
     def is_end_of_block(line)
