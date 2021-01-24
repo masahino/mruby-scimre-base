@@ -7,7 +7,7 @@ module Mrbmacs
         command_candidate = command_list.select {|item| item =~ /^#{input_text}/}
         [command_candidate.join(" "), input_text.length]
       end
-      if input_str != ""
+      if input_str != nil
         args = input_str.split(/\s/)
         command = args.shift
         if args != []
