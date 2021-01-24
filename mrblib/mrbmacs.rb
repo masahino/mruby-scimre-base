@@ -96,9 +96,9 @@ module Mrbmacs
 
       @theme = @config.theme.new
 
-      if @theme.respond_to?(:set_pallete)
-       @theme.set_pallete
-      end
+#      if @theme.respond_to?(:set_pallete)
+#       @theme.set_pallete
+#      end
       set_default_style()
       @current_buffer.mode.set_style(@frame.view_win, @theme)
 
