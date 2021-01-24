@@ -1,8 +1,9 @@
 module Mrbmacs
   class SolarizedLightTheme < SolarizedTheme
+    @@theme_name = "solarized-light"
     def initialize
       super
-      @name = "solarized-light"
+      @name = @@theme_name
       @foreground_color = @@base00
       @background_color = @@base3
       @font_color = {

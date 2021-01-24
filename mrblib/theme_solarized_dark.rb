@@ -17,9 +17,10 @@ module Mrbmacs
   #  COLOR_GREEN
 
   class SolarizedDarkTheme < SolarizedTheme
+    @@theme_name = "solarized-dark"
     def initialize
       super
-      @name = "solarized-dark"
+      @name = @@theme_name
       @foreground_color = @@base0
       @background_color = @@base03
       @font_color = {

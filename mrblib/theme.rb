@@ -72,9 +72,8 @@ module Mrbmacs
       list = Hash.new
       ObjectSpace.each_object(Class) do |klass|
         if klass < self
-          name = klass.new.name
-          if name != nil
-             list[klass.new.name] = klass
+          if klass.class_variable_defined? :@@theme_name
+             list[klass.class_variable_get(:@@theme_name)] = klass
           end
         end
       end
