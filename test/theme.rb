@@ -2,9 +2,10 @@ require File.dirname(__FILE__) + '/test_helper.rb'
 
 module Mrbmacs
   class TestTheme < SolarizedTheme
+    @@theme_name = "test-theme"
     def initialize
       super
-      @name = "test-theme"
+      @name = @@theme_name
       @foreground_color = @@base0
     end
     def set_pallete
@@ -39,5 +40,5 @@ end
 
 assert('create_theme_list') do
   list = Mrbmacs::Theme::create_theme_list
-  assert_equal(3, list.size)
+  assert_equal(5, list.size)
 end

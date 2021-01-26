@@ -13,7 +13,7 @@ assert('copy-region') do
   app = Mrbmacs::TestApp.new()
   app.set_mark()
   app.copy_region()
-  assert_equal(Scintilla::SCI_COPYRANGE, app.frame.view_win.messages.pop)
+  assert_equal(Scintilla::SCI_SETEMPTYSELECTION, app.frame.view_win.messages.pop)
   assert_equal(nil, app.mark_pos)
 end
 
