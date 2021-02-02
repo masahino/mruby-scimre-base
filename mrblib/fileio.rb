@@ -88,16 +88,13 @@ module Mrbmacs
 
     def write_file(filename = nil)
       view_win = @frame.view_win
-      
+
       if filename == nil
         dir = @current_buffer.directory
-        prefix_text = dir + File::SEPARATOR
-        
-        filename = @frame.echo_gets("Write file: ", prefix_text) do |input_text|
-          file_list, len = Mrbmacs::dir_glob(input_text)
-          [file_list.join(" "), len]
-        end
+        filename = read_save_file_name("write file: ", dir)
+        @frame.modeline_refresh(self)
       end
+
       if filename != nil
         @current_buffer.set_filename(filename)
         save_buffer()
