@@ -4,6 +4,8 @@ $test_echo_gets = {
   :input_text => "test",
   :output_text => "test"
 }
+$test_file_name = "test"
+
 module Mrbmacs
   class TestApp < Application
     def initialize(argv = [])
@@ -13,6 +15,9 @@ module Mrbmacs
     def add_buffer_to_frame(buffer)
     end
 
+    def read_file_name(prompt, directory, default_name = nil)
+      $test_file_name
+    end
   end
 
   class Frame

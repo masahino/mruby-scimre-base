@@ -6,15 +6,6 @@ assert('insert-file nil') do
   assert_equal "no match", app.frame.echo_message
 end
 
-assert('insert-file echo_gets') do
-  app = Mrbmacs::TestApp.new()
-  $test_echo_gets[:call_block] = true
-  $test_echo_gets[:output_text] = File.dirname(__FILE__) + File::SEPARATOR + "test.input"
-  app.insert_file()
-  assert_equal nil, app.frame.echo_message
-  assert_equal(Scintilla::SCI_INSERTTEXT, app.frame.view_win.messages.pop)
-end
-
 assert('insert-file') do
   app = Mrbmacs::TestApp.new()
   test_file = File.dirname(__FILE__) + File::SEPARATOR + "test.input"

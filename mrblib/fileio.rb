@@ -90,9 +90,9 @@ module Mrbmacs
       view_win = @frame.view_win
 
       if filename == nil
-        dir = @current_buffer.directory
-        filename = read_save_file_name("write file: ", dir, @current_buffer.basename)
-        @frame.modeline_refresh(self)
+        filename = read_save_file_name("write file: ",
+          @current_buffer.directory,
+          @current_buffer.basename)
       end
 
       if filename != nil
@@ -107,13 +107,7 @@ module Mrbmacs
     def insert_file(file_path = nil)
       view_win = @frame.view_win
       if file_path == nil
-        dir = @current_buffer.directory
-        prefix_text = dir + File::SEPARATOR
-
-        file_path = @frame.echo_gets("insert file: ", prefix_text) do |input_text|
-          file_list, len = Mrbmacs::dir_glob(input_text)
-          [file_list.join(" "), len]
-        end
+        file_path = read_file_name("insert file: ", @current_buffer.directory)
       end
       if file_path != nil
         if File.exist?(file_path) == true and FileTest.file?(file_path) == true
@@ -127,9 +121,7 @@ module Mrbmacs
 
     def find_file(filename = nil)
       if filename == nil
-        dir = @current_buffer.directory
-        filename = read_file_name("find file: ", dir)
-        @frame.modeline_refresh(self)
+        filename = read_file_name("find file: ", @current_buffer.directory)
       end
       if filename != nil
         if Mrbmacs::get_buffer_from_path(@buffer_list, filename) != nil
