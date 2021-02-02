@@ -91,7 +91,7 @@ module Mrbmacs
 
       if filename == nil
         dir = @current_buffer.directory
-        filename = read_save_file_name("write file: ", dir)
+        filename = read_save_file_name("write file: ", dir, @current_buffer.basename)
         @frame.modeline_refresh(self)
       end
 
