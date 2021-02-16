@@ -34,6 +34,7 @@ module Mrbmacs
         :color_brace_highlight => [@background_color, @foreground_color, nil, nil],
         :color_annotation => [@@base03, @@red, true, nil],
         :color_linenumber => [@@base00, @@base2, nil, nil],
+        :color_caret_line => [@foreground_color, @@base2, nil, nil],
       }
     end
   end

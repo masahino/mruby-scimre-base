@@ -4,6 +4,7 @@ module Mrbmacs
     ".rb" => "ruby",
     ".rake" => "ruby",
     "Rakefile" => "ruby",
+    ".mrbmacsrc" => "ruby",
     ".c" => "cpp",
     ".h" => "cpp",
     ".cpp" => "cpp",
