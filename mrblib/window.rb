@@ -73,6 +73,10 @@ module Mrbmacs
         sci.sci_style_set_back(Scintilla::STYLE_LINENUMBER,
           theme.font_color[:color_linenumber][1])
       end
+      if theme.font_color[:color_caret_line]
+        @sci.sci_set_caret_line_visible(true)
+        @sci.sci_set_caret_line_back(theme.cont_color[:color_caret_line][1])
+      end
       @sci.sci_set_sel_fore(true, theme.background_color)
       @sci.sci_set_sel_back(true, theme.foreground_color)
     end
