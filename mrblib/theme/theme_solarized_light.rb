@@ -35,6 +35,7 @@ module Mrbmacs
         :color_annotation => [@@base03, @@red, true, nil],
         :color_linenumber => [@@base00, @@base2, nil, nil],
         :color_caret_line => [@foreground_color, @@base2, nil, nil],
+        :color_indent_guide => [@@base1, @background_color, nil, nil],
       }
     end
   end
