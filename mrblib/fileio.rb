@@ -18,6 +18,14 @@ module Mrbmacs
   end
 
   class Application
+    def read_file_name(prompt, directory, default_name = nil)
+      $stderr.puts "not yet implemented"
+    end
+
+    def read_dir_name(prompt, directory)
+      $stderr.puts "not yet implemented"
+    end
+
     def open_file(filename)
       view_win = @frame.view_win
       file_encodings = @file_encodings
