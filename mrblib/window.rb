@@ -78,7 +78,6 @@ module Mrbmacs
         @sci.sci_set_caret_line_back(theme.font_color[:color_caret_line][1])
       end
       if theme.font_color[:color_indent_guide]
-        @sci.sci_set_indentation_guides(Scintilla::SC_IV_LOOKBOTH)
         @sci.sci_style_set_fore(Scintilla::STYLE_INDENTGUIDE,
           theme.font_color[:color_indent_guide][0])
         @sci.sci_style_set_back(Scintilla::STYLE_INDENTGUIDE,
