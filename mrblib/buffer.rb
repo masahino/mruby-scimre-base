@@ -2,8 +2,10 @@ module Mrbmacs
   class Buffer
     attr_accessor :filename, :directory, :basename
     attr_accessor :docpointer, :name, :encoding, :mode, :pos
+    attr_accessor :vcinfo
     attr_accessor :additional_info
     def initialize(filename = nil)
+      @vcinfo = nil
       if filename != nil
         if filename =~ /^\*.*\*$/ # special buffer
           @filename = ""
@@ -33,6 +35,7 @@ module Mrbmacs
       @basename = File.basename(@filename)
       @directory = File.dirname(@filename)
       @mode = Mrbmacs::Mode.set_mode_by_filename(filename)
+      @vcinfo = VC.new(@directory)
     end
   end
 
