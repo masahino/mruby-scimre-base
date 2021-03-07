@@ -127,6 +127,7 @@ module Mrbmacs
       keymap = {
         'C-a' => SCI_HOME,
         'C-e' => SCI_LINEEND,
+        'C-k' => SCI_DELLINERIGHT,
         'C-y' => SCI_PASTE,
         'Tab' => "completion",
       }
