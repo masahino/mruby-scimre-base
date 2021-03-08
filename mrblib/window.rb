@@ -43,15 +43,6 @@ module Mrbmacs
       @sci.sci_set_automatic_fold(Scintilla::SC_AUTOMATICFOLD_CLICK)
     end
 
-    def set_sci_default()
-      @sci.sci_set_codepage(Scintilla::SC_CP_UTF8)
-      @sci.sci_set_viewws(3)
-      @sci.sci_auto_cset_choose_single(1)
-      @sci.sci_auto_cset_auto_hide(false)
-      @sci.sci_set_property("fold", "1")
-      @sci.sci_set_wrap_mode(Scintilla::SC_WRAP_CHAR)
-    end
-
     def set_theme_base(theme)
       @sci.sci_style_clear_all
       @sci.sci_style_set_fore(Scintilla::STYLE_DEFAULT, theme.foreground_color)

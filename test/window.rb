@@ -13,12 +13,6 @@ assert('set_marign') do
   assert_equal(Scintilla::SCI_SETAUTOMATICFOLD, edit_win.sci.messages.pop)
 end
 
-assert('set_sci_default') do
-  edit_win = Mrbmacs::EditWindowTest.new(0, 0, 0, 0, 0, 0)
-  edit_win.set_sci_default
-  assert_equal(Scintilla::SCI_SETWRAPMODE, edit_win.sci.messages.pop)
-end
-
 assert('newline') do
   edit_win = Mrbmacs::EditWindowTest.new(0, 0, 0, 0, 0, 0)
   assert_equal "CRLF", edit_win.newline
