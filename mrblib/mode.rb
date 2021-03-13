@@ -33,6 +33,9 @@ module Mrbmacs
     "Makefile" => "make",
     "makefile" => "make",
     "" => "fundamental",
+    "*scratch*" => "fundamental",
+    "*compilation*" => "compilation",
+    "*Messages*" => "fundamental",
   }
     
   class Mode
@@ -84,6 +87,12 @@ module Mrbmacs
       @tab_indent = 0
       @lexer = @name
       @keymap = {}
+    end
+
+    def set_lexer(view_win)
+      if @lexer != nil
+        view_win.sci_set_lexer_language(@name)
+      end
     end
 
     def set_style(view_win, theme)
@@ -162,6 +171,10 @@ module Mrbmacs
 
     def add_keybind(key_str, command)
       @keymap[key_str] = command
+    end
+
+    def on_style_needed(app, notify)
+      $stderr.puts "on_style_needed"
     end
   end
 

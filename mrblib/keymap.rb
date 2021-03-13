@@ -84,6 +84,7 @@ module Mrbmacs
         'C-a' => "beginning-of-line",
         'C-c' => 'prefix',
         'C-c r' => "revert-buffer",
+        'C-c C-c' => "compile",
         'C-e' => "end-of-line",
         'C-k' => "kill-line",
         'C-m' => SCI_NEWLINE,
@@ -108,6 +109,7 @@ module Mrbmacs
 #        'C-x  ' => "rectangle-mark-mode",
         'C-x C-c' => "save_buffers_kill-terminal",
         'C-x C-f' => "find-file",
+        'C-x C-p' => "open-project",
         'C-x C-s' => "save-buffer",
         'C-x C-w' => "write-file",
         'C-x Enter' => "prefix",
@@ -127,6 +129,7 @@ module Mrbmacs
       keymap = {
         'C-a' => SCI_HOME,
         'C-e' => SCI_LINEEND,
+        'C-k' => SCI_DELLINERIGHT,
         'C-y' => SCI_PASTE,
         'Tab' => "completion",
       }

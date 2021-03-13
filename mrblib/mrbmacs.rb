@@ -11,6 +11,7 @@ module Mrbmacs
     attr_accessor :use_builtin_completion, :use_builtin_indent
     attr_accessor :config
     attr_accessor :modeline
+    attr_accessor :project
 
     def parse_args(argv)
       op = OptionParser.new
@@ -89,6 +90,7 @@ module Mrbmacs
       @echo_keymap.set_keymap(@frame.echo_win)
       @system_encodings = Mrbmacs::get_encoding_list()
       @themes = Theme::create_theme_list
+      @project = Project.new(@current_buffer.directory)
 
       if opts[:no_init_file] == false
         load_init_file
@@ -113,6 +115,9 @@ module Mrbmacs
       end
       add_sci_event(Scintilla::SCN_UPDATEUI) do |app, scn|
         display_selection_range(scn)
+      end
+      add_sci_event(Scintilla::SCN_STYLENEEDED) do |app, scn|
+        @current_buffer.mode.on_style_needed(app, scn)
       end
       create_messages_buffer(logfile)
 
