@@ -2,15 +2,17 @@ module Mrbmacs
   class Buffer
     attr_accessor :filename, :directory, :basename
     attr_accessor :docpointer, :name, :encoding, :mode, :pos
+    attr_accessor :vcinfo
     attr_accessor :additional_info
     def initialize(filename = nil)
+      @vcinfo = nil
       if filename != nil
         if filename =~ /^\*.*\*$/ # special buffer
           @filename = ""
           @basename = ""
           @name = filename
           @directory = Dir.getwd
-          @mode = Mrbmacs::Mode.instance
+          @mode = Mrbmacs::Mode.set_mode_by_filename(filename)
         else
           set_filename(filename)
         end
@@ -33,6 +35,7 @@ module Mrbmacs
       @basename = File.basename(@filename)
       @directory = File.dirname(@filename)
       @mode = Mrbmacs::Mode.set_mode_by_filename(filename)
+      @vcinfo = VC.new(@directory)
     end
   end
 
@@ -59,14 +62,20 @@ module Mrbmacs
   end
 
   class Application
+    def set_buffer_mode(buffer)
+      buffer.mode.set_lexer(@frame.view_win)
+      buffer.mode.set_style(@frame.view_win, @theme)
+    end
+
     def update_buffer_window(new_buffer)
       @current_buffer.pos = @frame.view_win.sci_get_current_pos
       @frame.view_win.sci_add_refdocument(@current_buffer.docpointer)
       @frame.view_win.sci_set_docpointer(new_buffer.docpointer)
       @current_buffer = new_buffer
       @buffer_list.push(@buffer_list.delete(new_buffer))
-      @frame.view_win.sci_set_lexer_language(@current_buffer.mode.name)
-      @current_buffer.mode.set_style(@frame.view_win, @theme)
+      set_buffer_mode(@current_buffer)
+#      @frame.view_win.sci_set_lexer_language(@current_buffer.mode.name)
+#      @current_buffer.mode.set_style(@frame.view_win, @theme)
       @frame.view_win.sci_goto_pos(@current_buffer.pos)
       @frame.sync_tab(@current_buffer.name)
       @frame.modeline(self)

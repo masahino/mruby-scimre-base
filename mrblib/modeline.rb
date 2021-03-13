@@ -54,13 +54,7 @@ module Mrbmacs
     end
 
     def modeline_vcinfo
-      # if git
-      branch = `git -C #{@current_buffer.directory} branch --show-current 2> /dev/null`.chomp
-      if branch != ''
-        "Git:#{branch}"
-      else
-        branch
-      end
+      @current_buffer.vcinfo.to_s
     end
   end
 end

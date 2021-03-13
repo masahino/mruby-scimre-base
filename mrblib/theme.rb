@@ -12,7 +12,7 @@ module Mrbmacs
           if $DEBUG
             $stderr.puts comp_list
           end
-          [comp_list.join(" "), input_text.length]
+          [comp_list.sort.join(" "), input_text.length]
         end
       end
       if theme_name != nil
