@@ -7,7 +7,7 @@ $test_echo_gets = {
 $test_file_name = "test"
 
 module Mrbmacs
-  class TestApp < Application
+  class ApplicationTest < Application
     def initialize(argv = [])
       super(argv)
     end
@@ -20,12 +20,12 @@ module Mrbmacs
     end
   end
 
-  class Frame
+  class Frame < FrameBase
     attr_accessor :view_win, :echo_win, :tk
     attr_accessor :echo_message
     attr_accessor :edit_win, :mode_win
     def initialize(buffer)
-      @echo_win = Scintilla::TestScintilla.new
+      @echo_win = Scintilla::ScintillaTest.new
       @edit_win = Mrbmacs::EditWindowTest.new(self, buffer, 0, 0, 40, 40)
       @view_win = @edit_win.sci
       @edit_win_list = [@edit_win]
@@ -67,7 +67,7 @@ module Mrbmacs
 
   class EditWindowTest < EditWindow
     def initialize(frame, buffer, x1, y1, width, height)
-      @sci = Scintilla::TestScintilla.new
+      @sci = Scintilla::ScintillaTest.new
       @buffer = buffer
       @x1 = x1
       @y1 = y1
@@ -91,7 +91,7 @@ end
 
 module Scintilla
   Scintilla::PLATFORM = :TEST
-  class TestScintilla < ScintillaBase
+  class ScintillaTest < ScintillaBase
     attr_accessor :pos
     attr_accessor :messages
     attr_accessor :test_return

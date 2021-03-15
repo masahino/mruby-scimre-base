@@ -15,7 +15,7 @@ module Mrbmacs
 end
 
 assert('select theme') do
-  app = Mrbmacs::TestApp.new()
+  app = Mrbmacs::ApplicationTest.new()
   assert_equal("solarized-dark", app.theme.name)
 
   app.select_theme("solarized-light")

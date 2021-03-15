@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/test_helper.rb'
 
 def setup
-  app = Mrbmacs::TestApp.new
+  app = Mrbmacs::ApplicationTest.new
   sci = nil
   test_text = File.open(File.dirname(__FILE__) + "/test-utf8.input").read
 

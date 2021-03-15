@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/test_helper.rb'
 
 def setup_buffers
-  app = Mrbmacs::TestApp.new()
+  app = Mrbmacs::ApplicationTest.new()
   buf1 = Mrbmacs::Buffer.new("/foo/bar/foo.rb")
   app.add_new_buffer(buf1)
   buf2 = Mrbmacs::Buffer.new("/foo/bar/bar.rb")
@@ -13,19 +13,19 @@ def setup_buffers
 end
 
 assert('Buffer.new') do
-  app = Mrbmacs::TestApp.new
+  app = Mrbmacs::ApplicationTest.new
   buffer = Mrbmacs::Buffer.new
   assert_kind_of(Mrbmacs::Buffer, buffer)
 end
 
 assert('buffer mode') do
-  app =Mrbmacs::TestApp.new()
+  app =Mrbmacs::ApplicationTest.new()
   buf1 = Mrbmacs::Buffer.new("/foo/bar/baz.r")
   assert_equal("r", buf1.mode.name)
 end
   
 assert('Buffer.set_filename') do
-  app = Mrbmacs::TestApp.new
+  app = Mrbmacs::ApplicationTest.new
   app.current_buffer.set_filename("/foo/bar/hoge.rb")
   assert_equal("hoge.rb", app.current_buffer.name)
   assert_equal("/foo/bar/hoge.rb", app.current_buffer.filename)
@@ -35,7 +35,7 @@ assert('Buffer.set_filename') do
 end
 
 assert('new buffer name') do
-  app = Mrbmacs::TestApp.new()
+  app = Mrbmacs::ApplicationTest.new()
   buffer1 = Mrbmacs::Buffer.new("/foo/bar/hoge.rb")
   assert_equal("hoge.rb", buffer1.name)
   app.add_new_buffer(buffer1)
@@ -115,7 +115,7 @@ assert('kill-buffer (not exist)') do
 end
 
 assert('buffer_list') do
-  app = Mrbmacs::TestApp.new
+  app = Mrbmacs::ApplicationTest.new
   buf1 = Mrbmacs::Buffer.new("/foo/bar/foo.rb")
   app.add_new_buffer(buf1)
   assert_equal "foo.rb", app.buffer_list.last.name

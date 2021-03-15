@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/test_helper.rb'
 
 assert('get_mode_str') do
-  app = Mrbmacs::TestApp.new
+  app = Mrbmacs::ApplicationTest.new
   assert_equal "(",
   app.frame.get_mode_str(app)[0]
 end

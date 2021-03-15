@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/test_helper.rb'
 
 assert('set_theme') do
-  app = Mrbmacs::TestApp.new()
+  app = Mrbmacs::ApplicationTest.new()
   edit_win = app.frame.edit_win
   edit_win.set_theme(app.theme)
   assert_equal(Scintilla::SCI_SETSELBACK, app.frame.view_win.messages.pop)

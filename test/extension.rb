@@ -9,6 +9,6 @@ module Mrbmacs
 end
 
 assert("subclasses") do
-  app = Mrbmacs::TestApp.new
+  app = Mrbmacs::ApplicationTest.new
   assert_equal(3, Mrbmacs::Extension.subclasses.size)
 end

@@ -1,6 +1,6 @@
 # coding: utf-8
 module Mrbmacs
-  class Frame
+  class FrameBase
     include Scintilla
     attr_accessor :view_win, :echo_win, :tk, :sci_notifications
     attr_accessor :edit_win_list, :edit_win
@@ -98,5 +98,8 @@ module Mrbmacs
     def exit()
       raise NotImplementedError
     end
+  end
+
+  class Frame < FrameBase
   end
 end
