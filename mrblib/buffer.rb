@@ -71,13 +71,10 @@ module Mrbmacs
       @current_buffer.pos = @frame.view_win.sci_get_current_pos
       @frame.view_win.sci_add_refdocument(@current_buffer.docpointer)
       @frame.view_win.sci_set_docpointer(new_buffer.docpointer)
+      set_buffer_mode(new_buffer)
+      @frame.view_win.sci_goto_pos(new_buffer.pos)
       @current_buffer = new_buffer
-      @buffer_list.push(@buffer_list.delete(new_buffer))
-      set_buffer_mode(@current_buffer)
-#      @frame.view_win.sci_set_lexer_language(@current_buffer.mode.name)
-#      @current_buffer.mode.set_style(@frame.view_win, @theme)
-      @frame.view_win.sci_goto_pos(@current_buffer.pos)
-      @frame.sync_tab(@current_buffer.name)
+      @frame.sync_tab(new_buffer.name)
       @frame.modeline(self)
     end
 
@@ -97,6 +94,7 @@ module Mrbmacs
         end
         new_buffer = Mrbmacs::get_buffer_from_name(@buffer_list, buffername)
         if new_buffer != nil
+          @buffer_list.push(@buffer_list.delete(new_buffer))
           update_buffer_window(new_buffer)
         end
       end
@@ -181,6 +179,7 @@ module Mrbmacs
         @frame.view_win.sci_document_end
         @frame.view_win.sci_set_savepoint
       end
+
     end
   end
 end

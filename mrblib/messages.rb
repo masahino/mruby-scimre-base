@@ -8,6 +8,9 @@ module Mrbmacs
       @frame.view_win.sci_set_readonly(1)
       @frame.view_win.sci_document_end
       add_sci_event(Scintilla::SCN_FOCUSIN) do |app, scn|
+        if $DEBUG
+          $stderr.puts "SCN_FOCUSIN on #{app.current_buffer.name}, #{app.frame.edit_win.buffer.name}"
+        end
         if app.current_buffer.name == "*Messages*"
           app.revert_buffer()
         end

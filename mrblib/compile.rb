@@ -8,7 +8,7 @@ module Mrbmacs
         result_buffer = Mrbmacs::Buffer.new(buffer_name)
         add_new_buffer(result_buffer)
         add_buffer_to_frame(result_buffer)
-        result_buffer.mode.set_lexer(@frame.view_win)
+        set_buffer_mode(result_buffer)
         @frame.set_theme(@theme)
         @frame.set_buffer_name(buffer_name)
       end
