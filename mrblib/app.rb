@@ -12,6 +12,7 @@ module Mrbmacs
     attr_accessor :config
     attr_accessor :modeline
     attr_accessor :project
+    attr_accessor :io_handler
 
     def parse_args(argv)
       op = OptionParser.new

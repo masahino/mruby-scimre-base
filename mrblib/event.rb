@@ -8,6 +8,7 @@ module Mrbmacs
     def del_io_read_event(io)
       @readings.delete io
       @io_handler.delete(io)
+      io.close
     end
 
     def add_sci_event(event_id, priority = nil, &proc)
