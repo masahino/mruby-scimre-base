@@ -136,6 +136,8 @@ module Scintilla
       []
     end
 
+    def sci_set_lexer_language(lang)
+    end
   end
 end
 
