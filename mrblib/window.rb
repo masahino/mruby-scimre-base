@@ -56,7 +56,7 @@ module Mrbmacs
       if theme.font_color[:color_annotation]
         @sci.sci_style_set_fore(254, theme.font_color[:color_annotation][0])
         @sci.sci_style_set_back(254, theme.font_color[:color_annotation][1])
-        @sci.sci_annotation_set_visible(Scintilla::ANNOTATION_BOXED)
+        @sci.sci_annotation_set_visible(Scintilla::ANNOTATION_INDENTED)
       end
       if theme.font_color[:color_linenumber]
         @sci.sci_style_set_fore(Scintilla::STYLE_LINENUMBER,
