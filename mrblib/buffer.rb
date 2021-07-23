@@ -71,6 +71,7 @@ module Mrbmacs
       @current_buffer.pos = @frame.view_win.sci_get_current_pos
       @frame.view_win.sci_add_refdocument(@current_buffer.docpointer)
       @frame.view_win.sci_set_docpointer(new_buffer.docpointer)
+      @frame.edit_win.buffer = new_buffer
       set_buffer_mode(new_buffer)
       @frame.view_win.sci_goto_pos(new_buffer.pos)
       @current_buffer = new_buffer

@@ -174,7 +174,7 @@ module Mrbmacs
     end
 
     def on_style_needed(app, notify)
-      $stderr.puts "on_style_needed"
+#      $stderr.puts "on_style_needed"
     end
   end
 
