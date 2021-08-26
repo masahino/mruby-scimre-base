@@ -1,5 +1,9 @@
 module Mrbmacs
   class Application
+    def insert(text = "")
+      @frame.view_win.sci_insert_text(get_current_pos, text)
+    end
+
     def set_mark()
       @mark_pos = @frame.view_win.sci_get_current_pos
       @frame.view_win.sci_set_anchor(@mark_pos)
