@@ -36,7 +36,7 @@ module Mrbmacs
     end
 
     def set_lexer(view_win)
-      view_win.sci_set_lexer(Scintilla::SCLEX_CONTAINER)
+#      view_win.sci_set_lexer(Scintilla::SCLEX_CONTAINER)
     end
 
     def on_style_needed(app, scn)
