@@ -101,7 +101,7 @@ assert('clear-rectangle') do
   assert_equal(Scintilla::SCI_SETSELECTIONMODE, app.frame.view_win.messages.pop)
   app.mark_pos = 1
   app.clear_rectangle
-  assert_equal(Scintilla::SCI_REPLACESEL, app.frame.view_win.messages.pop)
+  assert_equal(Scintilla::SCI_REPLACERECTANGULAR, app.frame.view_win.messages.pop)
   assert_nil(app.mark_pos)
 end
 

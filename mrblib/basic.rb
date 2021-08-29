@@ -118,9 +118,16 @@ module Mrbmacs
       win.sci_set_selection_mode(1)
       if @mark_pos != nil
         win.sci_set_anchor(@mark_pos)
-        win.sci_replace_sel(nil, " ")
+        anchor_x = win.sci_get_column(@mark_pos)
+        anchor_y = win.sci_line_from_position(@mark_pos)
+        current_x = win.sci_get_column(get_current_pos)
+        current_y = win.sci_line_from_position(get_current_pos)
+        width = (current_x - anchor_x).abs
+        lines = (current_y - anchor_y).abs + 1
+        replaced_text = Array.new(lines, " "*width).join("\n")
+        win.sci_replace_rectangular(replaced_text.length, replaced_text)
         @mark_pos = nil
-        end
+      end
     end
 
     def delete_rectangle()
