@@ -40,7 +40,7 @@ end
 
 assert('modeline_modename') do
   app = Mrbmacs::ApplicationTest.new
-  assert_equal 'fundamental', app.modeline_modename
+  assert_equal 'irb', app.modeline_modename
 end
 
 assert('modeline_additional_info') do
