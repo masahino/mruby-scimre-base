@@ -4,8 +4,7 @@ module Mrbmacs
       text, pos = @frame.view_win.sci_get_curline
       begin
         ret = eval(text[0..pos-1])
-      rescue
-#        $stderr.puts $!
+      rescue Exception => ret
       end
       @frame.view_win.sci_newline
       @frame.view_win.sci_addtext(ret.to_s.length, ret.to_s)
