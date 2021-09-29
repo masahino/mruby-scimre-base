@@ -54,8 +54,23 @@ module Mrbmacs
           theme.font_color[:color_brace_highlight][1])
       end
       if theme.font_color[:color_annotation]
-        @sci.sci_style_set_fore(254, theme.font_color[:color_annotation][0])
-        @sci.sci_style_set_back(254, theme.font_color[:color_annotation][1])
+        @sci.sci_style_set_fore(theme.annotation_style(:other), theme.font_color[:color_annotation][0])
+        @sci.sci_style_set_back(theme.annotation_style(:other), theme.font_color[:color_annotation][1])
+        @sci.sci_annotation_set_visible(Scintilla::ANNOTATION_INDENTED)
+      end
+      if theme.font_color[:color_annotation_info]
+        @sci.sci_style_set_fore(theme.annotation_style(:info), theme.font_color[:color_annotation_info][0])
+        @sci.sci_style_set_back(theme.annotation_style(:info), theme.font_color[:color_annotation_info][1])
+        @sci.sci_annotation_set_visible(Scintilla::ANNOTATION_INDENTED)
+      end
+      if theme.font_color[:color_annotation_warn]
+        @sci.sci_style_set_fore(theme.annotation_style(:warn), theme.font_color[:color_annotation_warn][0])
+        @sci.sci_style_set_back(theme.annotation_style(:warn), theme.font_color[:color_annotation_warn][1])
+        @sci.sci_annotation_set_visible(Scintilla::ANNOTATION_INDENTED)
+      end
+      if theme.font_color[:color_annotation_error]
+        @sci.sci_style_set_fore(theme.annotation_style(:error), theme.font_color[:color_annotation_error][0])
+        @sci.sci_style_set_back(theme.annotation_style(:error), theme.font_color[:color_annotation_error][1])
         @sci.sci_annotation_set_visible(Scintilla::ANNOTATION_INDENTED)
       end
       if theme.font_color[:color_linenumber]
