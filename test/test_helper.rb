@@ -1,10 +1,10 @@
 # test module for mruby-mrbmacs-base
 $test_echo_gets = {
-  :call_block => false,
-  :input_text => "test",
-  :output_text => "test"
+  call_block: false,
+  input_text: 'test',
+  output_text: 'test'
 }
-$test_file_name = "test"
+$test_file_name = 'test'
 
 module Mrbmacs
   class ApplicationTest < Application
@@ -21,9 +21,8 @@ module Mrbmacs
   end
 
   class Frame < FrameBase
-    attr_accessor :view_win, :echo_win, :tk
-    attr_accessor :echo_message
-    attr_accessor :edit_win, :mode_win
+    attr_accessor :view_win, :echo_win, :tk, :echo_message, :edit_win, :mode_win
+
     def initialize(buffer)
       @echo_win = Scintilla::ScintillaTest.new
       @edit_win = Mrbmacs::EditWindowTest.new(self, buffer, 0, 0, 40, 40)
