@@ -60,3 +60,12 @@ assert('get_candidates unknown') do
 #  candidates = Symbol.all_symbols.collect{|s| ":" + s.id2name}
   assert_equal(Array, mode.get_candidates_a('Mrbmacs::').class)
 end
+
+#      if line =~/^\s*(end|else|then|elsif|when|rescue|ensure|\}|\]|\)).*$/
+assert('is_end_of_block') do
+  mode = Mrbmacs::RubyMode.new
+  assert_equal true, mode.is_end_of_block('end')
+  assert_equal true, mode.is_end_of_block('}')
+  assert_equal true, mode.is_end_of_block(']')
+  assert_equal true, mode.is_end_of_block(')')
+end

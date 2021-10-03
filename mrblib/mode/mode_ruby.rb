@@ -52,7 +52,7 @@ module Mrbmacs
     end
 
     def is_end_of_block(line)
-      if line =~/^\s*(end|else|then|elsif|when|rescue|ensure|}).*$/
+      if line =~/^\s*(end|else|then|elsif|when|rescue|ensure|\}|\]|\)).*$/
         true
       else
         false
