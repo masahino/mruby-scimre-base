@@ -2,9 +2,9 @@ module Mrbmacs
   class IrbMode < Mode
     def initialize
       super.initialize
-      @name = "irb"
-      @lexer = "ruby"
-      @keyword_list = "attr_accessor attr_reader attr_writer module_function begin break elsif module retry unless end case next return until class ensure nil self when def false not super while alias defined? for or then yield and do if redo true else in rescue undef"
+      @name = 'irb'
+      @lexer = 'ruby'
+      @keyword_list = 'attr_accessor attr_reader attr_writer module_function begin break elsif module retry unless end case next return until class ensure nil self when def false not super while alias defined? for or then yield and do if redo true else in rescue undef'
       @style = [
         :color_foreground, # SCE_RB_DEFAULT 0
         :color_warning, # SCE_RB_ERROR 1
@@ -37,23 +37,23 @@ module Mrbmacs
         :color_foreground, # SCE_RB_STRING_QW 28
         :color_foreground, # SCE_RB_WORD_DEMOTED 29
         :color_foreground, # SCE_RB_STDIN 30
-        :color_foreground, # SCE_RB_STDOUT 31
-#        :color_foreground, # 32
-#        :color_foreground, # 33
-#        :color_foreground, # 34
-#        :color_foreground, # 35
-#        :color_foreground, # 36
-#        :color_foreground, # 37
-#        :color_foreground, # 38
-#        :color_foreground, # 39
-#        :color_foreground, # SCE_RB_STDERR 40
-#        :color_foreground, # SCE_RB_UPPER_BOUND 41
-        ]
+        :color_foreground # SCE_RB_STDOUT 31
+        #        :color_foreground, # 32
+        #        :color_foreground, # 33
+        #        :color_foreground, # 34
+        #        :color_foreground, # 35
+        #        :color_foreground, # 36
+        #        :color_foreground, # 37
+        #        :color_foreground, # 38
+        #        :color_foreground, # 39
+        #        :color_foreground, # SCE_RB_STDERR 40
+        #        :color_foreground, # SCE_RB_UPPER_BOUND 41
+      ]
       @keymap['C-j'] = 'eval_last_exp'
     end
 
     def is_end_of_block(line)
-      if line =~/^\s*(end|else|then|elsif|when|rescue|ensure|}).*$/
+      if line =~ /^\s*(end|else|then|elsif|when|rescue|ensure|}).*$/
         true
       else
         false
@@ -61,12 +61,12 @@ module Mrbmacs
     end
 
     def syntax_check(view_win)
-      all_text = view_win.sci_get_text(view_win.sci_get_length+1)
-      Mrbmacs::mrb_check_syntax(all_text)
+      all_text = view_win.sci_get_text(view_win.sci_get_length + 1)
+      Mrbmacs.mrb_check_syntax(all_text)
     end
 
     def get_candidates(input)
-      get_candidates_a(input).join(" ")
+      get_candidates_a(input).join(' ')
     end
 
     def get_candidates_a(input)
@@ -76,7 +76,7 @@ module Mrbmacs
         receiver = $1
         message = Regexp.quote($3)
 
-        candidates = String.instance_methods.collect{|m| m.to_s}
+        candidates = String.instance_methods.collect { |m| m.to_s }
         select_message(receiver, message, candidates).compact.sort.uniq
 
       when /^(\/[^\/]*\/)\.([^.]*)$/
@@ -84,7 +84,7 @@ module Mrbmacs
         receiver = $1
         message = Regexp.quote($2)
 
-        candidates = Regexp.instance_methods.collect{|m| m.to_s}
+        candidates = Regexp.instance_methods.collect { |m| m.to_s }
         select_message(receiver, message, candidates).compact.sort.uniq
 
       when /^([^\]]*\])\.([^.]*)$/
@@ -92,7 +92,7 @@ module Mrbmacs
         receiver = $1
         message = Regexp.quote($2)
 
-        candidates = Array.instance_methods.collect{|m| m.to_s}.sort
+        candidates = Array.instance_methods.collect { |m| m.to_s }.sort
         select_message(receiver, message, candidates).compact.sort.uniq
 
       when /^([^\}]*\})\.([^.]*)$/
@@ -100,15 +100,15 @@ module Mrbmacs
         receiver = $1
         message = Regexp.quote($2)
 
-        candidates = Proc.instance_methods.collect{|m| m.to_s}
-        candidates |= Hash.instance_methods.collect{|m| m.to_s}.sort
+        candidates = Proc.instance_methods.collect { |m| m.to_s }
+        candidates |= Hash.instance_methods.collect { |m| m.to_s }.sort
         select_message(receiver, message, candidates).compact.sort.uniq
 
       when /^(:[^:.]*)$/
         # Symbol
         if Symbol.respond_to?(:all_symbols)
           sym = $1
-          candidates = Symbol.all_symbols.collect{|s| ":" + s.id2name}
+          candidates = Symbol.all_symbols.collect { |s| ':' + s.id2name }
           candidates.grep(/^#{Regexp.quote(sym)}/).sort
         else
           []
@@ -117,8 +117,8 @@ module Mrbmacs
       when /^::([A-Z][^:\.\(]*)$/
         # Absolute Constant or class methods
         receiver = $1
-        candidates = Object.constants.collect{|m| m.to_s}
-        candidates.grep(/^#{receiver}/).collect{|e| "::" + e}.compact.sort.uniq
+        candidates = Object.constants.collect { |m| m.to_s }
+        candidates.grep(/^#{receiver}/).collect { |e| '::' + e }.compact.sort.uniq
 
       when /^([A-Z].*)::([^:.]*)$/
         # Constant or class methods
@@ -138,7 +138,7 @@ module Mrbmacs
         sep = $2
         message = Regexp.quote($3)
 
-        candidates = Symbol.instance_methods.collect{|m| m.to_s}
+        candidates = Symbol.instance_methods.collect { |m| m.to_s }
         select_message(receiver, message, candidates, sep).compact.sort.uniq
 
       when /^(-?(0[dbo])?[0-9_]+(\.[0-9_]+)?([eE]-?[0-9]+)?)(\.|::)([^.]*)$/
@@ -148,7 +148,7 @@ module Mrbmacs
         message = Regexp.quote($6)
 
         begin
-          candidates = eval(receiver).methods.collect{|m| m.to_s}
+          candidates = eval(receiver).methods.collect { |m| m.to_s }
         rescue Exception
           candidates = []
         end
@@ -161,8 +161,8 @@ module Mrbmacs
         message = Regexp.quote($3)
 
         begin
-          candidates = eval(receiver).methods.collect{|m| m.to_s}.sort
-        rescue Exception
+          candidates = eval(receiver).methods.collect { |m| m.to_s }.sort
+        rescue StandardError
           candidates = []
         end
         select_message(receiver, message, candidates, sep)
@@ -170,7 +170,7 @@ module Mrbmacs
       when /^(\$[^.]*)$/
         # global var
         regmessage = Regexp.new(Regexp.quote($1))
-        candidates = global_variables.collect{|m| m.to_s}.grep(regmessage).sort
+        candidates = global_variables.collect { |m| m.to_s }.grep(regmessage).sort
 
       when /^([^."].*)(\.|::)([^.]*)$/
         # variable.func or func.func
@@ -178,7 +178,7 @@ module Mrbmacs
         sep = $2
         message = Regexp.quote($3)
 
-        gv = eval("global_variables").collect{|m| m.to_s}
+        gv = eval('global_variables').collect { |m| m.to_s }
         lv = eval("local_variables").collect{|m| m.to_s}
         iv = eval("instance_variables").collect{|m| m.to_s}
         cv = eval("Object.constants").collect{|m| m.to_s}

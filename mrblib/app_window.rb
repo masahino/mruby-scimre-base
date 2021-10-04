@@ -1,5 +1,7 @@
 # coding: utf-8
+
 module Mrbmacs
+  # Application
   class Application
     def other_window
       if @frame.edit_win_list.size > 1
@@ -8,15 +10,15 @@ module Mrbmacs
           index = 0
         end
         @frame.switch_window(@frame.edit_win_list[index])
-#      @frame.switch_window(@frame.edit_win_list.rotate!().first)
+        # @frame.switch_window(@frame.edit_win_list.rotate!().first)
         @current_buffer = @frame.edit_win.buffer
       end
     end
 
     def delete_window
       active_win = @frame.edit_win
-      if @frame.edit_win_list.size ==1
-        @frame.echo_puts("Atempt to delete sole ordinary window")
+      if @frame.edit_win_list.size == 1
+        @frame.echo_puts('Atempt to delete sole ordinary window')
         return
       end
       x1 = active_win.x1
@@ -25,7 +27,7 @@ module Mrbmacs
       y2 = active_win.y2
       new_win = nil
       count = 0
-      expand_wins = Hash.new()
+      expand_wins = {}
       expand_wins[:left] = []
       expand_wins[:right] = []
       expand_wins[:top] = []
@@ -35,6 +37,7 @@ module Mrbmacs
         if e == active_win
           next
         end
+
         new_win = e
         ex1 = e.x1
         ex2 = e.x2
@@ -127,7 +130,7 @@ module Mrbmacs
         width = active_win.x2 - x
         height = active_win.y2 - active_win.y1
         if width < 10
-          @frame.echo_puts("too small for splitting")
+          @frame.echo_puts('too small for splitting')
           return
         end
         active_win.x2 = x
@@ -137,7 +140,7 @@ module Mrbmacs
         width = active_win.x2 - active_win.x1
         height = active_win.y2 - y
         if height < 3
-          @frame.echo_puts("too small for splitting")
+          @frame.echo_puts('too small for splitting')
           return
         end
         active_win.y2 = y
@@ -151,7 +154,7 @@ module Mrbmacs
       @current_buffer.mode.set_style(new_win.sci, @theme)
       @frame.edit_win_list.push(new_win)
       @frame.edit_win_list.each do |win|
-        win.refresh()
+        win.refresh
       end
       @frame.modeline(self, new_win.mode_win)
       new_win.focus_out

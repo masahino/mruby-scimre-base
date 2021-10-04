@@ -3,9 +3,9 @@ module Mrbmacs
   class CppMode < Mode
     def initialize
       super.initialize
-      @name = "cpp"
-      @lexer = "cpp"
-      @keyword_list = "and and_eq asm auto bitand bitor bool break case catch char class compl const const_cast constexpr continue default delete do double dynamic_cast else enum explicit export extern false float for friend goto if inline int long mutable namespace new not not_eq operator or or_eq private protected public register reinterpret_cast return short signed sizeof static static_cast struct switch template this throw true try typedef typeid typename union unsigned using virtual void volatile wchar_t while xor xor_eq"
+      @name = 'cpp'
+      @lexer = 'cpp'
+      @keyword_list = 'and and_eq asm auto bitand bitor bool break case catch char class compl const const_cast constexpr continue default delete do double dynamic_cast else enum explicit export extern false float for friend goto if inline int long mutable namespace new not not_eq operator or or_eq private protected public register reinterpret_cast return short signed sizeof static static_cast struct switch template this throw true try typedef typeid typename union unsigned using virtual void volatile wchar_t while xor xor_eq'
       @style = [
         :color_foreground, # SCE_C_DEFAULT 0
         :color_comment, # SCE_C_COMMENT 1
@@ -34,13 +34,13 @@ module Mrbmacs
         :color_comment, # SCE_C_PREPROCESSORCOMMENTDOC 24
         :color_foreground, # SCE_C_USERLITERAL 25
         :color_foreground, # SCE_C_TASKMARKER 26
-        :color_negation_char, # SCE_C_ESCAPESEQUENCE 27
-        ]
+        :color_negation_char # SCE_C_ESCAPESEQUENCE 27
+      ]
     end
 
     def set_style(view_win, theme)
       super
-      view_win.sci_set_property("lexer.cpp.track.preprocessor", "0")
+      view_win.sci_set_property('lexer.cpp.track.preprocessor', '0')
     end
 
     def is_end_of_block(line)

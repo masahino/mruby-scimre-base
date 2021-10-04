@@ -4,6 +4,7 @@ module Mrbmacs
       @type = 'git'
       @branch = `git -C #{directory} branch --show-current 2> /dev/null`.chomp
     end
+
     def to_s
       if @branch != ''
         "Git:#{@branch}"
@@ -13,7 +14,5 @@ module Mrbmacs
     end
   end
   class Application
-
-
   end
 end

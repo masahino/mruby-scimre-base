@@ -12,7 +12,7 @@ module Mrbmacs
         end
       end
       unless theme_name.nil?
-        if @themes.has_key?(theme_name)
+        if @themes.key?(theme_name)
           @theme = @themes[theme_name].new
           #          if @theme.respond_to?(:set_pallete)
           #            @theme.set_pallete

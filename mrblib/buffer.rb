@@ -1,4 +1,5 @@
 module Mrbmacs
+  # Buffer
   class Buffer
     attr_accessor :filename, :directory, :basename
     attr_accessor :docpointer, :name, :encoding, :mode, :pos
@@ -8,8 +9,8 @@ module Mrbmacs
       @vcinfo = nil
       if filename != nil
         if filename =~ /^\*.*\*$/ # special buffer
-          @filename = ""
-          @basename = ""
+          @filename = ''
+          @basename = ''
           @name = filename
           @directory = Dir.getwd
           @mode = Mrbmacs::Mode.set_mode_by_filename(filename)
@@ -17,16 +18,16 @@ module Mrbmacs
           set_filename(filename)
         end
       else
-        @filename = ""
-        @basename = ""
-        @name = ""
+        @filename = ''
+        @basename = ''
+        @name = ''
         @directory = Dir.getwd
         @mode = Mrbmacs::Mode.instance
       end
-      @encoding = "utf-8"
+      @encoding = 'utf-8'
       @docpointer = nil
       @pos = 0
-      @additional_info = ""
+      @additional_info = ''
     end
 
     def set_filename(filename)
@@ -58,9 +59,9 @@ module Mrbmacs
       end
       return nil
     end
-
   end
 
+  # Application
   class Application
     def set_buffer_mode(buffer)
       buffer.mode.set_lexer(@frame.view_win)
@@ -80,20 +81,21 @@ module Mrbmacs
     end
 
     def switch_to_buffer(buffername = nil)
-#      if @buffer_list.size <= 1
-#        return
-#      end
+      # if @buffer_list.size <= 1
+      #   return
+      # end
       if buffername == nil
-        buffername = @frame.select_buffer(@buffer_list[-2].name, @buffer_list.collect{|b| b.name})
+        buffername = @frame.select_buffer(@buffer_list[-2].name, @buffer_list.collect{ |b| b.name })
       end
       if buffername != nil
-        if buffername == ""
+        if buffername == ''
           buffername = @buffer_list[-2].name
         end
         if buffername == @current_buffer.name
           return
         end
-        new_buffer = Mrbmacs::get_buffer_from_name(@buffer_list, buffername)
+
+        new_buffer = Mrbmacs.get_buffer_from_name(@buffer_list, buffername)
         if new_buffer != nil
           @buffer_list.push(@buffer_list.delete(new_buffer))
           update_buffer_window(new_buffer)
@@ -105,14 +107,15 @@ module Mrbmacs
       if @buffer_list.size <= 1
         return
       end
+
       if buffername == nil
         echo_text = "kill-buffer (default #{@current_buffer.name}): "
-        buffername = @frame.echo_gets(echo_text, "") do |input_text|
-          buffer_list = @buffer_list.collect{|b| b.name}.select{|b| b[0, input_text.length] == input_text}
-          [buffer_list.join(" "), input_text.length]
+        buffername = @frame.echo_gets(echo_text, '') do |input_text|
+          buffer_list = @buffer_list.collect { |b| b.name }.select { |b| b[0, input_text.length] == input_text }
+          [buffer_list.join(' '), input_text.length]
         end
       end
-      if buffername == ""
+      if buffername == ''
         buffername = @current_buffer.name
       end
       # if buffer is modified
@@ -127,17 +130,18 @@ module Mrbmacs
         end
       end
       # delete buffer
-      target_buffer = Mrbmacs::get_buffer_from_name(@buffer_list, buffername)
+      target_buffer = Mrbmacs.get_buffer_from_name(@buffer_list, buffername)
       @buffer_list.delete(target_buffer)
       switch_to_buffer(@buffer_list.last.name)
     end
 
     def add_new_buffer(new_buffer)
       @buffer_list.push(new_buffer)
-      if new_buffer.basename == ""
+      if new_buffer.basename == ''
         return
       end
-      duplicates = @buffer_list.select {|b| b.basename == new_buffer.basename}
+
+      duplicates = @buffer_list.select { |b| b.basename == new_buffer.basename }
       if duplicates.size > 1
         n = 1
         loop do
@@ -156,9 +160,9 @@ module Mrbmacs
           if b.basename == new_buffer.basename
             tmp_str = b.directory.gsub(/^\//, '')
             if tmp_str.count('/') < n
-              b.name = b.basename + "<" + tmp_str + ">"
+              b.name = b.basename + '<' + tmp_str + '>'
             else
-              b.name = b.basename + "<" + tmp_str.split('/')[-n, n].join('/') + ">"
+              b.name = b.basename + '<' + tmp_str.split('/')[-n, n].join('/') + '>'
             end
           end
         end
@@ -170,17 +174,16 @@ module Mrbmacs
     end
 
     def revert_buffer
-      if @current_buffer.name == "*Messages*"
+      if @current_buffer.name == '*Messages*'
         @frame.view_win.sci_set_read_only(0)
       end
       @frame.view_win.sci_clear_all
       insert_file(@current_buffer.filename)
-      if @current_buffer.name == "*Messages*"
+      if @current_buffer.name == '*Messages*'
         @frame.view_win.sci_set_read_only(1)
         @frame.view_win.sci_document_end
         @frame.view_win.sci_set_savepoint
       end
-
     end
   end
 end

@@ -8,23 +8,23 @@ module Mrbmacs
     SCE_STYLE_NUMBER = 3
     def initialize
       super.initialize
-      @name = "compilation"
+      @name = 'compilation'
       @lexer = nil
-      @keyword_list = ""
+      @keyword_list = ''
       @style = [
         :color_foreground,    # 0: default
         :color_warning,       # 1: error message
         :color_function_name, # 2: file path
         :color_keyword,       # 3: number
         :color_string,        # 4: reserve
-        :color_comment,       # 5: reserve
-        ]
+        :color_comment        # 5: reserve
+      ]
       @keymap['Enter'] = 'compilation_open_file'
     end
 
     def set_style(view_win, theme)
       super
-      view_win.sci_set_property("fold.compact", "1")
+      view_win.sci_set_property('fold.compact', '1')
     end
 
     def is_end_of_block(line)
@@ -36,7 +36,7 @@ module Mrbmacs
     end
 
     def set_lexer(view_win)
-#      view_win.sci_set_lexer(Scintilla::SCLEX_CONTAINER)
+      #      view_win.sci_set_lexer(Scintilla::SCLEX_CONTAINER)
     end
 
     def on_style_needed(app, scn)
@@ -50,8 +50,8 @@ module Mrbmacs
         if line_length > 0
           app.frame.view_win.sci_start_styling(pos, 0)
           line = app.frame.view_win.sci_get_line(i)
-#/foo/bar/baz/hoge.rb:7:7: syntax error, unexpected keyword_end
-#          if line =~ /^(\/.+):(\d+):(\d+): (.+)$/
+          #/foo/bar/baz/hoge.rb:7:7: syntax error, unexpected keyword_end
+          #          if line =~ /^(\/.+):(\d+):(\d+): (.+)$/
           if line =~ /^(\/.+):(\d+):(\d+): (.+)$/
             app.frame.view_win.sci_set_styling($1.length, SCE_STYLE_FILE)      # file
             app.frame.view_win.sci_set_styling(1, SCE_STYLE_DEFAULT)              # :

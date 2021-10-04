@@ -26,7 +26,7 @@ module Mrbmacs
           end
         end
         @sci_handler[event_id].push SciEvent.new(priority, proc)
-        @sci_handler[event_id].sort! {|a, b| a.priority <=> b.priority}
+        @sci_handler[event_id].sort! { |a, b| a.priority <=> b.priority }
       end
     end
 

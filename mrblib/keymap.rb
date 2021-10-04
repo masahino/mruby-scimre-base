@@ -2,36 +2,36 @@ module Mrbmacs
   class KeyMap
     include Scintilla
     attr_accessor :command_list, :keymap
-    def initialize()
+    def initialize
       @command_list = {}
       @default_keymap = {
         'C-b' => SCI_CHARLEFT,
         'C-d' => SCI_CLEAR,
         'C-f' => SCI_CHARRIGHT,
-        'C-g' => "keyboard-quit",
+        'C-g' => 'keyboard-quit',
         'C-h' => SCI_DELETEBACK,
-        'C-w' => "cut-region",
-        'C- ' => "set-mark", # C-SPC
+        'C-w' => 'cut-region',
+        'C- ' => 'set-mark', # C-SPC
         'C-x u' => SCI_UNDO,
         'C-_' => SCI_UNDO,
         'C-/' => SCI_UNDO,
         'Escape' => 'prefix',
         'M-b' => SCI_WORDLEFT,
         'M-f' => SCI_WORDRIGHT,
-        'M-w' => "copy-region",
-        'M-<' => "beginning-of-buffer",
-        'M->' => "end-of-buffer",
+        'M-w' => 'copy-region',
+        'M-<' => 'beginning-of-buffer',
+        'M->' => 'end-of-buffer',
         'M-d' => SCI_DELWORDRIGHT,
-        'M-/' => SCI_REDO,
-#        'M-DEL' => SCI_DELWORDLEFT,
+        'M-/' => SCI_REDO
+        # 'M-DEL' => SCI_DELWORDLEFT,
       }
       @keymap = {}
     end
 
     def set_keymap_with_key(k, v, win)
-      strokes = k.split(" ").size
+      strokes = k.split(' ').size
       #      case v.class.to_s
-      if strokes == 1 and v.is_a?(Integer)
+      if strokes == 1 && v.is_a?(Integer)
         set_keybind(win, k, v)
       else
         #      when "String"
@@ -55,12 +55,12 @@ module Mrbmacs
       end
       keydef = 0
       if key =~ /^(\w)-(\S)$/
-        if $1 == "C"
+        if $1 == 'C'
           keydef += ctrl_code << 16
-        elsif $1 == "M"
+        elsif $1 == 'M'
           keydef += meta_code << 16
         end
-        if $2 == "DEL"
+        if $2 == 'DEL'
           keydef += Scintilla::SCK_DELETE
         else
           if Scintilla::PLATFORM == :GTK_MACOSX
@@ -75,67 +75,66 @@ module Mrbmacs
   end
 
   class ViewKeyMap < KeyMap
-    def initialize()
-      super.initialize()
+    def initialize
+      super.initialize
       keymap = {
-        'Enter' => "newline",
-        'Tab' => "indent",
-#        'C-j' => "eval-last_exp",
-        'C-a' => "beginning-of-line",
+        'Enter' => 'newline',
+        'Tab' => 'indent',
+        # 'C-j' => "eval-last_exp",
+        'C-a' => 'beginning-of-line',
         'C-c' => 'prefix',
-        'C-c r' => "revert-buffer",
-        'C-c C-c' => "compile",
-        'C-e' => "end-of-line",
-        'C-k' => "kill-line",
+        'C-c r' => 'revert-buffer',
+        'C-c C-c' => 'compile',
+        'C-e' => 'end-of-line',
+        'C-k' => 'kill-line',
         'C-m' => SCI_NEWLINE,
         'C-n' => SCI_LINEDOWN,
         'C-p' => SCI_LINEUP,
-        'C-r' => "isearch-backward",
-        'C-s' => "isearch-forward",
+        'C-r' => 'isearch-backward',
+        'C-s' => 'isearch-forward',
         'C-v' => SCI_PAGEDOWN,
-        'C-x' => "prefix",
-        'C-x r' => "prefix",
-        'C-y' => "yank",
-        'C-x b' => "switch-to-buffer",
-        'C-x i' => "insert-file",
-        'C-x k' => "kill-buffer",
-        'C-x o' => "other-window",
-        'C-x r c' => "clear-rectangle",
-        'C-x r d' => "delete-rectangle",
-        'C-x 0' => "delete-window",
-        'C-x 1' => "delete-other-window",
-        'C-x 2' => "split-window-vertically",
-        'C-x 3' => "split-window-horizontally",
-#        'C-x  ' => "rectangle-mark-mode",
-        'C-x C-c' => "save_buffers_kill-terminal",
-        'C-x C-f' => "find-file",
-        'C-x C-p' => "open-project",
-        'C-x C-s' => "save-buffer",
-        'C-x C-w' => "write-file",
-        'C-x Enter' => "prefix",
-        'C-x Enter f' => "set-buffer-file-coding-system",
+        'C-x' => 'prefix',
+        'C-x r' => 'prefix',
+        'C-y' => 'yank',
+        'C-x b' => 'switch-to-buffer',
+        'C-x i' => 'insert-file',
+        'C-x k' => 'kill-buffer',
+        'C-x o' => 'other-window',
+        'C-x r c' => 'clear-rectangle',
+        'C-x r d' => 'delete-rectangle',
+        'C-x 0' => 'delete-window',
+        'C-x 1' => 'delete-other-window',
+        'C-x 2' => 'split-window-vertically',
+        'C-x 3' => 'split-window-horizontally',
+        # 'C-x  ' => 'rectangle-mark-mode',
+        'C-x C-c' => 'save_buffers_kill-terminal',
+        'C-x C-f' => 'find-file',
+        'C-x C-p' => 'open-project',
+        'C-x C-s' => 'save-buffer',
+        'C-x C-w' => 'write-file',
+        'C-x Enter' => 'prefix',
+        'C-x Enter f' => 'set-buffer-file-coding-system',
         'M-v' => SCI_PAGEUP,
-        'M-x' => "execute-extended-command",
-        'M-%' => "query-replace",
+        'M-x' => 'execute-extended-command',
+        'M-%' => 'query-replace'
       }
       @keymap = @default_keymap.merge(keymap)
-#      set_keymap(win, keymap)
+      #      set_keymap(win, keymap)
     end
   end
-  
+
   class EchoWinKeyMap < KeyMap
-    def initialize()
-      super.initialize()
+    def initialize
+      super.initialize
       keymap = {
         'C-a' => SCI_HOME,
         'C-e' => SCI_LINEEND,
         'C-k' => SCI_DELLINERIGHT,
         'C-y' => SCI_PASTE,
-        'Tab' => "completion",
+        'Tab' => 'completion'
       }
-#      set_keymap(win, keymap)
+      #      set_keymap(win, keymap)
       @keymap = @default_keymap.merge(keymap)
     end
   end
-
 end

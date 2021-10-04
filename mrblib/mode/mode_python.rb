@@ -1,13 +1,13 @@
 module Mrbmacs
-    include Scintilla
+  include Scintilla
   class PythonMode < Mode
     def initialize
       super.initialize
       @indent = 4
-      @name = "python"
-      @lexer = "python"
+      @name = 'python'
+      @lexer = 'python'
       @use_tabs = false
-      @keyword_list = "and as assert break class continue def del elif else except exec finally for from global if import in is lambda not or pass print raise return try while with yield"
+      @keyword_list = 'and as assert break class continue def del elif else except exec finally for from global if import in is lambda not or pass print raise return try while with yield'
       @style = [
         :color_foreground, # SCE_P_DEFAULT 0
         :color_comment, # SCE_P_COMMENT 1
@@ -28,13 +28,12 @@ module Mrbmacs
         :color_string, # SCE_P_FSTRING 16
         :color_foreground, # SCE_P_FCHARACTER 17
         :color_foreground, # SCE_P_FTRIPLE 18
-        :color_foreground, # SCE_P_FTRIPLEDOUBLE 19
-        ]
+        :color_foreground # SCE_P_FTRIPLEDOUBLE 19
+      ]
     end
 
     def is_end_of_block(line)
       false
     end
-
   end
 end

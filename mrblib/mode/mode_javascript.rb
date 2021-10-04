@@ -3,8 +3,7 @@ module Mrbmacs
   class JavascriptMode < CppMode
     def initialize
       super
-      @name = "javascript"
+      @name = 'javascript'
     end
-
   end
 end

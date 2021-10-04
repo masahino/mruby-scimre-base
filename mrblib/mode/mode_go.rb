@@ -1,14 +1,14 @@
 module Mrbmacs
-    include Scintilla
+  include Scintilla
   class GoMode < Mode
     def initialize
       super.initialize
       @indent = 4
-      @name = "go"
-      @lexer = "cpp"
+      @name = 'go'
+      @lexer = 'cpp'
       @use_tabs = true
       @tab_indent = 8
-      @keyword_list = "break default func interface select case defer go map struct chan else goto package switch const fallthrough if range type continue for import return var bool int int8 int16 int32 int64 byte uint uint8 uint16 uint32 uint64 uintptr float float32 float64 string nil true false"
+      @keyword_list = 'break default func interface select case defer go map struct chan else goto package switch const fallthrough if range type continue for import return var bool int int8 int16 int32 int64 byte uint uint8 uint16 uint32 uint64 uintptr float float32 float64 string nil true false'
       @style = [
         :color_foreground, # SCE_C_DEFAULT 0
         :color_comment, # SCE_C_COMMENT 1
@@ -37,18 +37,17 @@ module Mrbmacs
         :color_comment, # SCE_C_PREPROCESSORCOMMENTDOC 24
         :color_foreground, # SCE_C_USERLITERAL 25
         :color_foreground, # SCE_C_TASKMARKER 26
-        :color_negation_char, # SCE_C_ESCAPESEQUENCE 27
-        ]
+        :color_negation_char # SCE_C_ESCAPESEQUENCE 27
+      ]
     end
     def get_indent_level(view_win)
-      line = view_win.sci_line_from_position(view_win.sci_get_current_pos())
+      line = view_win.sci_line_from_position(view_win.sci_get_current_pos)
       level = view_win.sci_get_fold_level(line) & Scintilla::SC_FOLDLEVELNUMBERMASK - Scintilla::SC_FOLDLEVELBASE
       cur_line = view_win.sci_get_curline()[0]
-      if level > 0 and cur_line =~/^\s+}.*$/
+      if level > 0 && cur_line =~ /^\s+}.*$/
         level -= 1
       end
       return level
     end
-
   end
 end

@@ -3,8 +3,7 @@ module Mrbmacs
   class JavaMode < CppMode
     def initialize
       super
-      @name = "java"
+      @name = 'java'
     end
-
   end
 end

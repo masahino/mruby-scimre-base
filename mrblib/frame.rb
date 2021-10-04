@@ -1,9 +1,7 @@
-# coding: utf-8
 module Mrbmacs
   class FrameBase
     include Scintilla
-    attr_accessor :view_win, :echo_win, :tk, :sci_notifications
-    attr_accessor :edit_win_list, :edit_win
+    attr_accessor :view_win, :echo_win, :tk, :sci_notifications, :edit_win_list, :edit_win
 
     def init_keysyms
       @keysyms = [0,
@@ -17,7 +15,7 @@ module Mrbmacs
                   Scintilla::SCK_DOWN,
                   Scintilla::SCK_LEFT,
                   Scintilla::SCK_RIGHT,
-                  0,0,
+                  0, 0,
                   Scintilla::SCK_INSERT,
                   Scintilla::SCK_DELETE,
                   0,
@@ -43,21 +41,22 @@ module Mrbmacs
       mode_text = " (#{app.current_buffer.encoding}-#{newline}):"
       if @view_win.sci_get_modify != 0
         if @view_win.sci_get_readonly != 0
-          mode_text += "%*"
+          mode_text += '%*'
         else
-          mode_text += "**"
+          mode_text += '**'
         end
       elsif @view_win.sci_get_readonly != 0
-        mode_text += "%%"
+        mode_text += '%%'
       else
-        mode_text += "--"
+        mode_text += '--'
       end
-      mode_text += sprintf("    %-20s", app.current_buffer.name)
-      x = @view_win.sci_get_column(@view_win.sci_get_current_pos)+1
-      y = @view_win.sci_line_from_position(@view_win.sci_get_current_pos)+1
-      mode_text += sprintf("%-10s", "(#{x},#{y})")
-      mode_text += sprintf("%-10s", "["+app.current_buffer.mode.name+"]")
-      mode_text += sprintf("%-20s", "["+app.current_buffer.additional_info+"]")
+      mode_text += sprintf('    %-20s', app.current_buffer.name)
+      x = @view_win.sci_get_column(@view_win.sci_get_current_pos) + 1
+      y = @view_win.sci_line_from_position(@view_win.sci_get_current_pos) + 1
+      mode_text += sprintf('%-10s', "(#{x},#{y})")
+      mode_text += sprintf('%-10s', '[' + app.current_buffer.mode.name + ']')
+      mode_text += sprintf('%-20s', '[' + app.current_buffer.additional_info + ']')
+      mode_text
     end
 
     def set_buffer_name(name)
@@ -73,11 +72,11 @@ module Mrbmacs
     def show_annotation(line, column, message, style = 254)
       #      text = sprintf "line %d: %s", line, message
       text = message
-      @view_win.sci_annotation_set_text(line-1, text)
-      @view_win.sci_annotation_set_style(line-1, style)
+      @view_win.sci_annotation_set_text(line - 1, text)
+      @view_win.sci_annotation_set_style(line - 1, style)
     end
 
-    def echo_gets(prompt, text = "", &block)
+    def echo_gets(prompt, text = '', &block)
       raise NotImplementedError
     end
 
@@ -89,14 +88,14 @@ module Mrbmacs
     end
 
     def switch_window(new_win)
-      @edit_win.focus_out()
+      @edit_win.focus_out
       @edit_win = new_win
       @view_win = new_win.sci
       @mode_win = new_win.mode_win
-      new_win.focus_in()
+      new_win.focus_in
     end
 
-    def exit()
+    def exit
       raise NotImplementedError
     end
   end
