@@ -51,10 +51,10 @@ module Mrbmacs
         color_regexp_grouping_backslash: [@@base05, @background_color, nil, nil],
         # additional
         color_brace_highlight: [@background_color, @foreground_color, nil, nil],
-        color_annotation: [@@base06, @@base08, true, nil],
-        color_annotation_info: [@@base06, @@base03, true, nil],
-        color_annotation_warn: [@@base06, @@base09, true, nil],
-        color_annotation_error: [@@base06, @@base08, true, nil],
+        color_annotation: [@@base05, @@base08, true, nil],
+        color_annotation_info: [@@base05, @@base03, true, nil],
+        color_annotation_warn: [@@base05, @@base0F, true, nil],
+        color_annotation_error: [@@base05, @@base08, true, nil],
         color_linenumber: [@@base04, @@base01, nil, nil],
         color_caret_line: [@foreground_color, @@base02, nil, nil],
         color_indent_guide: [@@base03, @background_color, nil, nil]
