@@ -125,30 +125,30 @@ module Mrbmacs
     def split_window(horizon)
       active_win = @frame.edit_win
       if horizon == true
-        x = ((active_win.x2 + active_win.x1) / 2).to_i
+        x = ((active_win.x2 + active_win.x1) / 2).to_i + 1
         y = active_win.y1
-        width = active_win.x2 - x
-        height = active_win.y2 - active_win.y1
-        if width < 10
+        new_width = active_win.x2 - x + 1
+        new_height = active_win.height
+        if new_width < 10
           @frame.echo_puts('too small for splitting')
           return
         end
-        active_win.x2 = x
+        active_win.x2 = x - 1
       else
-        y = ((active_win.y2 + active_win.y1) / 2).to_i
+        y = ((active_win.y2 + active_win.y1) / 2).to_i + 1
         x = active_win.x1
-        width = active_win.x2 - active_win.x1
-        height = active_win.y2 - y
-        if height < 3
+        new_width = active_win.width
+        new_height = active_win.y2 - y + 1
+        if new_height < 3
           @frame.echo_puts('too small for splitting')
           return
         end
-        active_win.y2 = y
+        active_win.y2 = y - 1
       end
 
       active_win.compute_area
       active_win.refresh
-      new_win = @frame.new_editwin(@current_buffer, x, y, width, height)
+      new_win = @frame.new_editwin(@current_buffer, x, y, new_width, new_height)
       @keymap.set_keymap(new_win.sci)
       new_win.set_theme(@theme)
       @current_buffer.mode.set_style(new_win.sci, @theme)
@@ -156,7 +156,7 @@ module Mrbmacs
       @frame.edit_win_list.each do |win|
         win.refresh
       end
-      @frame.modeline(self, new_win.mode_win)
+      @frame.modeline(self, new_win)
       new_win.focus_out
     end
 
