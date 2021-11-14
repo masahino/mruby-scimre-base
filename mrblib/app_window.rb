@@ -44,33 +44,33 @@ module Mrbmacs
         ey1 = e.y1
         ey2 = e.y2
 
-        if x1 == ex2 && y1 == ey1 && y2 == ey2
+        if x1 == (ex2 + 1) && y1 == ey1 && y2 == ey2
           # left border
           e.x2 = x2
           count += 1
           break
-        elsif x2 == ex1 && y1 == ey1 && y2 == ey2
+        elsif (x2 + 1) == ex1 && y1 == ey1 && y2 == ey2
           # right border
           e.x1 = x1
           count += 1
           break
-        elsif y1 == ey2 && x1 == ex1 && x2 == ex2
+        elsif y1 == (ey2 + 1) && x1 == ex1 && x2 == ex2
           #  top border
           e.y2 = y2
           count += 1
           break
-        elsif y2 == ey1 && x1 == ex1 && x2 == ex2
+        elsif (y2 +1 ) == ey1 && x1 == ex1 && x2 == ex2
           # bottom border
           e.y1 = y1
           count += 1
           break
-        elsif x1 == ex2
+        elsif x1 == (ex2 + 1)
           expand_wins[:left].push e
-        elsif x2 == ex1
+        elsif (x2 + 1) == ex1
           expand_wins[:right].push e
-        elsif y1 == ey2
+        elsif y1 == (ey2 + 1)
           expand_wins[:top].push e
-        elsif y2 == ey1
+        elsif (y2 + 1) == ey1
           expand_wins[:bottom].push e
         end
       end

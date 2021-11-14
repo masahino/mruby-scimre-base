@@ -70,8 +70,8 @@ module Mrbmacs
       @buffer = buffer
       @x1 = x1
       @y1 = y1
-      @x2 = x1 + width
-      @y2 = y1 + height
+      @x2 = x1 + width - 1
+      @y2 = y1 + height - 1
       @width = width
       @height = height
     end
