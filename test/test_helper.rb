@@ -109,6 +109,20 @@ module Scintilla
       end
     end
 
+    def send_message_get_text(length)
+      send_message(Scintilla::SCI_GETTEXT, [length])
+    end
+
+    def send_message_get_line(line)
+      send_message(Scintilla::SCI_GETLINE, [line])
+    end
+
+    def send_message_set_docpointer(id, wparam)
+    end
+
+    def send_message_get_docpointer(wparam)
+    end
+
     def resize_window(height, width)
     end
 
@@ -118,11 +132,6 @@ module Scintilla
     def refresh
     end
 
-#    def sci_set_docpointer(doc)
-#    end
-
-#    def sci_set_lexer_language(lang)
-#    end
 
     def send_key(key, mod_shift, mod_ctrl, mod_alt)
     end
