@@ -6,7 +6,11 @@ module Mrbmacs
       @name = 'rust'
       @lexer = 'rust'
       @indent = 4
-      @keyword_list = 'as fn let const static if else match for in loop while break continue return crate extern use mod self super struct enum union trait type where impl Self self pub unsafe true false move mut ref box do catch default'
+      @keyword_list = "as fn let const static if else match for in loop \
+      while break continue return crate extern use mod self super struct \
+      enum union trait type where impl Self self pub unsafe true false \
+      move mut ref box do catch default"
+      @start_of_comment = '// '
       @style = [
         :color_foreground, # define SCE_RUST_DEFAULT 0
         :color_comment, # define SCE_RUST_COMMENTBLOCK 1

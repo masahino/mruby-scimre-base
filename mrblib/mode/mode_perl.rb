@@ -33,6 +33,7 @@ module Mrbmacs
       use utime values vec wait waitpid wantarray warn while write \
       xor \
       given when default say state UNITCHECK"
+      @start_of_comment = '# '
       @style = [
         :color_foreground, # define SCE_PL_DEFAULT 0
         :color_warning, # define SCE_PL_ERROR 1

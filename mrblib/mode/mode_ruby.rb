@@ -5,6 +5,7 @@ module Mrbmacs
       @name = 'ruby'
       @lexer = 'ruby'
       @keyword_list = 'attr_accessor attr_reader attr_writer module_function begin break elsif module retry unless end case next return until class ensure nil self when def false not super while alias defined? for or then yield and do if redo true else in rescue undef'
+      @start_of_comment = '# '
       @style = [
         :color_foreground, # SCE_RB_DEFAULT 0
         :color_warning, # SCE_RB_ERROR 1

@@ -6,6 +6,8 @@ module Mrbmacs
       @name = 'html'
       @lexer = 'hypertext'
       @keyword_list = ''
+      @start_of_comment = '<!-- '
+      @end_of_comment = ' -->'
       @style = [
         :color_foreground, # define SCE_H_DEFAULT 0
         :color_keyword, # define SCE_H_TAG 1

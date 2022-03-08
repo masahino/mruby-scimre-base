@@ -8,6 +8,7 @@ module Mrbmacs
       @keyword_list = "case class data default deriving do else hiding if \
       import in infix infixl infixr instance let module \
       newtype of then type where forall foreign"
+      @start_of_comment = '-- '
       @style = [
         :color_foreground, # define SCE_HA_DEFAULT 0
         :color_foreground, # define SCE_HA_IDENTIFIER 1

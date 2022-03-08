@@ -18,6 +18,7 @@ module Mrbmacs
       continue errset baktrace evalhook truncate float rem min max abs sin cos tan expt exp sqrt \
       random logand logior logxor lognot bignums logeqv lognand lognor \
       logorc2 logtest logbitp logcount integer length nil"
+      @start_of_comment = '; '
       @style = [
         :color_foreground, # define SCE_LISP_DEFAULT 0
         :color_comment, # define SCE_LISP_COMMENT 1

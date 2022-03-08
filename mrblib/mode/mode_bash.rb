@@ -6,6 +6,7 @@ module Mrbmacs
       @name = 'bash'
       @lexer = 'bash'
       @keyword_list = ''
+      @start_of_comment = '# '
       @style = [
         :color_foreground, # define SCE_SH_DEFAULT 0
         :color_warning, # define SCE_SH_ERROR 1

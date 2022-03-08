@@ -6,6 +6,8 @@ module Mrbmacs
       @name = 'css'
       @lexer = 'css'
       @keyword_list = ''
+      @start_of_comment = '/* '
+      @end_of_comment = ' */'
       @style = [
         :color_foreground, # define SCE_CSS_DEFAULT 0
         :color_foregrond, # define SCE_CSS_TAG 1

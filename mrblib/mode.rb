@@ -43,6 +43,7 @@ module Mrbmacs
   class Mode
     include Singleton
     attr_accessor :name, :lexer, :indent, :use_tab, :keymap
+    attr_reader :start_of_comment, :end_of_comment
 
     #    def name
     #      @name
@@ -90,6 +91,8 @@ module Mrbmacs
       @tab_indent = 0
       @lexer = @name
       @keymap = {}
+      @start_of_comment = ''
+      @end_of_comment = ''
     end
 
     def set_lexer(view_win)

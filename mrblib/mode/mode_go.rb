@@ -9,6 +9,7 @@ module Mrbmacs
       @use_tabs = true
       @tab_indent = 8
       @keyword_list = 'break default func interface select case defer go map struct chan else goto package switch const fallthrough if range type continue for import return var bool int int8 int16 int32 int64 byte uint uint8 uint16 uint32 uint64 uintptr float float32 float64 string nil true false'
+      @start_of_comment = '// '
       @style = [
         :color_foreground, # SCE_C_DEFAULT 0
         :color_comment, # SCE_C_COMMENT 1

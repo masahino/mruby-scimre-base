@@ -6,6 +6,7 @@ module Mrbmacs
       @name = 'latex'
       @lexer = 'latex'
       @keyword_list = ''
+      @start_of_comment = '% '
       @style = [
         :color_foreground, # define SCE_L_DEFAULT 0
         :color_builtin, # define SCE_L_COMMAND 1

@@ -7,7 +7,9 @@ module Mrbmacs
       @name = 'python'
       @lexer = 'python'
       @use_tabs = false
-      @keyword_list = 'and as assert break class continue def del elif else except exec finally for from global if import in is lambda not or pass print raise return try while with yield'
+      @keyword_list = "and as assert break class continue def del elif else except exec finally for from \
+      global if import in is lambda not or pass print raise return try while with yield"
+      @start_of_comment = '# '
       @style = [
         :color_foreground, # SCE_P_DEFAULT 0
         :color_comment, # SCE_P_COMMENT 1

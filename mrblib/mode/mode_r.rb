@@ -6,6 +6,7 @@ module Mrbmacs
       @name = 'r'
       @lexer = 'r'
       @keyword_list = 'if else repeat while function for in next break TRUE FALSE NULL NA Inf NaN'
+      @start_of_comment = '# '
       @style = [
         :color_foreground, # define SCE_R_DEFAULT 0
         :color_comment, # define SCE_R_COMMENT 1

@@ -6,6 +6,7 @@ module Mrbmacs
       @name = 'make'
       @lexer = 'make'
       @keyword_list = ''
+      @start_of_comment = '# '
       @style = [
         :color_foreground, # define SCE_MAKE_DEFAULT 0
         :color_comment, # define SCE_MAKE_COMMENT 1
