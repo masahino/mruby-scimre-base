@@ -19,7 +19,7 @@ module Mrbmacs
           eval("#{command.gsub('-', '_')}(#{args})")
         rescue
           @logger.error $!
-          @frame.message $!
+          message "#{command} no found"
         end
       end
     end
