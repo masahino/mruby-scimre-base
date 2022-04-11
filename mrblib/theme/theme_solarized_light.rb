@@ -8,6 +8,7 @@ module Mrbmacs
       @background_color = @@base3
       @font_color = {
         #                                italic, bold
+        # basic color
         color_foreground: [@@base00, @@base3, nil, nil],
         color_builtin: [@@green, @@base3, nil, nil],
         color_comment: [@@base1, @@base3, true, nil],
@@ -18,6 +19,9 @@ module Mrbmacs
         color_type: [@@yellow, @@base3, nil, nil],
         color_variable_name: [@@blue, @@base3, nil, nil],
         color_warning: [@@red, @@base3, nil, true],
+        color_preprocessor: [@@orange, @@base3, nil, nil],
+        color_regexp: [@@orange, @@base3, nil, nil],
+        # extra
         color_doc: [@@base1, @@base3, true, nil],
         color_doc_string: [@@base1, @@base3, true, nil],
         color_color_constant: [@@green, @@base3, nil, nil],
@@ -30,7 +34,7 @@ module Mrbmacs
         color_exit: [@@red, @@base3, nil, nil],
         color_other_emphasized: [@@violet, @@base3, true, true],
         color_regexp_grouping_backslash: [@@yellow, @@base3, nil, nil],
-
+        # additional
         color_brace_highlight: [@background_color, @foreground_color, nil, nil],
         color_annotation: [@@base03, @@red, true, nil],
         color_annotation_info: [@@base03, @@base1, true, nil],

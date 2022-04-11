@@ -27,8 +27,9 @@ module Mrbmacs
       @background_color = @@base00
       @font_color = {
         # [fore, back, italic_flag, bold_flag ]
+        # basic colors
         color_foreground: [@@base05, @background_color, nil, nil],
-        color_builtin: [@@base0D, @background_color, nil, nil],
+        color_builtin: [@@base0E, @background_color, nil, nil],
         color_comment: [@@base03, @background_color, true, nil],
         color_constant: [@@base09, @background_color, nil, nil],
         color_function_name: [@@base0D, @background_color, nil, nil],
@@ -37,16 +38,18 @@ module Mrbmacs
         color_type: [@@base0A, @background_color, nil, true],
         color_variable_name: [@@base08, @background_color, nil, nil],
         color_warning: [@@base08, @background_color, nil, true],
-        color_doc: [@@base01, @background_color, true, nil],
-        color_doc_string: [@@base04, @background_color, true, nil],
+        color_regexp: [@@base0C, @background_color, nil, nil],
+        color_preprocessor: [@@base0D, @background_color, nil, nil],
+        # extra
+        color_doc: [@@base0B, @background_color, true, nil],
+        color_doc_string: [@@base0B, @background_color, true, nil],
         color_color_constant: [@@base09, @background_color, nil, nil],
         color_comment_delimiter: [@@base03, @background_color, true, nil],
-        color_preprocessor: [@@base0D, @background_color, nil, nil],
         color_negation_char: [@@base0B, @background_color, nil, nil],
         color_other_type: [@@base05, @background_color, true, nil],
         color_regexp_grouping_construct: [@@base0E, @background_color, nil, nil],
-        color_special_keyword: [@@base0E, @@base0E, nil, nil],
-        color_exit: [@@base0E, @@base05, nil, nil],
+        color_special_keyword: [@@base0E, @background_color, nil, nil],
+        color_exit: [@@base0E, @background_color, nil, nil],
         color_other_emphasized: [@@base05, @background_color, true, true],
         color_regexp_grouping_backslash: [@@base05, @background_color, nil, nil],
         # additional

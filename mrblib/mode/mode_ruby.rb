@@ -19,7 +19,7 @@ module Mrbmacs
         :color_function_name, # SCE_RB_DEFNAME 9
         :color_foreground, # SCE_RB_OPERATOR 10
         :color_keyword, # SCE_RB_IDENTIFIER 11
-        :color_regexp_grouping_construct, # SCE_RB_REGEX 12
+        :color_regexp, # SCE_RB_REGEX 12
         :color_variable_name, # SCE_RB_GLOBAL 13
         :color_string, # SCE_RB_SYMBOL 14
         :color_preprocessor, # SCE_RB_MODULE_NAME 15

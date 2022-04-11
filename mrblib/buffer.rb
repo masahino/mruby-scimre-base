@@ -185,5 +185,15 @@ module Mrbmacs
         @frame.view_win.sci_set_savepoint
       end
     end
+
+    def create_new_buffer(buffer_name)
+      new_buffer = Mrbmacs::Buffer.new(buffer_name)
+      add_new_buffer(new_buffer)
+      add_buffer_to_frame(new_buffer)
+      set_buffer_mode(new_buffer)
+      @frame.set_theme(@theme)
+      @frame.set_buffer_name(buffer_name)
+      new_buffer
+    end
   end
 end

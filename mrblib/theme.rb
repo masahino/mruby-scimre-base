@@ -36,6 +36,7 @@ module Mrbmacs
       @style_list = {}
       @font_color = {
         # [fore, back, italic_flag, bold_flag ]
+        # basic color
         color_foreground: [@foreground_color, @background_color, nil, nil],
         color_builtin: [0x00ff00, @background_color, nil, nil],
         color_comment: [0xc0c0c0, @background_color, nil, nil],
@@ -46,11 +47,13 @@ module Mrbmacs
         color_type: [0xffff00, @background_color, nil, nil],
         color_variable_name: [0x0000ff, @background_color, nil, nil],
         color_warning: [0xff0000, @background_color, nil, nil],
+        color_preprocessor: [0x800000, @background_color, nil, nil],
+        color_regexp: [0x800000, @background_color, nil, nil],
+        # extra
         color_doc: [0xc0c0c0, @background_color, nil, nil],
         color_doc_string: [0xc0c0c0, @background_color, nil, nil],
         color_color_constant: [0x00ff00, @background_color, nil, nil],
         color_comment_delimiter: [0xc0c0c0, @background_color, nil, nil],
-        color_preprocessor: [0x800000, @background_color, nil, nil],
         color_negation_char: [0xff0000, @background_color, nil, nil],
         color_other_type: [0x0000ff, @background_color, nil, nil],
         color_regexp_grouping_construct: [0x800000, @background_color, nil, nil],
@@ -58,6 +61,7 @@ module Mrbmacs
         color_exit: [0xff0000, @background_color, nil, nil],
         color_other_emphasized: [0xff00ff, @background_color, nil, nil],
         color_regexp_grouping_backslash: [0xffff00, @background_color, nil, nil],
+        # additonal
         color_brace_highlight: [@background_color, @foreground_color, nil, nil],
         color_annotation: [@background_color, 0xff0000, true, nil],
         color_annotation_info: [@background_color, 0x808080, true, nil],
