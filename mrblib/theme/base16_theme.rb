@@ -33,7 +33,7 @@ module Mrbmacs
         color_comment: [@@base03, @background_color, true, nil],
         color_constant: [@@base09, @background_color, nil, nil],
         color_function_name: [@@base0D, @background_color, nil, nil],
-        color_keyword: [@@base0E, @background_color, nil, true],
+        color_keyword: [@@base0E, @background_color, nil, nil],
         color_string: [@@base0B, @background_color, nil, nil],
         color_type: [@@base0A, @background_color, nil, true],
         color_variable_name: [@@base08, @background_color, nil, nil],

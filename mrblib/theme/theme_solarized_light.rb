@@ -26,7 +26,6 @@ module Mrbmacs
         color_doc_string: [@@base1, @@base3, true, nil],
         color_color_constant: [@@green, @@base3, nil, nil],
         color_comment_delimiter: [@@base1, @@base3, true, nil],
-        color_preprocessor: [@@orange, @@base3, nil, nil],
         color_negation_char: [@@red, @@base3, nil, nil],
         color_other_type: [@@blue, @@base3, true, nil],
         color_regexp_grouping_construct: [@@orange, @@base3, nil, nil],

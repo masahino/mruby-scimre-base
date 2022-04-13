@@ -31,7 +31,7 @@ module Mrbmacs
         color_comment: [@@base01, @@base03, true, nil],
         color_constant: [@@cyan, @@base03, nil, nil],
         color_function_name: [@@blue, @@base03, nil, nil],
-        color_keyword: [@@green, @@base03, nil, true],
+        color_keyword: [@@green, @@base03, nil, nil],
         color_string: [@@cyan, @@base03, nil, nil],
         color_type: [@@yellow, @@base03, nil, true],
         color_variable_name: [@@blue, @@base03, nil, nil],
