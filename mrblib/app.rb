@@ -103,7 +103,7 @@ module Mrbmacs
       #      if @theme.respond_to?(:set_pallete)
       #       @theme.set_pallete
       #      end
-      set_default_style
+      @frame.set_theme(@theme)
       @current_buffer.mode.set_style(@frame.view_win, @theme)
 
       register_extensions
@@ -130,10 +130,6 @@ module Mrbmacs
         load_file(opts[:load])
       end
       @frame.modeline(self)
-    end
-
-    def set_default_style
-      @frame.set_theme(@theme)
     end
 
     def load_file(filename)
