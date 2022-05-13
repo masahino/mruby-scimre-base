@@ -117,6 +117,9 @@ module Scintilla
       send_message(Scintilla::SCI_GETLINE, [line])
     end
 
+    def send_message_get_text(wparam)
+    end
+
     def send_message_set_docpointer(id, wparam)
     end
 
