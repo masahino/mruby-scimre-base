@@ -12,7 +12,7 @@ module Mrbmacs
     end
 
     def eval_buffer
-      all_text = @frame.view_win.sci_get_text(@frame.view_win.sci_get_length+1)
+      all_text = @frame.view_win.sci_get_text(@frame.view_win.sci_get_length + 1)
       begin
         ret = eval(all_text)
       rescue

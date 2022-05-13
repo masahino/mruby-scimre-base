@@ -76,7 +76,7 @@ module Mrbmacs
       @modeline = Modeline.new
 
       tmpdir = ENV['TMPDIR'] || ENV['TMP'] || ENV['TEMP'] || ENV['USERPROFILE'] || '/tmp'
-      logfile = tmpdir + '/mrbmacs-' + $$.to_s + '.log'
+      logfile = "#{tmpdir}/mrbmacs-#{$$}.log"
       @logger = Logger.new(logfile)
       @logger.info 'Logging start'
       @logger.info logfile
