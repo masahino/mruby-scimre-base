@@ -24,6 +24,7 @@ module Mrbmacs
     '.sh' => 'bash',
     '.go' => 'go',
     '.pl' => 'perl',
+    '.pov' => 'pov',
     '.py' => 'python',
     '.r' => 'r',
     '.rs' => 'rust',
