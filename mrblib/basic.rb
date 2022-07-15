@@ -169,5 +169,12 @@ module Mrbmacs
     def get_current_pos
       @frame.view_win.sci_get_current_pos
     end
+
+    def recenter
+      current_pos = @frame.view_win.sci_get_current_pos
+      y = @frame.view_win.sci_pointy_from_position(0, current_pos)
+      diff = @frame.edit_win.height / 2 - y
+      @frame.view_win.sci_linescroll(0, -diff)
+    end
   end
 end

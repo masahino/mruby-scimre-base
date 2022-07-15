@@ -87,6 +87,7 @@ module Mrbmacs
         'C-c C-c' => 'compile',
         'C-e' => 'end-of-line',
         'C-k' => 'kill-line',
+        'C-l' => 'recenter',
         'C-m' => SCI_NEWLINE,
         'C-n' => SCI_LINEDOWN,
         'C-p' => SCI_LINEUP,
