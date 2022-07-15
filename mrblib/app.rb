@@ -2,16 +2,15 @@ module Mrbmacs
   class Application
     include Scintilla
 
-    attr_accessor :frame, :mark_pos, :current_buffer, :buffer_list
-    attr_accessor :theme
-    attr_accessor :file_encodings, :system_encodings
-    attr_accessor :sci_handler, :ext
-    attr_accessor :command_list
-    attr_accessor :use_builtin_completion, :use_builtin_indent
-    attr_accessor :config
-    attr_accessor :modeline
-    attr_accessor :project
-    attr_accessor :io_handler
+    attr_accessor :frame, :mark_pos, :current_buffer, :buffer_list, :theme,
+                  :file_encodings, :system_encodings,
+                  :sci_handler, :ext,
+                  :command_list,
+                  :use_builtin_completion, :use_builtin_indent,
+                  :config,
+                  :modeline,
+                  :project,
+                  :io_handler
 
     def parse_args(argv)
       op = OptionParser.new
@@ -46,14 +45,14 @@ module Mrbmacs
 
     def load_init_file
       homedir =
-      if ENV['HOME'] != nil
-        ENV['HOME']
-      elsif ENV['HOMEDRIVE'] != nil
-        ENV['HOMEDRIVE'] + ENV['HOMEPATH']
-      else
-        ''
-      end
-      init_filename = homedir + '/.mrbmacsrc'
+        if ENV['HOME'] != nil
+          ENV['HOME']
+        elsif ENV['HOMEDRIVE'] != nil
+          ENV['HOMEDRIVE'] + ENV['HOMEPATH']
+        else
+          ''
+        end
+      init_filename = "#{homedir}/.mrbmacsrc"
       @logger.debug 'load initfile'
       load_file(init_filename)
     end
@@ -94,9 +93,7 @@ module Mrbmacs
       @themes = Theme.create_theme_list
       @project = Project.new(@current_buffer.directory)
 
-      if opts[:no_init_file] == false
-        load_init_file
-      end
+      load_init_file if opts[:no_init_file] == false
 
       @theme = @config.theme.new
 
@@ -123,12 +120,10 @@ module Mrbmacs
       end
       create_messages_buffer(logfile)
 
-      if argv.size > 0
-        find_file(argv[0])
-      end
-      if opts[:load] != ''
-        load_file(opts[:load])
-      end
+      find_file(argv[0]) if argv.size > 0
+
+      load_file(opts[:load]) if opts[:load] != ''
+
       @frame.modeline(self)
     end
 
@@ -136,9 +131,9 @@ module Mrbmacs
       begin
         File.open(File.expand_path(filename), 'r') do |f|
           str = f.read
-          eval(str)
+          instance_eval(str)
         end
-      rescue => e
+      rescue StandardError => e
         @logger.error e
       end
     end
@@ -148,8 +143,8 @@ module Mrbmacs
         @frame.view_win.send_message(command)
       else
         begin
-          eval("#{command.gsub('-', '_')}()")
-        rescue => e
+          instance_eval("#{command.gsub('-', '_')}()")
+        rescue StandardError => e
           @logger.error e.to_s
           @frame.echo_puts e.to_s
         end
@@ -170,9 +165,7 @@ module Mrbmacs
 
     def run(file = nil)
       @logger.debug 'run'
-      if file != nil
-        find_file(file)
-      end
+      find_file(file) if file != nil
       editloop
     end
   end

@@ -81,12 +81,12 @@ module Mrbmacs
       file_encodings = @file_encodings
       current_buffer = @current_buffer
       begin
-        file_encoding = "utf-8"
+        file_encoding = 'utf-8'
         text = File.open(filename).read
         file_encodings.each do |from|
-          tmp_text = ""
+          tmp_text = ''
           begin
-            tmp_text = Iconv.conv("utf-8", from, text)
+            tmp_text = Iconv.conv('utf-8', from, text)
           rescue
             next
           end
@@ -95,8 +95,8 @@ module Mrbmacs
           end
           break
         end
-        if file_encoding != "utf-8"
-          text = Iconv.conv("utf-8", file_encoding, text)
+        if file_encoding != 'utf-8'
+          text = Iconv.conv('utf-8', file_encoding, text)
           current_buffer.encoding = file_encoding
         end
         mod_mask = view_win.sci_get_mod_event_mask
@@ -120,7 +120,7 @@ module Mrbmacs
         view_win.sci_set_mod_event_mask(mod_mask)
       rescue
         # new file
-        message "error load file"
+        message 'error load file'
       end
     end
 
@@ -131,7 +131,7 @@ module Mrbmacs
       end
       #    $stderr.print all_text
       #      File.open(app.filename, "w") do |f|
-      File.open(@current_buffer.filename, "w") do |f|
+      File.open(@current_buffer.filename, 'w') do |f|
         f.write all_text
       end
       @frame.view_win.sci_set_save_point
@@ -147,10 +147,8 @@ module Mrbmacs
     end
 
     def write_file(filename = nil)
-      view_win = @frame.view_win
-
       if filename == nil
-        filename = read_save_file_name("write file: ",
+        filename = read_save_file_name('write file: ',
           @current_buffer.directory,
           @current_buffer.basename)
       end
@@ -167,21 +165,21 @@ module Mrbmacs
     def insert_file(file_path = nil)
       view_win = @frame.view_win
       if file_path == nil
-        file_path = read_file_name("insert file: ", @current_buffer.directory)
+        file_path = read_file_name('insert file: ', @current_buffer.directory)
       end
       if file_path != nil
         if File.exist?(file_path) == true and FileTest.file?(file_path) == true
           text = File.open(file_path).read
           view_win.sci_insert_text(view_win.sci_get_current_pos, text)
         else
-          message("no match")
+          message('no match')
         end
       end
     end
 
     def find_file(filename = nil)
       if filename == nil
-        filename = read_file_name("find file: ", @current_buffer.directory)
+        filename = read_file_name('find file: ', @current_buffer.directory)
       end
       if filename != nil
         if Mrbmacs::get_buffer_from_path(@buffer_list, filename) != nil

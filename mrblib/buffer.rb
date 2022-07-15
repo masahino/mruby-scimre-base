@@ -1,10 +1,9 @@
 module Mrbmacs
   # Buffer
   class Buffer
-    attr_accessor :filename, :directory, :basename
-    attr_accessor :docpointer, :name, :encoding, :mode, :pos
-    attr_accessor :vcinfo
-    attr_accessor :additional_info
+    attr_accessor :filename, :directory, :basename,
+                  :docpointer, :name, :encoding, :mode, :pos,
+                  :vcinfo, :additional_info
     def initialize(filename = nil)
       @vcinfo = nil
       if filename != nil
@@ -47,7 +46,7 @@ module Mrbmacs
           return b
         end
       end
-      return nil
+      nil
     end
 
     def get_buffer_from_path(buffer_list, file_path)
@@ -57,7 +56,7 @@ module Mrbmacs
           return b
         end
       end
-      return nil
+      nil
     end
   end
 
@@ -104,9 +103,7 @@ module Mrbmacs
     end
 
     def kill_buffer(buffername = nil)
-      if @buffer_list.size <= 1
-        return
-      end
+      return if @buffer_list.size <= 1
 
       if buffername == nil
         echo_text = "kill-buffer (default #{@current_buffer.name}): "
@@ -125,9 +122,7 @@ module Mrbmacs
       end
       if @frame.view_win.sci_get_modify != 0
         ret = @frame.y_or_n("Buffer #{buffername} modified; kill anyway? (y or n) ")
-        if ret == false
-          return
-        end
+        return if ret == false
       end
       # delete buffer
       target_buffer = Mrbmacs.get_buffer_from_name(@buffer_list, buffername)
@@ -137,9 +132,7 @@ module Mrbmacs
 
     def add_new_buffer(new_buffer)
       @buffer_list.push(new_buffer)
-      if new_buffer.basename == ''
-        return
-      end
+      return if new_buffer.basename == ''
 
       duplicates = @buffer_list.select { |b| b.basename == new_buffer.basename }
       if duplicates.size > 1
@@ -154,6 +147,7 @@ module Mrbmacs
             end
           end
           break if dirs.uniq == dirs
+
           n += 1
         end
         @buffer_list.each do |b|

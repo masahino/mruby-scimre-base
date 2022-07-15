@@ -16,7 +16,7 @@ module Mrbmacs
   class Application
     def set_buffer_file_coding_system(code = nil)
       if code == nil
-        code = @frame.echo_gets("Coding system for saving file:") do |input_text|
+        code = @frame.echo_gets('Coding system for saving file:') do |input_text|
           tmp_str = input_text.upcase
           comp_list = @system_encodings.select do |encoding|
             encoding.start_with?(tmp_str)
@@ -24,12 +24,11 @@ module Mrbmacs
           if $DEBUG
             $stderr.puts comp_list
           end
-          [comp_list.join(" "), input_text.length]
+          [comp_list.join(' '), input_text.length]
         end
-      else
-        if @system_encodings.include?(code.upcase) == true
-          @current_buffer.encoding = code
-        end
+      end
+      if @system_encodings.include?(code.upcase) == true
+        @current_buffer.encoding = code
       end
     end
   end
