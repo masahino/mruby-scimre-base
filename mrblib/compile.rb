@@ -45,6 +45,9 @@ module Mrbmacs
       if @project.last_build_command != nil
         default_command = @project.last_build_command
       end
+      if default_command.nil?
+        default_command = @current_buffer.mode.build_command
+      end
       command = @frame.echo_gets('Compile command: ', default_command)
       if command != nil
         @project.last_build_command = command

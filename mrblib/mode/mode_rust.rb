@@ -11,6 +11,7 @@ module Mrbmacs
       enum union trait type where impl Self self pub unsafe true false \
       move mut ref box do catch default"
       @start_of_comment = '// '
+      @build_command = 'cargo build'
       @style = [
         :color_foreground, # define SCE_RUST_DEFAULT 0
         :color_comment, # define SCE_RUST_COMMENTBLOCK 1

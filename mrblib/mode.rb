@@ -44,12 +44,8 @@ module Mrbmacs
 
   class Mode
     include Singleton
-    attr_accessor :name, :lexer, :indent, :use_tab, :keymap
-    attr_reader :start_of_comment, :end_of_comment
-
-    #    def name
-    #      @name
-    #    end
+    attr_accessor :name, :lexer, :indent, :use_tab, :keymap, :start_of_comment, :end_of_comment,
+                  :build_command
 
     def self.get_mode_by_suffix(suffix)
       if $mode_list.key?(suffix)
@@ -95,6 +91,7 @@ module Mrbmacs
       @keymap = {}
       @start_of_comment = ''
       @end_of_comment = ''
+      @build_command = 'make'
     end
 
     def set_lexer(view_win)
