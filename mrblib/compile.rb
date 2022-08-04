@@ -14,6 +14,7 @@ module Mrbmacs
       end
       switch_to_buffer(buffer_name)
       @current_buffer.docpointer = @frame.view_win.sci_get_docpointer
+      @frame.view_win.sci_clear_all
       if Object.const_defined? 'Open3'
         _o, e, s = Open3.capture3(command)
         @frame.view_win.sci_set_text(e)

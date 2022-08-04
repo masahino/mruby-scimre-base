@@ -26,14 +26,14 @@ module Mrbmacs
     def modeline_modified
       if @frame.view_win.sci_get_modify != 0
         if @frame.view_win.sci_get_readonly != 0
-          "%*"
+          '%*'
         else
-          "**"
+          '**'
         end
       elsif @frame.view_win.sci_get_readonly != 0
-        "%%"
+        '%%'
       else
-        "--"
+        '--'
       end
     end
 
@@ -42,7 +42,7 @@ module Mrbmacs
     end
 
     def modeline_pos
-      "(#{get_current_col+1},#{get_current_line+1})"
+      "(#{get_current_col + 1},#{get_current_line + 1})"
     end
 
     def modeline_modename
