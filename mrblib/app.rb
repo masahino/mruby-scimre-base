@@ -79,6 +79,7 @@ module Mrbmacs
       @logger = Logger.new(logfile)
       @logger.info 'Logging start'
       @logger.info logfile
+
       @current_buffer = Buffer.new('*scratch*')
       @buffer_list = [@current_buffer]
       @frame = Mrbmacs::Frame.new(@current_buffer)
@@ -110,7 +111,7 @@ module Mrbmacs
         end
       end
       add_sci_event(Scintilla::SCN_UPDATEUI) do |_app, scn|
-        set_brace_highlight(scn)
+        brace_highlight(scn)
       end
       add_sci_event(Scintilla::SCN_UPDATEUI) do |_app, scn|
         display_selection_range(scn)

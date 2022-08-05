@@ -8,9 +8,7 @@ module Mrbmacs
       dir = File.dirname(input_text)
       fname = File.basename(input_text)
       Dir.foreach(dir) do |item|
-        if item =~ /^#{fname}/
-          file_list.push(item)
-        end
+        file_list.push(item) if item =~ /^#{fname}/
       end
       len = fname.length
     end
@@ -20,9 +18,7 @@ module Mrbmacs
   class Application
     def read_dir_name(prompt, default_directory = nil)
       prefix_text = default_directory
-      if prefix_text[-1] != '/'
-        prefix_text += '/'
-      end
+      prefix_text += '/' if prefix_text[-1] != '/'
       dirname = @frame.echo_gets(prompt, prefix_text) do |input_text|
         dir_list = []
         len = 0
@@ -33,9 +29,7 @@ module Mrbmacs
           fname = File.basename(input_text)
           qfname = Regexp.quote(fname)
           Dir.foreach(dir) do |item|
-            if File.directory?(item) && item =~ /^#{qfname}/
-              dir_list.push(item)
-            end
+            dir_list.push(item) if File.directory?(item) && item =~ /^#{qfname}/
           end
           len = fname.length
         end
@@ -60,9 +54,7 @@ module Mrbmacs
           fname = File.basename(input_text)
           qfname = Regexp.quote(fname)
           Dir.foreach(dir) do |item|
-            if item =~ /^#{qfname}/
-              file_list.push(item)
-            end
+            file_list.push(item) if item =~ /^#{qfname}/
           end
           len = fname.length
         end
@@ -90,9 +82,7 @@ module Mrbmacs
           rescue
             next
           end
-          if tmp_text.size != text.size
-            file_encoding = from
-          end
+          file_encoding = from if tmp_text.size != text.size
           break
         end
         if file_encoding != 'utf-8'
@@ -103,7 +93,7 @@ module Mrbmacs
         view_win.sci_set_mod_event_mask(0)
         view_win.sci_set_codepage(Scintilla::SC_CP_UTF8)
         view_win.sci_set_text(text)
-        eolmode = view_win.sci_get_eolmode()
+        eolmode = view_win.sci_get_eolmode
         cr = text.scan(/\r/).length
         lf = text.scan(/\n/).length
         crlf = text.scan(/\r\n/).length
@@ -125,7 +115,7 @@ module Mrbmacs
     end
 
     def save_buffer()
-      all_text = @frame.view_win.sci_get_text(@frame.view_win.sci_get_length+1)
+      all_text = @frame.view_win.sci_get_text(@frame.view_win.sci_get_length + 1)
       if @current_buffer.encoding != 'utf-8'
         all_text = Iconv.conv(@current_buffer.encoding, 'utf-8', all_text)
       end
@@ -148,14 +138,12 @@ module Mrbmacs
 
     def write_file(filename = nil)
       if filename == nil
-        filename = read_save_file_name('write file: ',
-          @current_buffer.directory,
-          @current_buffer.basename)
+        filename = read_save_file_name('write file: ', @current_buffer.directory, @current_buffer.basename)
       end
 
       if filename != nil
         @current_buffer.set_filename(filename)
-        save_buffer()
+        save_buffer
         @frame.view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
         @current_buffer.mode.set_style(@frame.view_win, @theme)
         @frame.set_buffer_name(@current_buffer.name)
@@ -168,7 +156,7 @@ module Mrbmacs
         file_path = read_file_name('insert file: ', @current_buffer.directory)
       end
       if file_path != nil
-        if File.exist?(file_path) == true and FileTest.file?(file_path) == true
+        if File.exist?(file_path) == true && FileTest.file?(file_path) == true
           text = File.open(file_path).read
           view_win.sci_insert_text(view_win.sci_get_current_pos, text)
         else
@@ -182,8 +170,8 @@ module Mrbmacs
         filename = read_file_name('find file: ', @current_buffer.directory)
       end
       if filename != nil
-        if Mrbmacs::get_buffer_from_path(@buffer_list, filename) != nil
-          switch_to_buffer(Mrbmacs::get_buffer_from_path(@buffer_list, filename).name)
+        if Mrbmacs.get_buffer_from_path(@buffer_list, filename) != nil
+          switch_to_buffer(Mrbmacs.get_buffer_from_path(@buffer_list, filename).name)
         else
           @current_buffer.pos = @frame.view_win.sci_get_current_pos
           new_buffer = Buffer.new(filename)
