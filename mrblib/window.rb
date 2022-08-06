@@ -2,8 +2,24 @@ module Mrbmacs
   class EditWindow
     attr_accessor :sci, :mode_win, :frame, :command_list, :buffer, :x1, :y1, :x2, :y2, :width, :height
 
-    def initialize(frame, buffer, x1, y1, width, height)
-      $stderr.puts "not yet implemented"
+    def initialize(frame, buffer, left, top, width, height)
+      @frame = frame
+      @buffer = buffer
+      @x1 = left
+      @y1 = top
+      @x2 = left + width - 1
+      @y2 = top + height - 1
+      @width = width
+      @height = height
+    end
+
+    def init_sci_default
+#      @sci.sci_set_caret_fore 0xffffff
+      @sci.sci_set_codepage(Scintilla::SC_CP_UTF8)
+      @sci.sci_set_mod_event_mask(Scintilla::SC_MOD_INSERTTEXT | Scintilla::SC_MOD_DELETETEXT)
+      @sci.sci_set_caret_style(Scintilla::CARETSTYLE_BLOCK_AFTER |
+        Scintilla::CARETSTYLE_OVERSTRIKE_BLOCK |
+        Scintilla::CARETSTYLE_BLOCK)
     end
 
     def set_buffer(buffer)
