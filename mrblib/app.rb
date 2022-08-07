@@ -57,6 +57,16 @@ module Mrbmacs
       load_file(init_filename)
     end
 
+    def init_logfile
+      tmpdir = ENV['TMPDIR'] || ENV['TMP'] || ENV['TEMP'] || ENV['USERPROFILE'] || '/tmp'
+      @logfile = "#{tmpdir}/mrbmacs-#{$$}.log"
+      severity = $DEBUG ? Logger::Severity::DEBUG : Logger::Severity::INFO
+      logger = Logger.new(@logfile, level: severity)
+      logger.info 'Logging start'
+      logger.info @logfile
+      logger
+    end
+
     def initialize(argv = [])
       opts, argv = parse_args(argv)
       @io_handler = {}
@@ -74,11 +84,7 @@ module Mrbmacs
       @theme = nil
       @modeline = Modeline.new
 
-      tmpdir = ENV['TMPDIR'] || ENV['TMP'] || ENV['TEMP'] || ENV['USERPROFILE'] || '/tmp'
-      logfile = "#{tmpdir}/mrbmacs-#{$$}.log"
-      @logger = Logger.new(logfile)
-      @logger.info 'Logging start'
-      @logger.info logfile
+      @logger = init_logfile
 
       @current_buffer = Buffer.new('*scratch*')
       @buffer_list = [@current_buffer]
@@ -119,7 +125,7 @@ module Mrbmacs
       add_sci_event(Scintilla::SCN_STYLENEEDED) do |app, scn|
         @current_buffer.mode.on_style_needed(app, scn)
       end
-      create_messages_buffer(logfile)
+      create_messages_buffer(@logfile)
 
       find_file(argv[0]) if argv.size > 0
 
