@@ -77,6 +77,7 @@ module Mrbmacs
             end
           else
             app.frame.view_win.sci_insert_text(app.frame.view_win.sci_get_length, "\n#{command} finished")
+            app.frame.view_win.sci_goto_pos(app.frame.view_win.sci_get_length)
             app.del_io_read_event(io_arg)
           end
         end
