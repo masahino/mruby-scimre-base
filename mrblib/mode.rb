@@ -39,7 +39,8 @@ module Mrbmacs
     '*scratch*' => 'irb',
     '*compilation*' => 'compilation',
     '*Messages*' => 'fundamental',
-    '*preview_theme*' => 'previewtheme'
+    '*preview_theme*' => 'previewtheme',
+    '*grep*' => 'grep'
   }
 
   class Mode

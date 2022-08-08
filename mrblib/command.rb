@@ -42,5 +42,45 @@ module Mrbmacs
         end
       end
     end
+
+    def exec_shell_command(buffer_name, command)
+      result_buffer = Mrbmacs.get_buffer_from_name(@buffer_list, buffer_name)
+      if result_buffer.nil?
+        result_buffer = Mrbmacs::Buffer.new(buffer_name)
+        add_new_buffer(result_buffer)
+        add_buffer_to_frame(result_buffer)
+        set_buffer_mode(result_buffer)
+        @frame.set_theme(@theme)
+        @frame.set_buffer_name(buffer_name)
+      end
+      switch_to_buffer(buffer_name)
+      @current_buffer.docpointer = @frame.view_win.sci_get_docpointer
+      @frame.view_win.sci_clear_all
+      if Object.const_defined? 'Open3'
+        _o, e, s = Open3.capture3(command)
+        @frame.view_win.sci_set_text(e)
+        @frame.view_win.sci_goto_pos(@frame.view_win.sci_get_length)
+        @frame.view_win.sci_insert_text(@frame.view_win.sci_get_length, "\n")
+        if s == 0
+          @frame.view_win.sci_insert_text(@frame.view_win.sci_get_length, "#{command} finished")
+        else
+          @frame.view_win.sci_insert_text(@frame.view_win.sci_get_length, "#{command} exited with abnormally with code #{s}")
+        end
+      else
+        io = IO.popen(command + ' 2>&1')
+        add_io_read_event(io) do |app, io_arg|
+          ret = io_arg.read(256)
+          if ret != nil
+            if app.current_buffer.name == buffer_name
+              app.frame.view_win.sci_insert_text(app.frame.view_win.sci_get_length, ret)
+              app.frame.view_win.sci_goto_pos(app.frame.view_win.sci_get_length)
+            end
+          else
+            app.frame.view_win.sci_insert_text(app.frame.view_win.sci_get_length, "\n#{command} finished")
+            app.del_io_read_event(io_arg)
+          end
+        end
+      end
+    end
   end
 end
