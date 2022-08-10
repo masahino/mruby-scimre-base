@@ -34,9 +34,7 @@ module Mrbmacs
       expand_wins[:bottom] = []
 
       @frame.edit_win_list.each do |e|
-        if e == active_win
-          next
-        end
+        next if e == active_win
 
         new_win = e
         ex1 = e.x1
@@ -59,7 +57,7 @@ module Mrbmacs
           e.y2 = y2
           count += 1
           break
-        elsif (y2 +1 ) == ey1 && x1 == ex1 && x2 == ex2
+        elsif (y2 + 1) == ey1 && x1 == ex1 && x2 == ex2
           # bottom border
           e.y1 = y1
           count += 1
@@ -154,6 +152,7 @@ module Mrbmacs
       @current_buffer.mode.set_style(new_win.sci, @theme)
       @frame.edit_win_list.push(new_win)
       @frame.edit_win_list.each do |win|
+        @frame.modeline(self, win)
         win.refresh
       end
       @frame.modeline(self, new_win)

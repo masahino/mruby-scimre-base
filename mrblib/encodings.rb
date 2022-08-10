@@ -21,9 +21,7 @@ module Mrbmacs
           comp_list = @system_encodings.select do |encoding|
             encoding.start_with?(tmp_str)
           end
-          if $DEBUG
-            $stderr.puts comp_list
-          end
+          @logger.debug comp_list
           [comp_list.join(' '), input_text.length]
         end
       end
