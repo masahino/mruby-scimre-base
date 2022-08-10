@@ -100,12 +100,34 @@ module Mrbmacs
     def sync_tab(buffername)
     end
 
+    def edit_win_from_buffer(buffer_name)
+      @edit_win_list.each do |w|
+        return w if w.buffer.name == buffer_name
+      end
+      nil
+    end
+
+    def get_edit_win_from_pos(line, col)
+      @edit_win_list.each do |w|
+        if line >= w.y1 && line <= w.y2 && col >= w.x1 && col <= w.x2
+          return w
+        end
+      end
+      nil
+    end
+
     def switch_window(new_win)
       @edit_win.focus_out
       @edit_win = new_win
       @view_win = new_win.sci
       @mode_win = new_win.mode_win
       new_win.focus_in
+    end
+
+    def refresh_all
+      @edit_win_list.each do |win|
+        win.refresh
+      end
     end
 
     def exit

@@ -43,7 +43,17 @@ module Mrbmacs
       end
     end
 
-    def exec_shell_command(buffer_name, command)
+    def setup_result_buffer(buffer_name)
+      tmp_win = @frame.edit_win_from_buffer(buffer_name)
+      unless tmp_win.nil?
+        @frame.switch_window(tmp_win)
+        @current_buffer = @frame.edit_win.buffer
+        return
+      end
+      split_window_vertically if @frame.edit_win_list.size == 1
+      other_window
+      @frame.refresh_all
+
       result_buffer = Mrbmacs.get_buffer_from_name(@buffer_list, buffer_name)
       if result_buffer.nil?
         result_buffer = Mrbmacs::Buffer.new(buffer_name)
@@ -54,6 +64,11 @@ module Mrbmacs
         @frame.set_buffer_name(buffer_name)
       end
       switch_to_buffer(buffer_name)
+    end
+
+    def exec_shell_command(buffer_name, command)
+      setup_result_buffer(buffer_name)
+
       @current_buffer.docpointer = @frame.view_win.sci_get_docpointer
       @frame.view_win.sci_clear_all
       if Object.const_defined? 'Open3'
