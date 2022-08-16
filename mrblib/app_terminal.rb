@@ -1,4 +1,5 @@
 module Mrbmacs
+  # Application class for terminal
   class ApplicationTerminal < Application
     def copy_region
       super
@@ -7,7 +8,7 @@ module Mrbmacs
         IO.popen('clip.exe', 'r+') { |f| f << str }
       else
         # try pbcopy
-        ret = `type pbcopy 2>/dev/null`
+        `type pbcopy 2>/dev/null`
         if $?.exitstatus == 0
           IO.popen('pbcopy', 'w') { |f| f << str }
         end
@@ -16,7 +17,7 @@ module Mrbmacs
 
     def yank
       if @frame.view_win.get_clipboard == ''
-        ret = `type pbpaste 2>/dev/null`
+        `type pbpaste 2>/dev/null`
         if $?.exitstatus == 0
           clipboard_text = `pbpaste`
           @frame.view_win.sci_copytext(clipboard_text.bytesize, clipboard_text)
@@ -26,11 +27,11 @@ module Mrbmacs
     end
 
     def isearch_forward
-      isearch("I-search: ", false)#, @frame.view_win.sci_get_length)
+      isearch('I-search: ', false) # , @frame.view_win.sci_get_length)
     end
 
     def isearch_backward
-      isearch("I-search backward: ", true) #0)
+      isearch('I-search backward: ', true) # 0)
     end
 
     def isearch(prompt, backward = false)
@@ -46,8 +47,8 @@ module Mrbmacs
       view_win.sci_set_target_start(start_pos)
       view_win.sci_set_target_end(end_pos)
       search_text = ''
-      while true
-        ret, key = @frame.waitkey(echo_win)
+      loop do
+        _ret, key = @frame.waitkey(echo_win)
         key_str = @frame.strfkey(key)
         if key_str == 'C-s'
           if search_text != ''
@@ -107,11 +108,11 @@ module Mrbmacs
     end
 
     def replace_string(str = nil, newstr = nil, query = false)
-      if str == nil or newstr == nil
+      if str.nil? || newstr.nil?
         @frame.echo_win.sci_clear_all
-        str = @frame.echo_gets("Replace string: ", "")
+        str = @frame.echo_gets('Replace string: ', '')
         if str != nil
-          newstr = @frame.echo_gets("Replace string #{str} with: ", "")
+          newstr = @frame.echo_gets("Replace string #{str} with: ", '')
         end
       end
       @frame.view_win.sci_begin_undo_action
@@ -125,7 +126,7 @@ module Mrbmacs
           when true
             @frame.view_win.sci_replace_target(newstr.length, newstr)
           when false # cancel
-            @frame.echo_puts("Quit")
+            @frame.echo_puts('Quit')
             break
           end
           @frame.view_win.refresh

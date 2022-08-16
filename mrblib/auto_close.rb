@@ -8,7 +8,7 @@ module Mrbmacs
       '(' => ')',
       '{' => '}',
       '[' => ']'
-    }
+    }.freeze
     def self.extension_id
       :auto_close
     end

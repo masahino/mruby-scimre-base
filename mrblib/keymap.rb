@@ -28,14 +28,14 @@ module Mrbmacs
       @keymap = {}
     end
 
-    def set_keymap_with_key(k, v, win)
-      strokes = k.split(' ').size
+    def set_keymap_with_key(key, action, win)
+      strokes = key.split(' ').size
       #      case v.class.to_s
-      if strokes == 1 && v.is_a?(Integer)
-        set_keybind(win, k, v)
+      if strokes == 1 && action.is_a?(Integer)
+        set_keybind(win, key, action)
       else
         #      when "String"
-        @command_list[k] = v
+        @command_list[key] = action
         #      else
         #        $stderr.puts v.class
       end
@@ -55,18 +55,18 @@ module Mrbmacs
       end
       keydef = 0
       if key =~ /^(\w)-(\S)$/
-        if $1 == 'C'
+        if Regexp.last_match[1] == 'C'
           keydef += ctrl_code << 16
-        elsif $1 == 'M'
+        elsif Regexp.last_match[1] == 'M'
           keydef += meta_code << 16
         end
-        if $2 == 'DEL'
+        if Regexp.last_match[2] == 'DEL'
           keydef += Scintilla::SCK_DELETE
         else
           if Scintilla::PLATFORM == :GTK_MACOSX
-            keydef += $2.upcase.ord
+            keydef += Regexp.last_match[2].upcase.ord
           else
-            keydef += $2.ord
+            keydef += Regexp.last_match[2].ord
           end
         end
       end
@@ -80,6 +80,7 @@ module Mrbmacs
       keymap = {
         'Enter' => 'newline',
         'Tab' => 'indent',
+        # 'F3' => 'start_keyboard_macro',
         # 'C-j' => "eval-last_exp",
         'C-a' => 'beginning-of-line',
         'C-c' => 'prefix',

@@ -69,7 +69,7 @@ module Mrbmacs
       echo_gets(prompt)
     end
 
-    def show_annotation(line, column, message, style = 254)
+    def show_annotation(line, _column, message, style = 254)
       #      text = sprintf "line %d: %s", line, message
       text = message
       @view_win.sci_annotation_set_text(line - 1, text)

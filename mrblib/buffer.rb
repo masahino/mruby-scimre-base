@@ -1,9 +1,10 @@
 module Mrbmacs
-  # Buffer
+  # Buffer class
   class Buffer
     attr_accessor :filename, :directory, :basename,
                   :docpointer, :name, :encoding, :mode, :pos,
                   :vcinfo, :additional_info
+
     def initialize(filename = nil)
       @vcinfo = nil
       if filename != nil
@@ -42,9 +43,7 @@ module Mrbmacs
   class << self
     def get_buffer_from_name(buffer_list, name)
       buffer_list.each do |b|
-        if b.name == name
-          return b
-        end
+        return b if b.name == name
       end
       nil
     end
@@ -52,9 +51,7 @@ module Mrbmacs
     def get_buffer_from_path(buffer_list, file_path)
       path = File.expand_path(file_path)
       buffer_list.each do |b|
-        if b.filename == path
-          return b
-        end
+        return b if b.filename == path
       end
       nil
     end
@@ -84,7 +81,7 @@ module Mrbmacs
       #   return
       # end
       if buffername == nil
-        buffername = @frame.select_buffer(@buffer_list[-2].name, @buffer_list.collect{ |b| b.name })
+        buffername = @frame.select_buffer(@buffer_list[-2].name, @buffer_list.collect { |b| b.name })
       end
       if buffername != nil
         if buffername == ''

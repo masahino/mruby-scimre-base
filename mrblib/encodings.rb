@@ -13,6 +13,7 @@ module Mrbmacs
     end
   end
 
+  # define methods about encodings
   class Application
     def set_buffer_file_coding_system(code = nil)
       if code == nil
