@@ -60,7 +60,9 @@ module Mrbmacs
         color_annotation_error: [@@base06, @@base08, true, nil],
         color_linenumber: [@@base04, @@base01, nil, nil],
         color_caret_line: [@foreground_color, @@base01, nil, nil],
-        color_indent_guide: [@@base03, @background_color, nil, nil]
+        color_indent_guide: [@@base03, @background_color, nil, nil],
+        color_marker_breakpoint: [@@base08, @@base01, nil, nil],
+        color_marker_current: [@@base0D, @@base01, nil, nil]
       }
     end
   end

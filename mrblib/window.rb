@@ -1,6 +1,12 @@
 module Mrbmacs
+  MARKERN_BREAKPOINT = 0
+  MARKERN_CURRENT = 1
+
   class EditWindow
     attr_accessor :sci, :mode_win, :frame, :command_list, :buffer, :x1, :y1, :x2, :y2, :width, :height
+
+    MARGIN_LINE_NUMBER = 0
+    MARGIN_FOLDING = 1
 
     def initialize(frame, buffer, left, top, width, height)
       @frame = frame
@@ -48,12 +54,19 @@ module Mrbmacs
     end
 
     def set_margin
-      @sci.sci_set_margin_widthn(0, @sci.sci_text_width(Scintilla::STYLE_LINENUMBER, '_99999'))
+      @sci.sci_set_margin_widthn(MARGIN_LINE_NUMBER,
+                                 @sci.sci_text_width(Scintilla::STYLE_LINENUMBER, '_99999'))
+      @sci.sci_set_marginsensitiven(MARGIN_LINE_NUMBER, 1)
       #      @sci.sci_set_margin_widthn(1, 1)
       #      @sci.sci_set_margin_typen(1, 0)
-      @sci.sci_set_margin_maskn(1, Scintilla::SC_MASK_FOLDERS)
-      @sci.sci_set_marginsensitiven(1, 1)
+      @sci.sci_set_margin_maskn(MARGIN_FOLDING, Scintilla::SC_MASK_FOLDERS)
+      @sci.sci_set_marginsensitiven(MARGIN_LINE_NUMBER, 1)
+      @sci.sci_set_marginsensitiven(MARGIN_FOLDING, 1)
       @sci.sci_set_automatic_fold(Scintilla::SC_AUTOMATICFOLD_CLICK)
+
+      # margin markers for debug
+      @sci.sci_marker_define(MARKERN_BREAKPOINT, Scintilla::SC_MARK_CIRCLE)
+      @sci.sci_marker_define(MARKERN_CURRENT, Scintilla::SC_MARK_SHORTARROW)
     end
 
     def set_theme_base(theme)
@@ -88,7 +101,15 @@ module Mrbmacs
       end
       if theme.font_color[:color_linenumber]
         @sci.sci_style_set_fore(Scintilla::STYLE_LINENUMBER, theme.font_color[:color_linenumber][0])
-        sci.sci_style_set_back(Scintilla::STYLE_LINENUMBER, theme.font_color[:color_linenumber][1])
+        @sci.sci_style_set_back(Scintilla::STYLE_LINENUMBER, theme.font_color[:color_linenumber][1])
+      end
+      if theme.font_color[:color_marker_breakpoint]
+        @sci.sci_marker_set_fore(Mrbmacs::MARKERN_BREAKPOINT, theme.font_color[:color_marker_breakpoint][0])
+        @sci.sci_marker_set_back(Mrbmacs::MARKERN_BREAKPOINT, theme.font_color[:color_marker_breakpoint][1])
+      end
+      if theme.font_color[:color_marker_current]
+        @sci.sci_marker_set_fore(Mrbmacs::MARKERN_CURRENT, theme.font_color[:color_marker_current][0])
+        @sci.sci_marker_set_back(Mrbmacs::MARKERN_CURRENT, theme.font_color[:color_marker_current][1])
       end
       if theme.font_color[:color_caret_line]
         @sci.sci_set_caret_line_visible(true)
