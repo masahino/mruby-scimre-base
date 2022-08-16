@@ -79,8 +79,8 @@ module Mrbmacs
 
   class Application
     def grep_open_file
-      line = @frame.view_win.sci_get_curline[0]
-      if line =~ /^(.+):(\d+):(.+)$/
+      line_str = @frame.view_win.sci_get_curline[0]
+      if line_str =~ /^(.+):(\d+):(.+)$/
         split_window if @frame.edit_win_list.size == 1
         other_window
         file = Regexp.last_match[1]
