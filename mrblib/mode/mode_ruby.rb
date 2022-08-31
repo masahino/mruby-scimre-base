@@ -11,18 +11,18 @@ module Mrbmacs
         :color_warning, # SCE_RB_ERROR 1
         :color_comment, # SCE_RB_COMMENTLINE 2
         :color_comment, # SCE_RB_POD 3
-        :color_foreground, # SCE_RB_NUMBER 4
+        :color_constant, # SCE_RB_NUMBER 4
         :color_builtin, # SCE_RB_WORD 5
         :color_string, # SCE_RB_STRING 6
         :color_string, # SCE_RB_CHARACTER 7
         :color_type, # SCE_RB_CLASSNAME 8
         :color_function_name, # SCE_RB_DEFNAME 9
-        :color_foreground, # SCE_RB_OPERATOR 10
-        :color_keyword, # SCE_RB_IDENTIFIER 11
+        :color_builtin, # SCE_RB_OPERATOR 10
+        :color_foreground, # SCE_RB_IDENTIFIER 11
         :color_regexp, # SCE_RB_REGEX 12
         :color_variable_name, # SCE_RB_GLOBAL 13
         :color_string, # SCE_RB_SYMBOL 14
-        :color_preprocessor, # SCE_RB_MODULE_NAME 15
+        :color_type, # SCE_RB_MODULE_NAME 15
         :color_variable_name, # SCE_RB_INSTANCE_VAR 16
         :color_variable_name, # SCE_RB_CLASS_VAR 17
         :color_negation_char, # SCE_RB_BACKTICKS 18
