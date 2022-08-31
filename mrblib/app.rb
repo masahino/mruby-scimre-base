@@ -160,19 +160,19 @@ module Mrbmacs
 
     def doin
       key, command = doscan('')
-      if key != nil
-        @logger.debug command
-        if command == nil
-          @frame.send_key(key)
-        else
-          extend(command)
-        end
+      return if key.nil?
+
+      @logger.debug command
+      if command.nil?
+        @frame.send_key(key)
+      else
+        extend(command)
       end
     end
 
     def run(file = nil)
       @logger.debug 'run'
-      find_file(file) if file != nil
+      find_file(file) unless file.nil?
       editloop
     end
   end
