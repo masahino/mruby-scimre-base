@@ -116,6 +116,8 @@ module Mrbmacs
         'C-x C-w' => 'write-file',
         'C-x Enter' => 'prefix',
         'C-x Enter f' => 'set-buffer-file-coding-system',
+        'C-x ^' => 'enlarge-window',
+        'C-x }' => 'enlarge-window-horizontally',
         'M-v' => SCI_PAGEUP,
         'M-x' => 'execute-extended-command',
         'M-%' => 'query-replace'

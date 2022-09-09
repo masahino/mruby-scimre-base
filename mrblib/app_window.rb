@@ -12,7 +12,7 @@ module Mrbmacs
         @frame.switch_window(@frame.edit_win_list[index])
         # @frame.switch_window(@frame.edit_win_list.rotate!().first)
         @current_buffer = @frame.edit_win.buffer
-        set_buffer_mode(@current_buffer)
+        # set_buffer_mode(@current_buffer)
       end
     end
 
@@ -123,6 +123,7 @@ module Mrbmacs
 
     def split_window(horizon)
       active_win = @frame.edit_win
+      active_win.refresh
       if horizon == true
         x = ((active_win.x2 + active_win.x1) / 2).to_i + 1
         y = active_win.y1
@@ -166,6 +167,18 @@ module Mrbmacs
 
     def split_window_horizontally
       split_window(true)
+    end
+
+    def enlarge_window(line = 1)
+      return if @frame.edit_win_list.size == 1
+
+      @frame.enlarge_window(@frame.edit_win, line)
+    end
+
+    def enlarge_window_horizontally(line = 1)
+      return if @frame.edit_win_list.size == 1
+
+      @frame.enlarge_window_horizontally(@frame.edit_win, line)
     end
   end
 end
