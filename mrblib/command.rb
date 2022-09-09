@@ -52,18 +52,27 @@ module Mrbmacs
       end
       split_window_vertically if @frame.edit_win_list.size == 1
       other_window
-      @frame.refresh_all
+      # @frame.refresh_all
 
       result_buffer = Mrbmacs.get_buffer_from_name(@buffer_list, buffer_name)
       if result_buffer.nil?
         result_buffer = Mrbmacs::Buffer.new(buffer_name)
+        if @current_buffer.docpointer != nil
+          @frame.view_win.sci_add_refdocument(@current_buffer.docpointer)
+        end
+        @frame.view_win.sci_set_docpointer(nil)
+        result_buffer.docpointer = @frame.view_win.sci_get_docpointer
         add_new_buffer(result_buffer)
+        @current_buffer = result_buffer
         add_buffer_to_frame(result_buffer)
         set_buffer_mode(result_buffer)
-        @frame.set_theme(@theme)
+        # @frame.set_theme(@theme)
+        @current_buffer.mode.set_style(@frame.view_win, @theme)
         @frame.set_buffer_name(buffer_name)
+        @frame.edit_win.buffer = @current_buffer
+      else
+        switch_to_buffer(buffer_name)
       end
-      switch_to_buffer(buffer_name)
     end
 
     def exec_shell_command(buffer_name, command)
