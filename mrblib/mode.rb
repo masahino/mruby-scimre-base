@@ -1,56 +1,61 @@
 module Mrbmacs
-  $mode_list = {
-    # ruby-mode
-    '.rb' => 'ruby',
-    '.rake' => 'ruby',
-    'Rakefile' => 'ruby',
-    '.mrbmacsrc' => 'ruby',
-    '.c' => 'cpp',
-    '.h' => 'cpp',
-    '.cpp' => 'cpp',
-    '.cxx' => 'cpp',
-    '.css' => 'css',
-    '.diff' => 'diff',
-    '.java' => 'java',
-    '.js' => 'javascript',
-    '.json' => 'json',
-    '.md' => 'markdown',
-    '.txt' => 'fundamental',
-    '.hs' => 'haskell',
-    '.html' => 'html',
-    '.htm' => 'html',
-    '.lisp' => 'lisp',
-    '.erb' => 'html',
-    '.sh' => 'bash',
-    '.go' => 'go',
-    '.pl' => 'perl',
-    '.pov' => 'pov',
-    '.py' => 'python',
-    '.r' => 'r',
-    '.rs' => 'rust',
-    '.tex' => 'latex',
-    '.xml' => 'xml',
-    '.plist' => 'xml',
-    '.yml' => 'yaml',
-    '.yaml' => 'yaml',
-    'Makefile' => 'make',
-    'makefile' => 'make',
-    '' => 'fundamental',
-    '*scratch*' => 'irb',
-    '*compilation*' => 'compilation',
-    '*Messages*' => 'fundamental',
-    '*preview_theme*' => 'previewtheme',
-    '*grep*' => 'grep'
-  }
-
+  # Mrbmacs::Mode
   class Mode
     include Singleton
     attr_accessor :name, :lexer, :indent, :use_tab, :keymap, :start_of_comment, :end_of_comment,
                   :build_command
 
+    @@mode_list = {
+      # ruby-mode
+      '.rb' => 'ruby',
+      '.rake' => 'ruby',
+      'Rakefile' => 'ruby',
+      '.mrbmacsrc' => 'ruby',
+      '.c' => 'cpp',
+      '.h' => 'cpp',
+      '.cpp' => 'cpp',
+      '.cxx' => 'cpp',
+      '.css' => 'css',
+      '.diff' => 'diff',
+      '.java' => 'java',
+      '.js' => 'javascript',
+      '.json' => 'json',
+      '.md' => 'markdown',
+      '.txt' => 'fundamental',
+      '.hs' => 'haskell',
+      '.html' => 'html',
+      '.htm' => 'html',
+      '.lisp' => 'lisp',
+      '.erb' => 'html',
+      '.sh' => 'bash',
+      '.go' => 'go',
+      '.pl' => 'perl',
+      '.pov' => 'pov',
+      '.py' => 'python',
+      '.r' => 'r',
+      '.rs' => 'rust',
+      '.tex' => 'latex',
+      '.xml' => 'xml',
+      '.plist' => 'xml',
+      '.yml' => 'yaml',
+      '.yaml' => 'yaml',
+      'Makefile' => 'make',
+      'makefile' => 'make',
+      '' => 'fundamental',
+      '*scratch*' => 'irb',
+      '*compilation*' => 'compilation',
+      '*Messages*' => 'fundamental',
+      '*preview_theme*' => 'previewtheme',
+      '*grep*' => 'grep'
+    }
+
+    def self.add_mode(suffix_or_filename, mode_name)
+      @@mode_list[suffix_or_filename] = mode_name
+    end
+
     def self.get_mode_by_suffix(suffix)
-      if $mode_list.key?(suffix)
-        $mode_list[suffix]
+      if @@mode_list.key?(suffix)
+        @@mode_list[suffix]
       else
         'fundamental'
       end
@@ -58,19 +63,17 @@ module Mrbmacs
 
     def self.get_mode_by_filename(filename)
       key = File.extname(filename)
-      if key == ''
-        key = File.basename(filename)
-      end
-      if $mode_list.key?(key)
-        $mode_list[key]
+      key = File.basename(filename) if key == ''
+      if @@mode_list.key?(key)
+        @@mode_list[key]
       else
         'fundamental'
       end
     end
 
     def self.get_mode_by_name(mode_name)
-      if Mrbmacs.const_defined?(mode_name.capitalize + 'Mode')
-        Mrbmacs.const_get(mode_name.capitalize + 'Mode').instance
+      if Mrbmacs.const_defined?("#{mode_name.capitalize}Mode")
+        Mrbmacs.const_get("#{mode_name.capitalize}Mode").instance
       else
         nil
       end
@@ -78,7 +81,7 @@ module Mrbmacs
 
     def self.set_mode_by_filename(filename)
       cur_mode = get_mode_by_filename(filename)
-      Mrbmacs.const_get(cur_mode.capitalize + 'Mode').instance
+      Mrbmacs.const_get("#{cur_mode.capitalize}Mode").instance
     end
 
     def initialize
@@ -96,26 +99,18 @@ module Mrbmacs
     end
 
     def set_lexer(view_win)
-      if @lexer != nil
-        view_win.sci_set_lexer_language(@name)
-      end
+      return if @lexer.nil?
+
+      view_win.sci_set_lexer_language(@name)
     end
 
     def set_style(view_win, theme)
       for i in 0..@style.length - 1
         color = theme.font_color[@style[i]]
-        if color[0] # foreground
-          view_win.sci_style_set_fore(i, color[0])
-        end
-        if color[1] # background
-          view_win.sci_style_set_back(i, color[1])
-        end
-        if color[2] # italic
-          view_win.sci_style_set_italic(i, color[2])
-        end
-        if color[3] # bold
-          view_win.sci_style_set_bold(i, color[3])
-        end
+        view_win.sci_style_set_fore(i, color[0]) if color[0] # foreground
+        view_win.sci_style_set_back(i, color[1]) if color[1] # background
+        view_win.sci_style_set_italic(i, color[2]) if color[2] # italic
+        view_win.sci_style_set_bold(i, color[3]) if color[3] # bold
       end
 
       #     # bracelight
@@ -135,7 +130,7 @@ module Mrbmacs
     def config
     end
 
-    def is_end_of_block(line)
+    def is_end_of_block(_line)
       false
     end
 
@@ -143,10 +138,8 @@ module Mrbmacs
       line = view_win.sci_line_from_position(view_win.sci_get_current_pos)
       level = view_win.sci_get_fold_level(line) & Scintilla::SC_FOLDLEVELNUMBERMASK - Scintilla::SC_FOLDLEVELBASE
       cur_line = view_win.sci_get_curline[0]
-      if level > 0 and is_end_of_block(cur_line) == true
-        level -= 1
-      end
-      return level
+      level -= 1 if level > 0 && is_end_of_block(cur_line) == true
+      level
     end
 
     def syntax_check(_view_win)
@@ -164,7 +157,7 @@ module Mrbmacs
         line = view_win.sci_line_from_position(pos)
         line_text = view_win.sci_get_line(line).chomp[0..col]
         input = line_text.split(' ').pop
-        if input != nil and input.length > 0
+        if input != nil && input.length > 0
           candidates = get_candidates(input)
           [input.length, candidates]
         else
@@ -184,6 +177,7 @@ module Mrbmacs
     end
   end
 
+  # fundamental mode
   class FundamentalMode < Mode
     def initialize
       super.initialize
