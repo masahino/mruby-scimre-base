@@ -1,19 +1,17 @@
-# coding: utf-8
-
 module Mrbmacs
   # Application
   class Application
     def other_window
-      if @frame.edit_win_list.size > 1
-        index = @frame.edit_win_list.index(@frame.edit_win) + 1
-        if index >= @frame.edit_win_list.size
-          index = 0
-        end
-        @frame.switch_window(@frame.edit_win_list[index])
-        # @frame.switch_window(@frame.edit_win_list.rotate!().first)
-        @current_buffer = @frame.edit_win.buffer
-        # set_buffer_mode(@current_buffer)
+      return if @frame.edit_win_list.size == 0
+
+      index = @frame.edit_win_list.index(@frame.edit_win) + 1
+      if index >= @frame.edit_win_list.size
+        index = 0
       end
+      @frame.switch_window(@frame.edit_win_list[index])
+      # @frame.switch_window(@frame.edit_win_list.rotate!().first)
+      @current_buffer = @frame.edit_win.buffer
+      # set_buffer_mode(@current_buffer)
     end
 
     def delete_window

@@ -7,6 +7,7 @@ module Mrbmacs
       @current_buffer.directory = Dir.getwd
       @frame.view_win.sci_set_readonly(1)
       @frame.view_win.sci_document_end
+      @frame.view_win.sci_set_change_history(0)
       add_sci_event(Scintilla::SCN_FOCUSIN) do |app, _scn|
         app.revert_buffer if app.current_buffer.name == '*Messages*'
       end

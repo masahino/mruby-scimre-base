@@ -2,6 +2,7 @@ module Mrbmacs
   MARKERN_BREAKPOINT = 0
   MARKERN_CURRENT = 1
 
+  # base
   class EditWindow
     attr_accessor :sci, :mode_win, :frame, :command_list, :buffer, :x1, :y1, :x2, :y2, :width, :height
 
@@ -67,6 +68,31 @@ module Mrbmacs
       # margin markers for debug
       @sci.sci_marker_define(MARKERN_BREAKPOINT, Scintilla::SC_MARK_CIRCLE)
       @sci.sci_marker_define(MARKERN_CURRENT, Scintilla::SC_MARK_SHORTARROW)
+
+      @sci.sci_marker_set_fore(Scintilla::SC_MARKNUM_HISTORY_REVERTED_TO_ORIGIN, 0xBFA040)
+      @sci.sci_marker_set_fore(Scintilla::SC_MARKNUM_HISTORY_SAVED, 0x00A000)
+      @sci.sci_marker_set_fore(Scintilla::SC_MARKNUM_HISTORY_MODIFIED, 0x0080FF)
+      @sci.sci_marker_set_fore(Scintilla::SC_MARKNUM_HISTORY_REVERTED_TO_MODIFIED, 0x00C0A0)
+    end
+
+    def set_theme_annotation(theme)
+      if theme.font_color[:color_annotation]
+        @sci.sci_style_set_fore(theme.annotation_style(:other), theme.font_color[:color_annotation][0])
+        @sci.sci_style_set_back(theme.annotation_style(:other), theme.font_color[:color_annotation][1])
+      end
+      if theme.font_color[:color_annotation_info]
+        @sci.sci_style_set_fore(theme.annotation_style(:info), theme.font_color[:color_annotation_info][0])
+        @sci.sci_style_set_back(theme.annotation_style(:info), theme.font_color[:color_annotation_info][1])
+      end
+      if theme.font_color[:color_annotation_warn]
+        @sci.sci_style_set_fore(theme.annotation_style(:warn), theme.font_color[:color_annotation_warn][0])
+        @sci.sci_style_set_back(theme.annotation_style(:warn), theme.font_color[:color_annotation_warn][1])
+      end
+      if theme.font_color[:color_annotation_error]
+        @sci.sci_style_set_fore(theme.annotation_style(:error), theme.font_color[:color_annotation_error][0])
+        @sci.sci_style_set_back(theme.annotation_style(:error), theme.font_color[:color_annotation_error][1])
+      end
+      @sci.sci_annotation_set_visible(Scintilla::ANNOTATION_INDENTED)
     end
 
     def set_theme_base(theme)
@@ -75,30 +101,11 @@ module Mrbmacs
       @sci.sci_style_set_back(Scintilla::STYLE_DEFAULT, theme.background_color)
       if theme.font_color[:color_brace_highlight]
         @sci.sci_style_set_fore(Scintilla::STYLE_BRACELIGHT,
-          theme.font_color[:color_brace_highlight][0])
+                                theme.font_color[:color_brace_highlight][0])
         @sci.sci_style_set_back(Scintilla::STYLE_BRACELIGHT,
-          theme.font_color[:color_brace_highlight][1])
+                                theme.font_color[:color_brace_highlight][1])
       end
-      if theme.font_color[:color_annotation]
-        @sci.sci_style_set_fore(theme.annotation_style(:other), theme.font_color[:color_annotation][0])
-        @sci.sci_style_set_back(theme.annotation_style(:other), theme.font_color[:color_annotation][1])
-        @sci.sci_annotation_set_visible(Scintilla::ANNOTATION_INDENTED)
-      end
-      if theme.font_color[:color_annotation_info]
-        @sci.sci_style_set_fore(theme.annotation_style(:info), theme.font_color[:color_annotation_info][0])
-        @sci.sci_style_set_back(theme.annotation_style(:info), theme.font_color[:color_annotation_info][1])
-        @sci.sci_annotation_set_visible(Scintilla::ANNOTATION_INDENTED)
-      end
-      if theme.font_color[:color_annotation_warn]
-        @sci.sci_style_set_fore(theme.annotation_style(:warn), theme.font_color[:color_annotation_warn][0])
-        @sci.sci_style_set_back(theme.annotation_style(:warn), theme.font_color[:color_annotation_warn][1])
-        @sci.sci_annotation_set_visible(Scintilla::ANNOTATION_INDENTED)
-      end
-      if theme.font_color[:color_annotation_error]
-        @sci.sci_style_set_fore(theme.annotation_style(:error), theme.font_color[:color_annotation_error][0])
-        @sci.sci_style_set_back(theme.annotation_style(:error), theme.font_color[:color_annotation_error][1])
-        @sci.sci_annotation_set_visible(Scintilla::ANNOTATION_INDENTED)
-      end
+      set_theme_annotation(theme)
       if theme.font_color[:color_linenumber]
         @sci.sci_style_set_fore(Scintilla::STYLE_LINENUMBER, theme.font_color[:color_linenumber][0])
         @sci.sci_style_set_back(Scintilla::STYLE_LINENUMBER, theme.font_color[:color_linenumber][1])

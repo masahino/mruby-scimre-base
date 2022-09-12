@@ -70,7 +70,8 @@ module Mrbmacs
         color_linenumber: [@foreground_color, 0x404040, nil, nil],
         color_caret_line: [@foreground_color, 0x404040, nil, nil],
         color_indent_guide: [0xc0c0c0, @background_color, nil, nil],
-        color_marker_breakpoint: [0x4246ab, 0x404040, nil, nil]
+        color_marker_breakpoint: [0xff0000, 0x404040, nil, nil],
+        color_marker_current: [0x0000ff, 0x404040, nil, nil]
       }
     end
 

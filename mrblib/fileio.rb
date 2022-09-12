@@ -108,13 +108,14 @@ module Mrbmacs
         view_win.sci_set_savepoint
         view_win.sci_empty_undo_buffer
         view_win.sci_set_mod_event_mask(mod_mask)
+        view_win.sci_set_change_history Scintilla::SC_CHANGE_HISTORY_ENABLED | Scintilla::SC_CHANGE_HISTORY_MARKERS
       rescue
         # new file
         message 'error load file'
       end
     end
 
-    def save_buffer()
+    def save_buffer
       all_text = @frame.view_win.sci_get_text(@frame.view_win.sci_get_length + 1)
       if @current_buffer.encoding != 'utf-8'
         all_text = Iconv.conv(@current_buffer.encoding, 'utf-8', all_text)
