@@ -68,11 +68,6 @@ module Mrbmacs
       # margin markers for debug
       @sci.sci_marker_define(MARKERN_BREAKPOINT, Scintilla::SC_MARK_CIRCLE)
       @sci.sci_marker_define(MARKERN_CURRENT, Scintilla::SC_MARK_SHORTARROW)
-
-      @sci.sci_marker_set_fore(Scintilla::SC_MARKNUM_HISTORY_REVERTED_TO_ORIGIN, 0xBFA040)
-      @sci.sci_marker_set_fore(Scintilla::SC_MARKNUM_HISTORY_SAVED, 0x00A000)
-      @sci.sci_marker_set_fore(Scintilla::SC_MARKNUM_HISTORY_MODIFIED, 0x0080FF)
-      @sci.sci_marker_set_fore(Scintilla::SC_MARKNUM_HISTORY_REVERTED_TO_MODIFIED, 0x00C0A0)
     end
 
     def set_theme_annotation(theme)
@@ -95,6 +90,31 @@ module Mrbmacs
       @sci.sci_annotation_set_visible(Scintilla::ANNOTATION_INDENTED)
     end
 
+    def set_theme_marker(theme)
+      if theme.font_color[:color_marker_breakpoint]
+        @sci.sci_marker_set_fore(Mrbmacs::MARKERN_BREAKPOINT, theme.font_color[:color_marker_breakpoint][0])
+        @sci.sci_marker_set_back(Mrbmacs::MARKERN_BREAKPOINT, theme.font_color[:color_marker_breakpoint][1])
+      end
+      if theme.font_color[:color_marker_current]
+        @sci.sci_marker_set_fore(Mrbmacs::MARKERN_CURRENT, theme.font_color[:color_marker_current][0])
+        @sci.sci_marker_set_back(Mrbmacs::MARKERN_CURRENT, theme.font_color[:color_marker_current][1])
+      end
+      @sci.sci_marker_set_fore(Scintilla::SC_MARKNUM_HISTORY_REVERTED_TO_ORIGIN, 0xBFA040)
+      @sci.sci_marker_set_fore(Scintilla::SC_MARKNUM_HISTORY_SAVED, 0x00A000)
+      @sci.sci_marker_set_fore(Scintilla::SC_MARKNUM_HISTORY_MODIFIED, 0x0080FF)
+      @sci.sci_marker_set_fore(Scintilla::SC_MARKNUM_HISTORY_REVERTED_TO_MODIFIED, 0x00C0A0)
+      if theme.font_color[:color_linenumber]
+        @sci.sci_marker_set_back(Scintilla::SC_MARKNUM_HISTORY_REVERTED_TO_ORIGIN,
+                                 theme.font_color[:color_linenumber][1])
+        @sci.sci_marker_set_back(Scintilla::SC_MARKNUM_HISTORY_SAVED,
+                                 theme.font_color[:color_linenumber][1])
+        @sci.sci_marker_set_back(Scintilla::SC_MARKNUM_HISTORY_MODIFIED,
+                                 theme.font_color[:color_linenumber][1])
+        @sci.sci_marker_set_back(Scintilla::SC_MARKNUM_HISTORY_REVERTED_TO_MODIFIED,
+                                 theme.font_color[:color_linenumber][1])
+      end
+    end
+
     def set_theme_base(theme)
       @sci.sci_style_clear_all
       @sci.sci_style_set_fore(Scintilla::STYLE_DEFAULT, theme.foreground_color)
@@ -110,14 +130,7 @@ module Mrbmacs
         @sci.sci_style_set_fore(Scintilla::STYLE_LINENUMBER, theme.font_color[:color_linenumber][0])
         @sci.sci_style_set_back(Scintilla::STYLE_LINENUMBER, theme.font_color[:color_linenumber][1])
       end
-      if theme.font_color[:color_marker_breakpoint]
-        @sci.sci_marker_set_fore(Mrbmacs::MARKERN_BREAKPOINT, theme.font_color[:color_marker_breakpoint][0])
-        @sci.sci_marker_set_back(Mrbmacs::MARKERN_BREAKPOINT, theme.font_color[:color_marker_breakpoint][1])
-      end
-      if theme.font_color[:color_marker_current]
-        @sci.sci_marker_set_fore(Mrbmacs::MARKERN_CURRENT, theme.font_color[:color_marker_current][0])
-        @sci.sci_marker_set_back(Mrbmacs::MARKERN_CURRENT, theme.font_color[:color_marker_current][1])
-      end
+      set_theme_marker(theme)
       if theme.font_color[:color_caret_line]
         @sci.sci_set_caret_line_visible(true)
         @sci.sci_set_caret_line_back(theme.font_color[:color_caret_line][1])
