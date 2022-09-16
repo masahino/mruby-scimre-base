@@ -79,7 +79,7 @@ module Mrbmacs
           tmp_text = ''
           begin
             tmp_text = Iconv.conv('utf-8', from, text)
-          rescue
+          rescue StandardError
             next
           end
           file_encoding = from if tmp_text.size != text.size
@@ -109,7 +109,7 @@ module Mrbmacs
         view_win.sci_empty_undo_buffer
         view_win.sci_set_mod_event_mask(mod_mask)
         view_win.sci_set_change_history Scintilla::SC_CHANGE_HISTORY_ENABLED | Scintilla::SC_CHANGE_HISTORY_MARKERS
-      rescue
+      rescue StandardError
         # new file
         message 'error load file'
       end

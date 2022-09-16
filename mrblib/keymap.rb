@@ -2,6 +2,7 @@ module Mrbmacs
   class KeyMap
     include Scintilla
     attr_accessor :command_list, :keymap
+
     def initialize
       @command_list = {}
       @default_keymap = {

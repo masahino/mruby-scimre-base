@@ -35,7 +35,7 @@ module Mrbmacs
       op.banner = "Usage: #{$0} [OPTION-OR-FILENAME]..."
       begin
         args = op.parse(argv)
-      rescue => e
+      rescue StandardError => e
         puts e.message
         puts op.to_s
         exit

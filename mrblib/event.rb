@@ -12,13 +12,13 @@ module Mrbmacs
     end
 
     def add_sci_event(event_id, priority = nil, &proc)
-      if @sci_handler[event_id] == nil
-        if priority == nil
+      if @sci_handler[event_id].nil?
+        if priority.nil?
           priority = 100
         end
         @sci_handler[event_id] = [SciEvent.new(priority, proc)]
       else
-        if priority == nil
+        if priority.nil?
           if @sci_handler[event_id].last.priority < 100
             priority = 100
           else
@@ -31,7 +31,7 @@ module Mrbmacs
     end
 
     def add_command_event(method, &proc)
-      if @command_handler[method] == nil
+      if @command_handler[method].nil?
         @command_handler[method] = []
       end
       @command_handler[method].push proc

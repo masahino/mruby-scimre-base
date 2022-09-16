@@ -48,9 +48,11 @@ module Mrbmacs
     end
 
     def isearch_backward
+      # isearch_backward
     end
 
     def isearch_forward
+      # isearch_forward
     end
 
     def indent
@@ -143,7 +145,7 @@ module Mrbmacs
 
     def get_current_line_col(pos = nil)
       view_win = @frame.view_win
-      if pos == nil
+      if pos.nil?
         pos = view_win.sci_get_current_pos
       end
       col = view_win.sci_get_column(pos)

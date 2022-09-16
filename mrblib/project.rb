@@ -31,7 +31,7 @@ module Mrbmacs
 
   class Application
     def open_project(root_directory = nil)
-      if root_directory == nil
+      if root_directory.nil?
         root_directory = read_dir_name('Project directory: ', @current_buffer.directory)
       end
       if root_directory != nil && Dir.exist?(root_directory)

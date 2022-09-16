@@ -15,7 +15,7 @@ module Mrbmacs
         @sci_handler[event['code']].each do |s|
           s.proc.call(self, event)
         end
-      rescue => e
+      rescue StandardError => e
         @logger.error e.to_s
         @logger.error e.backtrace
         @frame.echo_puts e.to_s

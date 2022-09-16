@@ -80,7 +80,7 @@ module Mrbmacs
       # if @buffer_list.size <= 1
       #   return
       # end
-      if buffername == nil
+      if buffername.nil?
         buffername = @frame.select_buffer(@buffer_list[-2].name, @buffer_list.collect { |b| b.name })
       end
       if buffername != nil
@@ -102,7 +102,7 @@ module Mrbmacs
     def kill_buffer(buffername = nil)
       return if @buffer_list.size <= 1
 
-      if buffername == nil
+      if buffername.nil?
         echo_text = "kill-buffer (default #{@current_buffer.name}): "
         buffername = @frame.echo_gets(echo_text, '') do |input_text|
           buffer_list = @buffer_list.collect { |b| b.name }.select { |b| b[0, input_text.length] == input_text }
