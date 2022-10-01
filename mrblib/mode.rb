@@ -26,6 +26,7 @@ module Mrbmacs
       '.html' => 'html',
       '.htm' => 'html',
       '.lisp' => 'lisp',
+      '.lua' => 'lua',
       '.erb' => 'html',
       '.sh' => 'bash',
       '.go' => 'go',
