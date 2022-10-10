@@ -77,7 +77,7 @@ module Mrbmacs
       @config = Config.new
       @command_handler = {}
       @mark_pos = nil
-      @filename = nil
+      # @filename = nil
       @target_start_pos = nil
       @file_encodings = []
       @last_search_text = ''
@@ -96,7 +96,7 @@ module Mrbmacs
       @command_list = @keymap.command_list
       @echo_keymap = EchoWinKeyMap.new
       @echo_keymap.set_keymap(@frame.echo_win)
-      @system_encodings = Mrbmacs.get_encoding_list
+      # @system_encodings = Mrbmacs.get_encoding_list
       @themes = Theme.create_theme_list
       @project = Project.new(@current_buffer.directory)
 
