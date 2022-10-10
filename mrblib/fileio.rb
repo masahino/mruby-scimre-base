@@ -70,12 +70,10 @@ module Mrbmacs
 
     def open_file(filename)
       view_win = @frame.view_win
-      file_encodings = @file_encodings
-      current_buffer = @current_buffer
       begin
         file_encoding = 'utf-8'
         text = File.open(filename).read
-        file_encodings.each do |from|
+        @file_encodings.each do |from|
           tmp_text = ''
           begin
             tmp_text = Iconv.conv('utf-8', from, text)
@@ -87,7 +85,7 @@ module Mrbmacs
         end
         if file_encoding != 'utf-8'
           text = Iconv.conv('utf-8', file_encoding, text)
-          current_buffer.encoding = file_encoding
+          @current_buffer.encoding = file_encoding
         end
         mod_mask = view_win.sci_get_mod_event_mask
         view_win.sci_set_mod_event_mask(0)
