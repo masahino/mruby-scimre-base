@@ -1,4 +1,5 @@
 module Mrbmacs
+  # command
   class Application
     def execute_extended_command
       # command_list = @command_list.values.select {|item| item.kind_of?(String)}
@@ -19,7 +20,7 @@ module Mrbmacs
           eval("#{command.gsub('-', '_')}(#{args})")
         rescue
           @logger.error $!
-          message "#{command} no found"
+          message "#{command} error"
         end
       end
     end
@@ -77,7 +78,6 @@ module Mrbmacs
 
     def exec_shell_command(buffer_name, command)
       setup_result_buffer(buffer_name)
-
       @current_buffer.docpointer = @frame.view_win.sci_get_docpointer
       @frame.view_win.sci_clear_all
       if Object.const_defined? 'Open3'
@@ -93,15 +93,16 @@ module Mrbmacs
       else
         io = IO.popen(command + ' 2>&1')
         add_io_read_event(io) do |app, io_arg|
-          ret = io_arg.read(256)
-          if ret != nil
+          ret = io_arg.read(256) unless io_arg.closed?
+          result_win = app.frame.edit_win_from_buffer(buffer_name)
+          if !ret.nil?
             if app.current_buffer.name == buffer_name
-              app.frame.view_win.sci_insert_text(app.frame.view_win.sci_get_length, ret)
-              app.frame.view_win.sci_goto_pos(app.frame.view_win.sci_get_length)
+              result_win.sci.sci_insert_text(result_win.sci.sci_get_length, ret)
+              result_win.sci.sci_goto_pos(result_win.sci.sci_get_length)
             end
           else
-            app.frame.view_win.sci_insert_text(app.frame.view_win.sci_get_length, "\n#{command} finished")
-            app.frame.view_win.sci_goto_pos(app.frame.view_win.sci_get_length)
+            result_win.sci.sci_insert_text(result_win.sci.sci_get_length, "\n#{command} finished")
+            result_win.sci.sci_goto_pos(result_win.sci.sci_get_length)
             app.del_io_read_event(io_arg)
           end
         end
