@@ -3,14 +3,7 @@ module Mrbmacs
     include Scintilla
 
     attr_accessor :frame, :mark_pos, :current_buffer, :buffer_list, :theme,
-                  :file_encodings, :system_encodings,
-                  :sci_handler, :ext,
-                  :command_list,
-                  :use_builtin_completion, :use_builtin_indent,
-                  :config,
-                  :modeline,
-                  :project,
-                  :io_handler
+                  :sci_handler, :ext, :command_list, :config, :modeline, :project, :io_handler
 
     def parse_args(argv)
       op = OptionParser.new
@@ -72,14 +65,11 @@ module Mrbmacs
       @io_handler = {}
       @readings = []
       @sci_handler = {}
-      # TODO: data of extension
       @ext = Extension.new
       @config = Config.new
       @command_handler = {}
       @mark_pos = nil
-      # @filename = nil
       @target_start_pos = nil
-      @file_encodings = []
       @last_search_text = ''
       @theme = nil
       @modeline = Modeline.new
@@ -96,7 +86,6 @@ module Mrbmacs
       @command_list = @keymap.command_list
       @echo_keymap = EchoWinKeyMap.new
       @echo_keymap.set_keymap(@frame.echo_win)
-      # @system_encodings = Mrbmacs.get_encoding_list
       @themes = Theme.create_theme_list
       @project = Project.new(@current_buffer.directory)
 

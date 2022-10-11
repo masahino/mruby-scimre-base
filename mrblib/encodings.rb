@@ -21,7 +21,6 @@ module Mrbmacs
         code = @frame.echo_gets('Coding system for saving file:') do |input_text|
           tmp_str = input_text.upcase
           comp_list = system_encodings.select do |encoding|
-#          comp_list = @system_encodings.select do |encoding|
             encoding.start_with?(tmp_str)
           end
           @logger.debug comp_list

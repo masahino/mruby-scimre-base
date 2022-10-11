@@ -73,7 +73,7 @@ module Mrbmacs
       begin
         file_encoding = 'utf-8'
         text = File.open(filename).read
-        @file_encodings.each do |from|
+        @config.file_encodings.each do |from|
           tmp_text = ''
           begin
             tmp_text = Iconv.conv('utf-8', from, text)

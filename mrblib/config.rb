@@ -1,7 +1,8 @@
 module Mrbmacs
   # configuration of mrbmacs
   class Config
-    attr_accessor :theme, :ext, :use_builtin_completion, :use_builtin_indent, :use_builtin_syntax_check
+    attr_accessor :theme, :ext, :use_builtin_completion, :use_builtin_indent, :use_builtin_syntax_check,
+                  :file_encodings
 
     def initialize
       @use_builtin_completion = false
@@ -9,6 +10,7 @@ module Mrbmacs
       @use_builtin_syntax_check = false
       @theme = SolarizedDarkTheme
       @ext = {}
+      @file_encodings = []
     end
   end
 end
