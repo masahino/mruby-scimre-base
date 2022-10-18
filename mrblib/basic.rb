@@ -57,7 +57,7 @@ module Mrbmacs
 
     def indent
       win = @frame.view_win
-      if win.sci_autoc_active == 1
+      if win.sci_autoc_active
         current = win.sci_autoc_get_current
         win.sci_linedown
         if current == win.sci_autoc_get_current
@@ -65,8 +65,7 @@ module Mrbmacs
         end
       else
         line = win.sci_line_from_position(win.sci_get_current_pos)
-        level = @current_buffer.mode.get_indent_level(win)
-        indent = win.sci_get_indent * level
+        indent = @current_buffer.mode.get_indent(win)
         win.sci_set_line_indentation(line, indent)
         if win.sci_get_column(win.sci_get_current_pos) < indent
           win.sci_vchome
@@ -96,7 +95,7 @@ module Mrbmacs
 
     def newline
       win = @frame.view_win
-      if win.sci_autoc_active == 1
+      if win.sci_autoc_active
         # win.sci_autoc_cancel
         win.sci_tab
       else

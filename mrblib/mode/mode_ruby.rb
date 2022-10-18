@@ -52,6 +52,10 @@ module Mrbmacs
       ]
     end
 
+    def get_indent(view_win)
+      view_win.sci_get_indent * get_indent_level(view_win)
+    end
+
     def is_end_of_block(line)
       if line =~ /^\s*(end|else|then|elsif|when|rescue|ensure|when|\}|\]|\)).*$/
         true

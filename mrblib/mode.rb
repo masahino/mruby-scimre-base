@@ -143,6 +143,10 @@ module Mrbmacs
       level
     end
 
+    def get_indent(view_win)
+      view_win.sci_get_indent * get_indent_level(view_win)
+    end
+
     def syntax_check(_view_win)
       []
     end
