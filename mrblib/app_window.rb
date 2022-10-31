@@ -14,16 +14,15 @@ module Mrbmacs
       # set_buffer_mode(@current_buffer)
     end
 
-    def delete_window
-      active_win = @frame.edit_win
+    def delete_window(target_win = @frame.edit_win)
       if @frame.edit_win_list.size == 1
         @frame.echo_puts('Atempt to delete sole ordinary window')
         return
       end
-      x1 = active_win.x1
-      x2 = active_win.x2
-      y1 = active_win.y1
-      y2 = active_win.y2
+      x1 = target_win.x1
+      x2 = target_win.x2
+      y1 = target_win.y1
+      y2 = target_win.y2
       new_win = nil
       count = 0
       expand_wins = {}
@@ -33,41 +32,37 @@ module Mrbmacs
       expand_wins[:bottom] = []
 
       @frame.edit_win_list.each do |e|
-        next if e == active_win
+        next if e == target_win
 
         new_win = e
-        ex1 = e.x1
-        ex2 = e.x2
-        ey1 = e.y1
-        ey2 = e.y2
 
-        if x1 == (ex2 + 1) && y1 == ey1 && y2 == ey2
+        if x1 == (e.x2 + 1) && y1 == e.y1 && y2 == e.y2
           # left border
           e.x2 = x2
           count += 1
           break
-        elsif (x2 + 1) == ex1 && y1 == ey1 && y2 == ey2
+        elsif (x2 + 1) == e.x1 && y1 == e.y1 && y2 == e.y2
           # right border
           e.x1 = x1
           count += 1
           break
-        elsif y1 == (ey2 + 1) && x1 == ex1 && x2 == ex2
+        elsif y1 == (e.y2 + 1) && x1 == e.x1 && x2 == e.x2
           #  top border
           e.y2 = y2
           count += 1
           break
-        elsif (y2 + 1) == ey1 && x1 == ex1 && x2 == ex2
+        elsif (y2 + 1) == e.y1 && x1 == e.x1 && x2 == e.x2
           # bottom border
           e.y1 = y1
           count += 1
           break
-        elsif x1 == (ex2 + 1)
+        elsif x1 == (e.x2 + 1)
           expand_wins[:left].push e
-        elsif (x2 + 1) == ex1
+        elsif (x2 + 1) == e.x1
           expand_wins[:right].push e
-        elsif y1 == (ey2 + 1)
+        elsif y1 == (e.y2 + 1)
           expand_wins[:top].push e
-        elsif (y2 + 1) == ey1
+        elsif (y2 + 1) == e.y1
           expand_wins[:bottom].push e
         end
       end
@@ -105,13 +100,15 @@ module Mrbmacs
       if count > 0
         new_win.compute_area
         @frame.switch_window(new_win)
-        active_win.delete
-        @frame.edit_win_list.delete(active_win)
+        @current_buffer = new_win.buffer
+        target_win.sci.sci_add_refdocument(target_win.buffer.docpointer)
+        target_win.delete
+        @frame.edit_win_list.delete(target_win)
         @frame.edit_win_list.each do |w|
           w.refresh
         end
       else
-        $stderr.puts "can't find any window"
+        @logger.error "can't find any window"
       end
     end
 
