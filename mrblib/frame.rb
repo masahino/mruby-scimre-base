@@ -97,6 +97,103 @@ module Mrbmacs
       new_win.focus_in
     end
 
+    def delete_window(target_win)
+      if @edit_win_list.size == 1
+        echo_puts('Atempt to delete sole ordinary window')
+        return
+      end
+      x1 = target_win.x1
+      x2 = target_win.x2
+      y1 = target_win.y1
+      y2 = target_win.y2
+      new_win = nil
+      count = 0
+      expand_wins = {}
+      expand_wins[:left] = []
+      expand_wins[:right] = []
+      expand_wins[:top] = []
+      expand_wins[:bottom] = []
+
+      @edit_win_list.each do |e|
+        next if e == target_win
+
+        new_win = e
+
+        if x1 == (e.x2 + 1) && y1 == e.y1 && y2 == e.y2
+          # left border
+          e.x2 = x2
+          count += 1
+          break
+        elsif (x2 + 1) == e.x1 && y1 == e.y1 && y2 == e.y2
+          # right border
+          e.x1 = x1
+          count += 1
+          break
+        elsif y1 == (e.y2 + 1) && x1 == e.x1 && x2 == e.x2
+          #  top border
+          e.y2 = y2
+          count += 1
+          break
+        elsif (y2 + 1) == e.y1 && x1 == e.x1 && x2 == e.x2
+          # bottom border
+          e.y1 = y1
+          count += 1
+          break
+        elsif x1 == (e.x2 + 1)
+          expand_wins[:left].push e
+        elsif (x2 + 1) == e.x1
+          expand_wins[:right].push e
+        elsif y1 == (e.y2 + 1)
+          expand_wins[:top].push e
+        elsif (y2 + 1) == e.y1
+          expand_wins[:bottom].push e
+        end
+      end
+      if count == 0
+        if expand_wins[:left].size > 1
+          count = expand_wins[:left].size
+          expand_wins[:left].each do |w|
+            w.x2 = x2
+            w.compute_area
+          end
+          new_win = expand_wins[:left].first
+        elsif expand_wins[:right].size > 1
+          count = expand_wins[:right].size
+          expand_wins[:right].each do |w|
+            w.x1 = x1
+            w.compute_area
+          end
+          new_win = expand_wins[:right].first
+        elsif expand_wins[:top].size > 1
+          count = expand_wins[:top].size
+          expand_wins[:top].each do |w|
+            w.y2 = y2
+            w.compute_area
+          end
+          new_win = expand_wins[:top].first
+        elsif expand_wins[:bottom].size > 1
+          count = expand_wins[:bottom].size
+          expand_wins[:bottom].each do |w|
+            w.y1 = y1
+            w.compute_area
+          end
+          new_win = expand_wins[:bottom].first
+        end
+      end
+      if count > 0
+        new_win.compute_area
+        switch_window(new_win)
+        target_win.sci.sci_add_refdocument(target_win.buffer.docpointer)
+        target_win.delete
+        @edit_win_list.delete(target_win)
+        @edit_win_list.each do |w|
+          w.refresh
+        end
+      else
+        echo_puts "can't find any window"
+      end
+    end
+
     def enlarge_window(active_win, line)
       downward_shrink_win = []
       downward_enlarge_win = [active_win]
