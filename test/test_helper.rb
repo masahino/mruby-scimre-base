@@ -7,19 +7,22 @@ $test_echo_gets = {
 $test_file_name = 'test'
 
 module Mrbmacs
+  # Application class for test
   class ApplicationTest < Application
     def initialize(argv = [])
       super(argv)
     end
 
     def add_buffer_to_frame(buffer)
+      # dummy
     end
 
-    def read_file_name(prompt, directory, default_name = nil)
+    def read_file_name(_prompt, _directory, _default_name = nil)
       $test_file_name
     end
   end
 
+  # Frame class for test
   class Frame < FrameBase
     attr_accessor :view_win, :echo_win, :tk, :echo_message, :edit_win, :mode_win
 
@@ -64,6 +67,7 @@ module Mrbmacs
     end
   end
 
+  # EditWindow class for test
   class EditWindowTest < EditWindow
     def initialize(frame, buffer, x1, y1, width, height)
       @sci = Scintilla::ScintillaTest.new
@@ -90,10 +94,9 @@ end
 
 module Scintilla
   Scintilla::PLATFORM = :TEST
+  # Scniailla class for test
   class ScintillaTest < ScintillaBase
-    attr_accessor :pos
-    attr_accessor :messages
-    attr_accessor :test_return
+    attr_accessor :pos, :messages, :test_return
     def initialize
       @pos = 0
       @messages = []
@@ -118,44 +121,55 @@ module Scintilla
     end
 
     def send_message_get_text(wparam)
+      # dummy
     end
 
     def send_message_set_docpointer(id, wparam)
+      # dummy
     end
 
     def send_message_get_docpointer(wparam)
+      # dummy
     end
 
     def resize_window(height, width)
+      # dummy
     end
 
     def move_window(x, y)
+      # dummy
     end
 
     def refresh
+      # dummy
     end
 
-
     def send_key(key, mod_shift, mod_ctrl, mod_alt)
+      # dummy
     end
 
 #   def sci_get_current_pos()
 #      @pos
 #    end
 
-    def sci_get_curline()
+    def sci_get_curline
       []
     end
 
     def sci_set_lexer_language(lang)
+      # dummy
     end
   end
 end
 
+# TermKey class for test
 class TermKey
   attr_accessor :key_buffer
+
+  # Key
   class Key
     attr_accessor :key_str
+
     def initialize(key = nil)
       if key != nil
         @code = key.chr
@@ -166,7 +180,7 @@ class TermKey
         @code = 0
         @type = TermKey::TYPE_UNKNOWN_CSI
         @modifiers = 0
-        @key_str = ""
+        @key_str = ''
       end
     end
 
@@ -184,7 +198,7 @@ class TermKey
 
   end
 
-  def initialize(fd, flag)
+  def initialize(_fd, _flag)
     @key_buffer = []
   end
 
@@ -196,7 +210,7 @@ class TermKey
     end
   end
 
-  def strfkey(key, flag)
+  def strfkey(key, _flag)
     key.key_str
   end
 
@@ -210,4 +224,5 @@ class TermKey
 end
 
 def exit
+  # dummy
 end
