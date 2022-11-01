@@ -51,7 +51,7 @@ end
 assert('newline') do
   app = Mrbmacs::ApplicationTest.new
   win = app.frame.view_win
-  win.test_return[Scintilla::SCI_AUTOCACTIVE] = false
+  win.test_return[Scintilla::SCI_AUTOCACTIVE] = 0
   app.newline
   assert_equal(Scintilla::SCI_NEWLINE, win.messages.pop)
 end
@@ -81,10 +81,10 @@ end
 assert('indent') do
   app = Mrbmacs::ApplicationTest.new
   win = app.frame.view_win
-  win.test_return[Scintilla::SCI_AUTOCACTIVE] = true
+  win.test_return[Scintilla::SCI_AUTOCACTIVE] = 1
   app.indent
   assert_equal(Scintilla::SCI_VCHOME, app.frame.view_win.messages.pop)
-  win.test_return[Scintilla::SCI_AUTOCACTIVE] = false
+  win.test_return[Scintilla::SCI_AUTOCACTIVE] = 0
   app.indent
   assert_equal(Scintilla::SCI_GETCOLUMN, app.frame.view_win.messages.pop)
 end
