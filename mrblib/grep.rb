@@ -1,5 +1,6 @@
 module Mrbmacs
-  class Application
+  # Command
+  module Command
     def grep(command = nil)
       command = @frame.echo_gets("Run Grep[#{Dir.getwd}]: ", 'grep -n ') if command.nil?
       return if command.nil?
@@ -10,5 +11,9 @@ module Mrbmacs
       result_buffer.mode.pattern = GrepMode.extract_pattern(command)
       exec_shell_command(buffer_name, command)
     end
+  end
+
+  class Application
+    include Command
   end
 end

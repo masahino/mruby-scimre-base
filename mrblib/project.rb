@@ -29,7 +29,8 @@ module Mrbmacs
     end
   end
 
-  class Application
+  # Command
+  module Command
     def open_project(root_directory = nil)
       if root_directory.nil?
         root_directory = read_dir_name('Project directory: ', @current_buffer.directory)
@@ -38,5 +39,9 @@ module Mrbmacs
         @project.update(root_directory)
       end
     end
+  end
+
+  class Application
+    include Command
   end
 end

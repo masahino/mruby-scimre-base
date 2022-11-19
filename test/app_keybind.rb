@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/test_helper.rb'
 
 assert('key_scan') do
   app = Mrbmacs::ApplicationTest.new
-  assert_equal 'beginning-of-line', app.key_scan('C-a')
+  assert_equal 'beginning_of_line', app.key_scan('C-a')
   assert_equal Scintilla::SCI_WORDLEFT, app.key_scan('M-b')
   assert_equal nil, app.key_scan('C-q')
   app.current_buffer.mode.keymap['C-a'] = 'hoge'

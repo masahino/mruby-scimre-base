@@ -1,5 +1,6 @@
 module Mrbmacs
-  class Application
+  # Command
+  module Command
     def eval_last_exp
       text, pos = @frame.view_win.sci_get_curline
       begin
@@ -21,5 +22,9 @@ module Mrbmacs
       end
       @logger.debug ret
     end
+  end
+
+  class Application
+    include Command
   end
 end

@@ -1,4 +1,11 @@
 module Mrbmacs
+  # Command
+  module Command
+    def query_replace
+      message 'not yet implemented'
+    end
+  end
+
   # Application class for terminal
   class ApplicationTerminal < Application
     def copy_region

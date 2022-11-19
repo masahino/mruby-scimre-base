@@ -1,6 +1,6 @@
 module Mrbmacs
-  # Application
-  class Application
+  # Command
+  module Command
     def other_window
       return if @frame.edit_win_list.size == 0
 
@@ -22,6 +22,30 @@ module Mrbmacs
     def delete_other_window
       @frame.delete_other_window
     end
+
+    def split_window_vertically
+      split_window(false)
+    end
+
+    def split_window_horizontally
+      split_window(true)
+    end
+
+    def enlarge_window(line = 1)
+      return if @frame.edit_win_list.size == 1
+
+      @frame.enlarge_window(@frame.edit_win, line)
+    end
+
+    def enlarge_window_horizontally(line = 1)
+      return if @frame.edit_win_list.size == 1
+
+      @frame.enlarge_window_horizontally(@frame.edit_win, line)
+    end
+  end
+  # Application
+  class Application
+    include Command
 
     def split_window(horizon)
       active_win = @frame.edit_win
@@ -61,26 +85,6 @@ module Mrbmacs
       end
       @frame.modeline(self, new_win)
       new_win.focus_out
-    end
-
-    def split_window_vertically
-      split_window(false)
-    end
-
-    def split_window_horizontally
-      split_window(true)
-    end
-
-    def enlarge_window(line = 1)
-      return if @frame.edit_win_list.size == 1
-
-      @frame.enlarge_window(@frame.edit_win, line)
-    end
-
-    def enlarge_window_horizontally(line = 1)
-      return if @frame.edit_win_list.size == 1
-
-      @frame.enlarge_window_horizontally(@frame.edit_win, line)
     end
   end
 end

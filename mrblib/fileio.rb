@@ -1,3 +1,4 @@
+# Mrbmacs
 module Mrbmacs
   def self.dir_glob(input_text)
     file_list = []
@@ -15,7 +16,92 @@ module Mrbmacs
     [file_list, len]
   end
 
+  # Command
+  module Command
+    def insert_file(file_path = nil)
+      view_win = @frame.view_win
+      file_path = read_file_name('insert file: ', @current_buffer.directory) if file_path.nil?
+      return if file_path.nil?
+
+      if File.exist?(file_path) == true && FileTest.file?(file_path) == true
+        text = File.open(file_path).read
+        view_win.sci_insert_text(view_win.sci_get_current_pos, text)
+      else
+        message('no match')
+      end
+    end
+
+    def find_file(filename = nil)
+      filename = read_file_name('find file: ', @current_buffer.directory) if filename.nil?
+      return if filename.nil?
+
+      if Mrbmacs.get_buffer_from_path(@buffer_list, filename) != nil
+        switch_to_buffer(Mrbmacs.get_buffer_from_path(@buffer_list, filename).name)
+      else
+        @current_buffer.pos = @frame.view_win.sci_get_current_pos
+        new_buffer = Buffer.new(filename)
+        if @current_buffer.docpointer != nil
+          @frame.view_win.sci_add_refdocument(@current_buffer.docpointer)
+        end
+        @frame.view_win.sci_set_docpointer(nil)
+        new_buffer.docpointer = @frame.view_win.sci_get_docpointer
+        add_new_buffer(new_buffer)
+        @current_buffer = new_buffer
+        add_buffer_to_frame(@current_buffer)
+        open_file(filename)
+        @frame.view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
+        @current_buffer.mode.set_style(@frame.view_win, @theme)
+        @frame.set_buffer_name(@current_buffer.name)
+        @frame.edit_win.buffer = @current_buffer
+        @frame.modeline(self)
+        if @config.use_builtin_syntax_check == true
+          error = @current_buffer.mode.syntax_check(@frame.view_win)
+          @frame.show_annotation(error[0], error[1], error[2]) if error.size > 0
+        end
+      end
+      after_find_file(self, filename)
+    end
+
+    def save_buffer
+      all_text = @frame.view_win.sci_get_text(@frame.view_win.sci_get_length + 1)
+      if @current_buffer.encoding != 'utf-8'
+        all_text = Iconv.conv(@current_buffer.encoding, 'utf-8', all_text)
+      end
+      #    $stderr.print all_text
+      #      File.open(app.filename, "w") do |f|
+      File.open(@current_buffer.filename, 'w') do |f|
+        f.write all_text
+      end
+      @frame.view_win.sci_set_save_point
+
+      if @config.use_builtin_syntax_check == true
+        @frame.view_win.sci_annotation_clearall
+        error = @current_buffer.mode.syntax_check(@frame.view_win)
+        if error.size > 0
+          @frame.show_annotation(error[0], error[1], error[2])
+        end
+      end
+      after_save_buffer(self, @current_buffer.filename)
+    end
+
+    def write_file(filename = nil)
+      if filename.nil?
+        filename = read_save_file_name('write file: ', @current_buffer.directory, @current_buffer.basename)
+      end
+      return if filename.nil?
+
+      @current_buffer.set_filename(filename)
+      save_buffer
+      @frame.view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
+      @current_buffer.mode.set_style(@frame.view_win, @theme)
+      @frame.set_buffer_name(@current_buffer.name)
+    end
+  end
+
+  # Application
   class Application
+    include Command
+
     def read_dir_name(prompt, default_directory = nil)
       prefix_text = default_directory
       prefix_text += '/' if prefix_text[-1] != '/'
@@ -111,85 +197,6 @@ module Mrbmacs
         # new file
         message 'error load file'
       end
-    end
-
-    def save_buffer
-      all_text = @frame.view_win.sci_get_text(@frame.view_win.sci_get_length + 1)
-      if @current_buffer.encoding != 'utf-8'
-        all_text = Iconv.conv(@current_buffer.encoding, 'utf-8', all_text)
-      end
-      #    $stderr.print all_text
-      #      File.open(app.filename, "w") do |f|
-      File.open(@current_buffer.filename, 'w') do |f|
-        f.write all_text
-      end
-      @frame.view_win.sci_set_save_point
-
-      if @config.use_builtin_syntax_check == true
-        @frame.view_win.sci_annotation_clearall
-        error = @current_buffer.mode.syntax_check(@frame.view_win)
-        if error.size > 0
-          @frame.show_annotation(error[0], error[1], error[2])
-        end
-      end
-      after_save_buffer(self, @current_buffer.filename)
-    end
-
-    def write_file(filename = nil)
-      if filename.nil?
-        filename = read_save_file_name('write file: ', @current_buffer.directory, @current_buffer.basename)
-      end
-      return if filename.nil?
-
-      @current_buffer.set_filename(filename)
-      save_buffer
-      @frame.view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
-      @current_buffer.mode.set_style(@frame.view_win, @theme)
-      @frame.set_buffer_name(@current_buffer.name)
-    end
-
-    def insert_file(file_path = nil)
-      view_win = @frame.view_win
-      file_path = read_file_name('insert file: ', @current_buffer.directory) if file_path.nil?
-      return if file_path.nil?
-
-      if File.exist?(file_path) == true && FileTest.file?(file_path) == true
-        text = File.open(file_path).read
-        view_win.sci_insert_text(view_win.sci_get_current_pos, text)
-      else
-        message('no match')
-      end
-    end
-
-    def find_file(filename = nil)
-      filename = read_file_name('find file: ', @current_buffer.directory) if filename.nil?
-      return if filename.nil?
-
-      if Mrbmacs.get_buffer_from_path(@buffer_list, filename) != nil
-        switch_to_buffer(Mrbmacs.get_buffer_from_path(@buffer_list, filename).name)
-      else
-        @current_buffer.pos = @frame.view_win.sci_get_current_pos
-        new_buffer = Buffer.new(filename)
-        if @current_buffer.docpointer != nil
-          @frame.view_win.sci_add_refdocument(@current_buffer.docpointer)
-        end
-        @frame.view_win.sci_set_docpointer(nil)
-        new_buffer.docpointer = @frame.view_win.sci_get_docpointer
-        add_new_buffer(new_buffer)
-        @current_buffer = new_buffer
-        add_buffer_to_frame(@current_buffer)
-        open_file(filename)
-        @frame.view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
-        @current_buffer.mode.set_style(@frame.view_win, @theme)
-        @frame.set_buffer_name(@current_buffer.name)
-        @frame.edit_win.buffer = @current_buffer
-        @frame.modeline(self)
-        if @config.use_builtin_syntax_check == true
-          error = @current_buffer.mode.syntax_check(@frame.view_win)
-          @frame.show_annotation(error[0], error[1], error[2]) if error.size > 0
-        end
-      end
-      after_find_file(self, filename)
     end
   end
 end

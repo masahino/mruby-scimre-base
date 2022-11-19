@@ -1,5 +1,6 @@
 module Mrbmacs
-  class Application
+  # Command
+  module Command
     def select_theme(theme_name = nil)
       if theme_name.nil?
         theme_name = @frame.echo_gets('theme:') do |input_text|
@@ -24,6 +25,10 @@ module Mrbmacs
         end
       end
     end
+  end
+
+  class Application
+    include Command
   end
 
   class Theme

@@ -14,7 +14,7 @@ module Mrbmacs
   end
 
   # define methods about encodings
-  class Application
+  module Command
     def set_buffer_file_coding_system(code = nil)
       system_encodings = Mrbmacs.encoding_list
       if code.nil?
@@ -29,5 +29,9 @@ module Mrbmacs
       end
       @current_buffer.encoding = code if system_encodings.include?(code.upcase)
     end
+  end
+
+  class Application
+    include Command
   end
 end

@@ -1,5 +1,6 @@
 module Mrbmacs
-  class Application
+  # Command
+  module Command
     def compile
       default_command = @project.build_command
       default_command = @project.last_build_command if @project.last_build_command != nil
@@ -19,5 +20,9 @@ module Mrbmacs
         exec_shell_command('*compilation*', @project.last_build_command)
       end
     end
+  end
+
+  class Application
+    include Command
   end
 end

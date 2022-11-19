@@ -1,6 +1,6 @@
 module Mrbmacs
-  # Application class
-  class Application
+  # Command
+  module Command
     def preview_theme
       buffer_name = '*preview_theme*'
       result_buffer = Mrbmacs.get_buffer_from_name(@buffer_list, buffer_name)
@@ -22,5 +22,10 @@ module Mrbmacs
         @frame.view_win.sci_set_styling(tmp_str.length, i)
       end
     end
+  end
+
+  # Application class
+  class Application
+    include Command
   end
 end
