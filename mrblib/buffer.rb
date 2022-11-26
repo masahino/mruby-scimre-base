@@ -15,7 +15,7 @@ module Mrbmacs
           @directory = Dir.getwd
           @mode = Mrbmacs::Mode.set_mode_by_filename(filename)
         else
-          set_filename(filename)
+          update_filename(filename)
         end
       else
         @filename = ''
@@ -30,7 +30,7 @@ module Mrbmacs
       @additional_info = ''
     end
 
-    def set_filename(filename)
+    def update_filename(filename)
       @filename = File.expand_path(filename)
       @name = File.basename(@filename)
       @basename = File.basename(@filename)
@@ -57,6 +57,7 @@ module Mrbmacs
     end
   end
 
+  # Command
   module Command
     def revert_buffer
       if @current_buffer.name == '*Messages*'
@@ -144,7 +145,6 @@ module Mrbmacs
       end
     end
 
-
     def add_new_buffer(new_buffer)
       @buffer_list.push(new_buffer)
       return if new_buffer.basename == ''
@@ -181,7 +181,6 @@ module Mrbmacs
     def add_buffer_to_frame(buffer)
       raise NotImplementedError
     end
-
 
     def create_new_buffer(buffer_name)
       new_buffer = Mrbmacs::Buffer.new(buffer_name)

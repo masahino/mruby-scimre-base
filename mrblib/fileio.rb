@@ -90,7 +90,7 @@ module Mrbmacs
       end
       return if filename.nil?
 
-      @current_buffer.set_filename(filename)
+      @current_buffer.update_filename(filename)
       save_buffer
       @frame.view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
       @current_buffer.mode.set_style(@frame.view_win, @theme)
