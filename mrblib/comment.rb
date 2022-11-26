@@ -1,6 +1,6 @@
 module Mrbmacs
-  # Application class
-  class Application
+  # Command
+  module Command
     def comment_line
       @frame.view_win.sci_begin_undo_action
       line = get_current_line
@@ -42,5 +42,10 @@ module Mrbmacs
       end
       @frame.view_win.sci_end_undo_action
     end
+  end
+
+  # Application class
+  class Application
+    include Command
   end
 end
