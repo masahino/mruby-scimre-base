@@ -20,14 +20,12 @@ module Mrbmacs
     end
 
     def cut_region
-      win = @frame.view_win
-      if @mark_pos != nil
-        win.sci_goto_pos(win.sci_get_current_pos)
-        win.sci_copy_range(@mark_pos, win.sci_get_current_pos)
-        win.sci_delete_range(@mark_pos,
-                             win.sci_get_current_pos - @mark_pos)
-        @mark_pos = nil
-      end
+      return if @mark_pos.nil?
+
+      @frame.view_win.sci_goto_pos(@frame.view_win.sci_get_current_pos)
+      @frame.view_win.sci_copy_range(@mark_pos, @frame.view_win.sci_get_current_pos)
+      @frame.view_win.sci_delete_range(@mark_pos, @frame.view_win.sci_get_current_pos - @mark_pos)
+      @mark_pos = nil
     end
 
     def yank
@@ -74,32 +72,27 @@ module Mrbmacs
     end
 
     def beginning_of_line
-      win = @frame.view_win
-      win.sci_home
+      @frame.view_win.sci_home
     end
 
     def end_of_line
-      win = @frame.view_win
-      win.sci_lineend
+      @frame.view_win.sci_lineend
     end
 
     def beginning_of_buffer
-      win = @frame.view_win
-      win.sci_document_start
+      @frame.view_win.sci_document_start
     end
 
     def end_of_buffer
-      win = @frame.view_win
-      win.sci_document_end
+      @frame.view_win.sci_document_end
     end
 
     def newline
-      win = @frame.view_win
-      if win.sci_autoc_active
+      if @frame.view_win.sci_autoc_active
         # win.sci_autoc_cancel
-        win.sci_tab
+        @frame.view_win.sci_tab
       else
-        win.sci_new_line
+        @frame.view_win.sci_new_line
       end
     end
 
@@ -116,30 +109,28 @@ module Mrbmacs
     end
 
     def clear_rectangle
-      win = @frame.view_win
-      win.sci_set_selection_mode(1)
-      if @mark_pos != nil
-        win.sci_set_anchor(@mark_pos)
-        anchor_x = win.sci_get_column(@mark_pos)
-        anchor_y = win.sci_line_from_position(@mark_pos)
-        current_x = win.sci_get_column(get_current_pos)
-        current_y = win.sci_line_from_position(get_current_pos)
-        width = (current_x - anchor_x).abs
-        lines = (current_y - anchor_y).abs + 1
-        replaced_text = Array.new(lines, ' ' * width).join("\n")
-        win.sci_replace_rectangular(replaced_text.length, replaced_text)
-        @mark_pos = nil
-      end
+      @frame.view_win.sci_set_selection_mode(1)
+      return if @mark_pos.nil?
+
+      @frame.view_win.sci_set_anchor(@mark_pos)
+      anchor_x = @frame.view_win.sci_get_column(@mark_pos)
+      anchor_y = @frame.view_win.sci_line_from_position(@mark_pos)
+      current_x = @frame.view_win.sci_get_column(get_current_pos)
+      current_y = @frame.view_win.sci_line_from_position(get_current_pos)
+      width = (current_x - anchor_x).abs
+      lines = (current_y - anchor_y).abs + 1
+      replaced_text = Array.new(lines, ' ' * width).join("\n")
+      @frame.view_win.sci_replace_rectangular(replaced_text.length, replaced_text)
+      @mark_pos = nil
     end
 
     def delete_rectangle
-      win = @frame.view_win
-      win.sci_set_selection_mode(1)
-      if @mark_pos != nil
-        win.sci_set_anchor(@mark_pos)
-        win.sci_replace_sel(nil, '')
-        @mark_pos = nil
-      end
+      @frame.view_win.sci_set_selection_mode(1)
+      return if @mark_pos.nil?
+
+      @frame.view_win.sci_set_anchor(@mark_pos)
+      @frame.view_win.sci_replace_sel(nil, '')
+      @mark_pos = nil
     end
 
     def recenter
@@ -155,20 +146,18 @@ module Mrbmacs
     include Command
 
     def get_current_line_col(pos = nil)
-      view_win = @frame.view_win
       if pos.nil?
-        pos = view_win.sci_get_current_pos
+        pos = @frame.view_win.sci_get_current_pos
       end
-      col = view_win.sci_get_column(pos)
-      line = view_win.sci_line_from_position(pos)
+      col = @frame.view_win.sci_get_column(pos)
+      line = @frame.view_win.sci_line_from_position(pos)
       [line, col]
     end
 
     def get_current_line_text
-      view_win = @frame.view_win
-      pos = view_win.sci_get_current_pos
-      line = view_win.sci_line_from_position(pos)
-      view_win.sci_get_line(line)
+      pos = @frame.view_win.sci_get_current_pos
+      line = @frame.view_win.sci_line_from_position(pos)
+      @frame.view_win.sci_get_line(line)
     end
 
     def get_current_col
