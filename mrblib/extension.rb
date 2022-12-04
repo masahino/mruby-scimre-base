@@ -1,4 +1,5 @@
 module Mrbmacs
+  # Extension
   class Extension
     attr_accessor :config, :data
 
@@ -14,6 +15,7 @@ module Mrbmacs
     end
   end
 
+  # Application
   class Application
     def register_extensions
       Extension.subclasses.each do |k|

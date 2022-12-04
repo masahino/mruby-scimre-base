@@ -82,9 +82,7 @@ module Mrbmacs
           [buffer_list.join(' '), input_text.length]
         end
       end
-      if buffername == ''
-        buffername = @current_buffer.name
-      end
+      buffername = @current_buffer.name if buffername == ''
       # if buffer is modified
       if buffername =~ /^\*.*\*$/ # special buffer
         @logger.info "can't delete special buffer"

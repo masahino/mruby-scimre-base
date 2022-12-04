@@ -1,4 +1,5 @@
 module Mrbmacs
+  # Application
   class Application
     include Scintilla
 
@@ -38,9 +39,9 @@ module Mrbmacs
 
     def load_init_file
       homedir =
-        if ENV['HOME'] != nil
+        if !ENV['HOME'].nil?
           ENV['HOME']
-        elsif ENV['HOMEDRIVE'] != nil
+        elsif !ENV['HOMEDRIVE'].nil?
           ENV['HOMEDRIVE'] + ENV['HOMEPATH']
         else
           ''
