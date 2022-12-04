@@ -21,7 +21,7 @@ module Mrbmacs
     end
 
     def init_sci_default
-      @sci.sci_set_caret_fore 0xffffff
+      @sci.sci_set_caret_fore(0xffffff)
       @sci.sci_set_codepage(Scintilla::SC_CP_UTF8)
       @sci.sci_set_mod_event_mask(Scintilla::SC_MOD_INSERTTEXT | Scintilla::SC_MOD_DELETETEXT)
       @sci.sci_set_caret_style(Scintilla::CARETSTYLE_BLOCK_AFTER |
@@ -29,7 +29,7 @@ module Mrbmacs
         Scintilla::CARETSTYLE_BLOCK)
     end
 
-    def set_buffer(buffer)
+    def init_buffer(buffer)
       @sci.sci_set_docpointer(buffer.docpointer)
       @sci.sci_set_lexer_language(buffer.mode.name)
       #      buffer.mode.set_style(view_win, @theme)
