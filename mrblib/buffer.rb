@@ -185,7 +185,7 @@ module Mrbmacs
       add_new_buffer(new_buffer)
       add_buffer_to_frame(new_buffer)
       set_buffer_mode(new_buffer)
-      @frame.set_theme(@theme)
+      @frame.apply_theme(@theme)
       @frame.set_buffer_name(buffer_name)
       new_buffer
     end

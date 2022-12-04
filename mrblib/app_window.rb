@@ -76,7 +76,7 @@ module Mrbmacs
       active_win.refresh
       new_win = @frame.new_editwin(@current_buffer, x, y, new_width, new_height)
       @keymap.set_keymap(new_win.sci)
-      new_win.set_theme(@theme)
+      new_win.apply_theme(@theme)
       @current_buffer.mode.set_style(new_win.sci, @theme)
       @frame.edit_win_list.push(new_win)
       @frame.edit_win_list.each do |win|

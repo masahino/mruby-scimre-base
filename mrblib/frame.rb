@@ -25,10 +25,10 @@ module Mrbmacs
                   Scintilla::SCK_END]
     end
 
-    def set_theme(theme)
+    def apply_theme(theme)
       @theme = theme
       @edit_win_list.each do |w|
-        w.set_theme(theme)
+        w.apply_theme(theme)
       end
     end
 

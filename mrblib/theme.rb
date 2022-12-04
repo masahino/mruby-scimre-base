@@ -18,7 +18,7 @@ module Mrbmacs
           #          if @theme.respond_to?(:set_pallete)
           #            @theme.set_pallete
           #          end
-          @frame.set_theme(@theme)
+          @frame.apply_theme(@theme)
           @current_buffer.mode.set_style(@frame.view_win, @theme)
         else
           @frame.echo_puts "#{theme_name} not found"

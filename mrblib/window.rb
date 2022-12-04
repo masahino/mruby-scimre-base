@@ -70,7 +70,7 @@ module Mrbmacs
       @sci.sci_marker_define(MARKERN_CURRENT, Scintilla::SC_MARK_SHORTARROW)
     end
 
-    def set_theme_annotation(theme)
+    def apply_theme_annotation(theme)
       if theme.font_color[:color_annotation]
         @sci.sci_style_set_fore(theme.annotation_style(:other), theme.font_color[:color_annotation][0])
         @sci.sci_style_set_back(theme.annotation_style(:other), theme.font_color[:color_annotation][1])
@@ -90,7 +90,7 @@ module Mrbmacs
       @sci.sci_annotation_set_visible(Scintilla::ANNOTATION_INDENTED)
     end
 
-    def set_theme_marker(theme)
+    def apply_theme_marker(theme)
       if theme.font_color[:color_marker_breakpoint]
         @sci.sci_marker_set_fore(Mrbmacs::MARKERN_BREAKPOINT, theme.font_color[:color_marker_breakpoint][0])
         @sci.sci_marker_set_back(Mrbmacs::MARKERN_BREAKPOINT, theme.font_color[:color_marker_breakpoint][1])
@@ -115,7 +115,7 @@ module Mrbmacs
       end
     end
 
-    def set_theme_base(theme)
+    def apply_theme_base(theme)
       @sci.sci_style_clear_all
       @sci.sci_style_set_fore(Scintilla::STYLE_DEFAULT, theme.foreground_color)
       @sci.sci_style_set_back(Scintilla::STYLE_DEFAULT, theme.background_color)
@@ -125,12 +125,12 @@ module Mrbmacs
         @sci.sci_style_set_back(Scintilla::STYLE_BRACELIGHT,
                                 theme.font_color[:color_brace_highlight][1])
       end
-      set_theme_annotation(theme)
+      apply_theme_annotation(theme)
       if theme.font_color[:color_linenumber]
         @sci.sci_style_set_fore(Scintilla::STYLE_LINENUMBER, theme.font_color[:color_linenumber][0])
         @sci.sci_style_set_back(Scintilla::STYLE_LINENUMBER, theme.font_color[:color_linenumber][1])
       end
-      set_theme_marker(theme)
+      apply_theme_marker(theme)
       if theme.font_color[:color_caret_line]
         @sci.sci_set_caret_line_visible(true)
         @sci.sci_set_caret_line_back(theme.font_color[:color_caret_line][1])
@@ -143,8 +143,8 @@ module Mrbmacs
       @sci.sci_set_sel_back(true, theme.foreground_color)
     end
 
-    def set_theme(theme)
-      set_theme_base(theme)
+    def apply_theme(theme)
+      apply_theme_base(theme)
     end
 
     def newline
