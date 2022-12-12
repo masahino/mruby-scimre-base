@@ -2,7 +2,6 @@ module Mrbmacs
   # command
   module Command
     def execute_extended_command
-      # command_list = @command_list.values.select {|item| item.kind_of?(String)}
       command_list = Mrbmacs::Command.instance_methods.map { |item| item.to_s }.sort
       input_str = @frame.echo_gets('M-x ') do |input_text|
         command_candidate = command_list.select { |item| item =~ /^#{input_text}/ }

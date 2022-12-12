@@ -4,7 +4,7 @@ module Mrbmacs
     include Scintilla
 
     attr_accessor :frame, :mark_pos, :current_buffer, :buffer_list, :theme,
-                  :sci_handler, :ext, :command_list, :config, :modeline, :project, :io_handler
+                  :sci_handler, :ext, :config, :modeline, :project, :io_handler
 
     def parse_args(argv)
       op = OptionParser.new
@@ -83,10 +83,9 @@ module Mrbmacs
       @frame.set_buffer_name(@current_buffer.name)
       @current_buffer.docpointer = @frame.view_win.sci_get_docpointer
       @keymap = ViewKeyMap.new
-      @keymap.set_keymap(@frame.view_win)
-      @command_list = @keymap.command_list
+      apply_keymap(@frame.view_win, @keymap)
       @echo_keymap = EchoWinKeyMap.new
-      @echo_keymap.set_keymap(@frame.echo_win)
+      apply_keymap(@frame.echo_win, @echo_keymap)
       @themes = Theme.create_theme_list
       @project = Project.new(@current_buffer.directory)
 

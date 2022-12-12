@@ -1,10 +1,9 @@
 module Mrbmacs
   class KeyMap
     include Scintilla
-    attr_accessor :command_list, :keymap
+    attr_accessor :keymap
 
     def initialize
-      @command_list = {}
       @default_keymap = {
         'C-b' => SCI_CHARLEFT,
         'C-d' => SCI_CLEAR,
@@ -28,53 +27,9 @@ module Mrbmacs
       }
       @keymap = {}
     end
-
-    def set_keymap_with_key(key, action, win)
-      strokes = key.split(' ').size
-      #      case v.class.to_s
-      if strokes == 1 && action.is_a?(Integer)
-        set_keybind(win, key, action)
-      else
-        #      when "String"
-        @command_list[key] = action
-        #      else
-        #        $stderr.puts v.class
-      end
-    end
-
-    def set_keymap(win)
-      @keymap.each do |k, v|
-        set_keymap_with_key(k, v, win)
-      end
-    end
-
-    def set_keybind(win, key, cmd)
-      ctrl_code = Scintilla::SCMOD_CTRL
-      meta_code = Scintilla::SCMOD_ALT
-      if Scintilla::PLATFORM == :GTK_MACOSX
-        ctrl_code = Scintilla::SCMOD_META
-      end
-      keydef = 0
-      if key =~ /^(\w)-(\S)$/
-        if Regexp.last_match[1] == 'C'
-          keydef += ctrl_code << 16
-        elsif Regexp.last_match[1] == 'M'
-          keydef += meta_code << 16
-        end
-        if Regexp.last_match[2] == 'DEL'
-          keydef += Scintilla::SCK_DELETE
-        else
-          if Scintilla::PLATFORM == :GTK_MACOSX
-            keydef += Regexp.last_match[2].upcase.ord
-          else
-            keydef += Regexp.last_match[2].ord
-          end
-        end
-      end
-      win.sci_assign_cmdkey(keydef, cmd)
-    end
   end
 
+  # KeyMap for a view window
   class ViewKeyMap < KeyMap
     def initialize
       super.initialize
@@ -124,10 +79,10 @@ module Mrbmacs
         'M-%' => 'query-replace'
       }
       @keymap = @default_keymap.merge(keymap)
-      #      set_keymap(win, keymap)
     end
   end
 
+  # Keymap for a echo window
   class EchoWinKeyMap < KeyMap
     def initialize
       super.initialize
@@ -138,8 +93,44 @@ module Mrbmacs
         'C-y' => SCI_PASTE,
         'Tab' => 'completion'
       }
-      #      set_keymap(win, keymap)
       @keymap = @default_keymap.merge(keymap)
+    end
+  end
+
+  # Application class for Keymap
+  class Application
+    def set_keybind(win, key, cmd)
+      ctrl_code = Scintilla::SCMOD_CTRL
+      meta_code = Scintilla::SCMOD_ALT
+      ctrl_code = Scintilla::SCMOD_META if Scintilla::PLATFORM == :GTK_MACOSX
+      keydef = 0
+      if key =~ /^(\w)-(\S)$/
+        case Regexp.last_match[1]
+        when 'C'
+          keydef += ctrl_code << 16
+        when 'M'
+          keydef += meta_code << 16
+        end
+        if Regexp.last_match[2] == 'DEL'
+          keydef += Scintilla::SCK_DELETE
+        else
+          if Scintilla::PLATFORM == :GTK_MACOSX
+            keydef += Regexp.last_match[2].upcase.ord
+          else
+            keydef += Regexp.last_match[2].ord
+          end
+        end
+      end
+      win.sci_assign_cmdkey(keydef, cmd)
+    end
+
+    def apply_keymap(win, keymap)
+      keymap.keymap.each do |key, action|
+        strokes = key.split(' ').size
+        if strokes == 1 && action.is_a?(Integer)
+          set_keybind(win, key, action)
+        end
+      end
     end
   end
 end
