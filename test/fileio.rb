@@ -10,7 +10,7 @@ assert('insert-file') do
   app = Mrbmacs::ApplicationTest.new
   test_file = "#{File.dirname(__FILE__)}#{File::SEPARATOR}test.input"
   app.insert_file(test_file)
-  assert_equal(Scintilla::SCI_INSERTTEXT, app.frame.view_win.messages.pop)
+  assert_equal(Scintilla::SCI_GOTOPOS, app.frame.view_win.messages.pop)
 end
 
 assert('insert-file new buffer') do
@@ -18,7 +18,7 @@ assert('insert-file new buffer') do
   app.find_file('hoge')
   test_file = "#{File.dirname(__FILE__)}#{File::SEPARATOR}test.input"
   app.insert_file(test_file)
-  assert_equal(Scintilla::SCI_INSERTTEXT, app.frame.view_win.messages.pop)
+  assert_equal(Scintilla::SCI_GOTOPOS, app.frame.view_win.messages.pop)
 end
 
 assert('write-file') do

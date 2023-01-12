@@ -19,13 +19,12 @@ module Mrbmacs
   # Command
   module Command
     def insert_file(file_path = nil)
-      view_win = @frame.view_win
       file_path = read_file_name('insert file: ', @current_buffer.directory) if file_path.nil?
       return if file_path.nil?
 
       if File.exist?(file_path) == true && FileTest.file?(file_path) == true
-        text = File.open(file_path).read
-        view_win.sci_insert_text(view_win.sci_get_current_pos, text)
+        encoding = identify_file_encoding(file_path)
+        insert_text_from_file(file_path, encoding)
       else
         message('no match')
       end
@@ -154,47 +153,71 @@ module Mrbmacs
       read_file_name(prompt, directory, default_name)
     end
 
+    def identify_file_encoding(filename)
+      file_encoding = 'utf-8'
+      text = File.open(filename).read(4096)
+      @config.file_encodings.each do |from|
+        tmp_text = ''
+        begin
+          tmp_text = Iconv.conv('utf-8', from, text)
+        rescue StandardError
+          next
+        end
+        file_encoding = from if tmp_text.size != text.size
+        break
+      end
+      file_encoding
+    end
+
+    def insert_text_from_file(filename, from_encoding)
+      pos = @frame.view_win.sci_get_current_pos
+      File.open(filename) do |f|
+        f.each do |line|
+          line = Iconv.conv('utf-8', from_encoding, line) if from_encoding != 'utf-8'
+          @frame.view_win.sci_add_text(line.bytesize, line)
+        end
+      end
+      @frame.view_win.sci_goto_pos(pos)
+    end
+
+    def identify_eolmode
+      eolmode = @frame.view_win.sci_get_eolmode
+      text = @frame.view_win.sci_get_text(4096)
+      cr = text.scan(/\r/).length
+      lf = text.scan(/\n/).length
+      crlf = text.scan(/\r\n/).length
+      if crlf > 0
+        eolmode = Scintilla::SC_EOL_CRLF
+      elsif lf > cr
+        eolmode = Scintilla::SC_EOL_LF
+      elsif cr > 0
+        eolmode = Scintilla::SC_EOL_CR
+      end
+      @frame.view_win.sci_set_eolmode(eolmode)
+    end
+
     def open_file(filename)
+      unless File.exist?(filename)
+        message 'New file'
+        return
+      end
+
       view_win = @frame.view_win
       begin
-        file_encoding = 'utf-8'
-        text = File.open(filename).read
-        @config.file_encodings.each do |from|
-          tmp_text = ''
-          begin
-            tmp_text = Iconv.conv('utf-8', from, text)
-          rescue StandardError
-            next
-          end
-          file_encoding = from if tmp_text.size != text.size
-          break
-        end
-        if file_encoding != 'utf-8'
-          text = Iconv.conv('utf-8', file_encoding, text)
-          @current_buffer.encoding = file_encoding
-        end
+        @current_buffer.encoding = identify_file_encoding(filename)
+
         mod_mask = view_win.sci_get_mod_event_mask
         view_win.sci_set_mod_event_mask(0)
         view_win.sci_set_codepage(Scintilla::SC_CP_UTF8)
-        view_win.sci_set_text(text)
-        eolmode = view_win.sci_get_eolmode
-        cr = text.scan(/\r/).length
-        lf = text.scan(/\n/).length
-        crlf = text.scan(/\r\n/).length
-        if crlf > 0
-          eolmode = Scintilla::SC_EOL_CRLF
-        elsif lf > cr
-          eolmode = Scintilla::SC_EOL_LF
-        elsif cr > 0
-          eolmode = Scintilla::SC_EOL_CR
-        end
-        view_win.sci_set_eolmode(eolmode)
+        insert_text_from_file(filename, @current_buffer.encoding)
+        identify_eolmode
         view_win.sci_set_savepoint
         view_win.sci_empty_undo_buffer
         view_win.sci_set_mod_event_mask(mod_mask)
-        view_win.sci_set_change_history Scintilla::SC_CHANGE_HISTORY_ENABLED | Scintilla::SC_CHANGE_HISTORY_MARKERS
-      rescue StandardError
-        # new file
+        view_win.sci_set_change_history(Scintilla::SC_CHANGE_HISTORY_ENABLED |
+          Scintilla::SC_CHANGE_HISTORY_MARKERS)
+      rescue StandardError => e
+        @logger.error e.to_s
         message 'error load file'
       end
     end

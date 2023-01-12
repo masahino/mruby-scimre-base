@@ -47,7 +47,7 @@ module Mrbmacs
     def echo_set_prompt(prompt)
     end
 
-    def echo_gets(prompt, text = "", &block)
+    def echo_gets(prompt, text = '', &block)
       if $test_echo_gets[:call_block] == true
         list, len = block.call($test_echo_gets[:input_text])
         $test_echo_gets[:output_text]
@@ -121,6 +121,7 @@ module Scintilla
     end
 
     def send_message_get_text(wparam)
+      ''
       # dummy
     end
 
