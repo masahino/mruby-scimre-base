@@ -50,6 +50,7 @@ module Mrbmacs
         'C-p' => SCI_LINEUP,
         'C-r' => 'isearch_backward',
         'C-s' => 'isearch_forward',
+        'C-t' => 'dmacro_exec',
         'C-v' => SCI_PAGEDOWN,
         'C-x' => 'prefix',
         'C-x r' => 'prefix',

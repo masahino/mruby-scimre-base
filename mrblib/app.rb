@@ -74,6 +74,7 @@ module Mrbmacs
       @last_search_text = ''
       @theme = nil
       @modeline = Modeline.new
+      @recent_keys = []
 
       @logger = init_logfile
 
@@ -132,6 +133,11 @@ module Mrbmacs
       rescue StandardError => e
         @logger.error e
       end
+    end
+
+    def add_recent_key(key)
+      @recent_keys.push key
+      @recent_keys.shift if @recent_keys.length > 100
     end
 
     def extend(command)
