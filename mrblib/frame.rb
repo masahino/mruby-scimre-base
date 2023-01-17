@@ -1,4 +1,5 @@
 module Mrbmacs
+  # Base class of Frame
   class FrameBase
     include Scintilla
     attr_accessor :view_win, :echo_win, :tk, :sci_notifications, :edit_win_list, :edit_win

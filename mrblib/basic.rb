@@ -8,9 +8,7 @@ module Mrbmacs
     def set_mark
       @mark_pos = @frame.view_win.sci_get_current_pos
       @frame.view_win.sci_set_anchor(@mark_pos)
-      if @frame.view_win.sci_get_move_extends_selection == 0
-        @frame.view_win.sci_set_selection_mode(0)
-      end
+      @frame.view_win.sci_set_selection_mode(0) if @frame.view_win.sci_get_move_extends_selection == 0
     end
 
     def copy_region
@@ -58,16 +56,12 @@ module Mrbmacs
       if win.sci_autoc_active
         current = win.sci_autoc_get_current
         win.sci_linedown
-        if current == win.sci_autoc_get_current
-          win.sci_vchome
-        end
+        win.sci_vchome if current == win.sci_autoc_get_current
       else
         line = win.sci_line_from_position(win.sci_get_current_pos)
         indent = @current_buffer.mode.get_indent(win)
         win.sci_set_line_indentation(line, indent)
-        if win.sci_get_column(win.sci_get_current_pos) < indent
-          win.sci_vchome
-        end
+        win.sci_vchome if win.sci_get_column(win.sci_get_current_pos) < indent
       end
     end
 
@@ -146,9 +140,7 @@ module Mrbmacs
     include Command
 
     def get_current_line_col(pos = nil)
-      if pos.nil?
-        pos = @frame.view_win.sci_get_current_pos
-      end
+      pos = @frame.view_win.sci_get_current_pos if pos.nil?
       col = @frame.view_win.sci_get_column(pos)
       line = @frame.view_win.sci_line_from_position(pos)
       [line, col]

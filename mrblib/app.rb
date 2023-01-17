@@ -44,7 +44,7 @@ module Mrbmacs
         elsif !ENV['HOMEDRIVE'].nil?
           ENV['HOMEDRIVE'] + ENV['HOMEPATH']
         else
-          ''
+          return
         end
       init_filename = "#{homedir}/.mrbmacsrc"
       @logger.debug 'load initfile'
@@ -83,42 +83,21 @@ module Mrbmacs
       @frame = Mrbmacs::Frame.new(@current_buffer)
       @frame.set_buffer_name(@current_buffer.name)
       @current_buffer.docpointer = @frame.view_win.sci_get_docpointer
-      @keymap = ViewKeyMap.new
-      apply_keymap(@frame.view_win, @keymap)
-      @echo_keymap = EchoWinKeyMap.new
-      apply_keymap(@frame.echo_win, @echo_keymap)
+      init_keymap
+
       @themes = Theme.create_theme_list
       @project = Project.new(@current_buffer.directory)
 
       load_init_file if opts[:no_init_file] == false
 
       @theme = @config.theme.new
-
-      #      if @theme.respond_to?(:set_pallete)
-      #       @theme.set_pallete
-      #      end
       @frame.apply_theme(@theme)
       @current_buffer.mode.set_style(@frame.view_win, @theme)
 
       register_extensions
-      if @config.use_builtin_completion == true
-        add_sci_event(Scintilla::SCN_CHARADDED) do |_app, scn|
-          builtin_completion(scn)
-        end
-      end
-      add_sci_event(Scintilla::SCN_UPDATEUI) do |_app, scn|
-        brace_highlight(scn)
-      end
-      add_sci_event(Scintilla::SCN_UPDATEUI) do |_app, scn|
-        display_selection_range(scn)
-      end
-      add_sci_event(Scintilla::SCN_STYLENEEDED) do |app, scn|
-        @current_buffer.mode.on_style_needed(app, scn)
-      end
+      init_default_event
       create_messages_buffer(@logfile)
-
       find_file(argv[0]) if argv.size > 0
-
       load_file(opts[:load]) if opts[:load] != ''
 
       @frame.modeline(self)
@@ -145,7 +124,7 @@ module Mrbmacs
         @frame.view_win.send_message(command)
       else
         begin
-          instance_eval("#{command.gsub('-', '_')}()")
+          instance_eval("#{command.gsub('-', '_')}()", __FILE__, __LINE__)
         rescue StandardError => e
           @logger.error e.to_s
           @frame.echo_puts e.to_s

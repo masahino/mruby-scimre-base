@@ -1,4 +1,5 @@
 module Mrbmacs
+  # Application method for message
   class Application
     def message(text)
       @logger.info text

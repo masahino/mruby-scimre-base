@@ -5,9 +5,7 @@ module Mrbmacs
       return if @frame.edit_win_list.size == 0
 
       index = @frame.edit_win_list.index(@frame.edit_win) + 1
-      if index >= @frame.edit_win_list.size
-        index = 0
-      end
+      index = 0 if index >= @frame.edit_win_list.size
       @frame.switch_window(@frame.edit_win_list[index])
       # @frame.switch_window(@frame.edit_win_list.rotate!().first)
       @current_buffer = @frame.edit_win.buffer
@@ -43,6 +41,7 @@ module Mrbmacs
       @frame.enlarge_window_horizontally(@frame.edit_win, line)
     end
   end
+
   # Application
   class Application
     include Command

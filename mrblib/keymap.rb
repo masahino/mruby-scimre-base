@@ -1,4 +1,5 @@
 module Mrbmacs
+  # KeyMap
   class KeyMap
     include Scintilla
     attr_accessor :keymap
@@ -100,6 +101,13 @@ module Mrbmacs
 
   # Application class for Keymap
   class Application
+    def init_keymap
+      @keymap = ViewKeyMap.new
+      apply_keymap(@frame.view_win, @keymap)
+      @echo_keymap = EchoWinKeyMap.new
+      apply_keymap(@frame.echo_win, @echo_keymap)
+    end
+
     def set_keybind(win, key, cmd)
       ctrl_code = Scintilla::SCMOD_CTRL
       meta_code = Scintilla::SCMOD_ALT

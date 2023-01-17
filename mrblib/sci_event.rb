@@ -1,4 +1,5 @@
 module Mrbmacs
+  # SciEvent class
   class SciEvent
     attr_accessor :priority, :proc
     def initialize(priority, proc)
@@ -7,7 +8,25 @@ module Mrbmacs
     end
   end
 
+  # methods
   class Application
+    def init_default_event
+      if @config.use_builtin_completion == true
+        add_sci_event(Scintilla::SCN_CHARADDED) do |_app, scn|
+          builtin_completion(scn)
+        end
+      end
+      add_sci_event(Scintilla::SCN_UPDATEUI) do |_app, scn|
+        brace_highlight(scn)
+      end
+      add_sci_event(Scintilla::SCN_UPDATEUI) do |_app, scn|
+        display_selection_range(scn)
+      end
+      add_sci_event(Scintilla::SCN_STYLENEEDED) do |app, scn|
+        @current_buffer.mode.on_style_needed(app, scn)
+      end
+    end
+
     def call_sci_event(event)
       return if @sci_handler[event['code']].nil?
 
