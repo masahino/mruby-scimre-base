@@ -139,24 +139,27 @@ module Mrbmacs
   class Application
     include Command
 
-    def get_current_line_col(pos = nil)
-      pos = @frame.view_win.sci_get_current_pos if pos.nil?
+    def line_col_from_pos(pos)
       col = @frame.view_win.sci_get_column(pos)
       line = @frame.view_win.sci_line_from_position(pos)
       [line, col]
     end
 
-    def get_current_line_text
+    def get_current_line_col(pos = nil)
+      line_col_from_pos(@frame.view_win.sci_get_current_pos)
+    end
+
+    def current_line_text
       pos = @frame.view_win.sci_get_current_pos
       line = @frame.view_win.sci_line_from_position(pos)
       @frame.view_win.sci_get_line(line)
     end
 
-    def get_current_col
+    def current_col
       @frame.view_win.sci_get_column(@frame.view_win.sci_get_current_pos)
     end
 
-    def get_current_line
+    def current_line
       @frame.view_win.sci_line_from_position(@frame.view_win.sci_get_current_pos)
     end
 

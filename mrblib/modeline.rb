@@ -42,7 +42,7 @@ module Mrbmacs
     end
 
     def modeline_pos
-      "(#{get_current_col + 1},#{get_current_line + 1})"
+      "(#{current_col + 1},#{current_line + 1})"
     end
 
     def modeline_modename

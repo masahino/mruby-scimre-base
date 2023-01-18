@@ -3,8 +3,8 @@ module Mrbmacs
   module Command
     def comment_line
       @frame.view_win.sci_begin_undo_action
-      line = get_current_line
-      line_text = get_current_line_text
+      line = current_line
+      line_text = current_line_text
       pattern1 = Regexp.escape(@current_buffer.mode.start_of_comment)
       pattern2 = Regexp.escape(@current_buffer.mode.end_of_comment)
       start_of_line = @frame.view_win.sci_position_from_line(line) +
@@ -26,8 +26,8 @@ module Mrbmacs
 
     def uncomment_line
       @frame.view_win.sci_begin_undo_action
-      line = get_current_line
-      line_text = get_current_line_text
+      line = current_line
+      line_text = current_line_text
       pattern1 = Regexp.escape(@current_buffer.mode.start_of_comment)
       pattern2 = Regexp.escape(@current_buffer.mode.end_of_comment)
       if line_text =~ /^\s*#{pattern1}.*#{pattern2}$/
