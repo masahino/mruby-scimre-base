@@ -1,4 +1,5 @@
 module Mrbmacs
+  # Version Control
   class VC
     def initialize(directory)
       @type = 'git'

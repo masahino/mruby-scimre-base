@@ -2,6 +2,7 @@ module Mrbmacs
   # SciEvent class
   class SciEvent
     attr_accessor :priority, :proc
+
     def initialize(priority, proc)
       @priority = priority
       @proc = proc

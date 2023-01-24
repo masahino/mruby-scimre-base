@@ -31,6 +31,7 @@ module Mrbmacs
     include Command
   end
 
+  # Theme
   class Theme
     attr_accessor :style_list, :foreground_color, :background_color, :font_color, :name
 

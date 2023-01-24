@@ -1,4 +1,5 @@
 module Mrbmacs
+  # messages
   class Application
     def create_messages_buffer(logfile)
       find_file(logfile)

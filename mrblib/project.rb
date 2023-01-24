@@ -1,4 +1,5 @@
 module Mrbmacs
+  # Project
   class Project
     attr_accessor :root_directory, :build_command, :last_build_command
 

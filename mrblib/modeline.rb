@@ -1,11 +1,14 @@
 module Mrbmacs
+  # Modeline
   class Modeline
     attr_accessor :format
+
     def initialize
       @format = '(#{modeline_encoding}-#{modeline_eol}):#{modeline_modified} #{modeline_buffername} #{modeline_pos}    (#{modeline_vcinfo})    [#{modeline_modename}]    [#{modeline_additional_info}]'
     end
   end
 
+  # Application
   class Application
     def modeline_str
       @modeline.format.gsub(/#\{([^}]*)\}/) { eval($1).to_s }

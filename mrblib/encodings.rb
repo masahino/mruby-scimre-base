@@ -1,3 +1,4 @@
+# Mrbmacs
 module Mrbmacs
   class << self
     def encoding_list

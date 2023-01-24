@@ -1,4 +1,5 @@
 module Mrbmacs
+  # Application
   class Application
     def add_io_read_event(io, &proc)
       @readings.push io
@@ -13,9 +14,7 @@ module Mrbmacs
 
     def add_sci_event(event_id, priority = nil, &proc)
       if @sci_handler[event_id].nil?
-        if priority.nil?
-          priority = 100
-        end
+        priority = 100 if priority.nil?
         @sci_handler[event_id] = [SciEvent.new(priority, proc)]
       else
         if priority.nil?
@@ -31,9 +30,7 @@ module Mrbmacs
     end
 
     def add_command_event(method, &proc)
-      if @command_handler[method].nil?
-        @command_handler[method] = []
-      end
+      @command_handler[method] = [] if @command_handler[method].nil?
       @command_handler[method].push proc
     end
   end
