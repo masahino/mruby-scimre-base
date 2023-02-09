@@ -133,6 +133,26 @@ module Mrbmacs
       diff = @frame.edit_win.height / 2 - y
       @frame.view_win.sci_linescroll(0, -diff)
     end
+
+    def downcase_word
+      current_pos = @frame.view_win.sci_get_current_pos
+      wordend_pos = @frame.view_win.sci_word_end_position(current_pos, true)
+      return if wordend_pos <= current_pos
+
+      word = @frame.view_win.sci_get_textrange(current_pos, wordend_pos)
+      @frame.view_win.sci_delete_range(current_pos, word.length)
+      @frame.view_win.sci_add_text(word.length, word.downcase)
+    end
+
+    def upcase_word
+      current_pos = @frame.view_win.sci_get_current_pos
+      wordend_pos = @frame.view_win.sci_word_end_position(current_pos, true)
+      return if wordend_pos <= current_pos
+
+      word = @frame.view_win.sci_get_textrange(current_pos, wordend_pos)
+      @frame.view_win.sci_delete_range(current_pos, word.length)
+      @frame.view_win.sci_add_text(word.length, word.upcase)
+    end
   end
 
   # Application

@@ -76,6 +76,8 @@ module Mrbmacs
         'C-x Enter f' => 'set_buffer_file_coding_system',
         'C-x ^' => 'enlarge_window',
         'C-x }' => 'enlarge_window_horizontally',
+        'M-l' => 'downcase_word',
+        'M-u' => 'upcase_word',
         'M-v' => SCI_PAGEUP,
         'M-x' => 'execute_extended_command',
         'M-%' => 'query-replace'
