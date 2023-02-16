@@ -10,5 +10,9 @@ module Mrbmacs
         nil
       end
     end
+
+    def modify_keymap(key, cmd)
+      @keymap.keymap[key] = cmd
+    end
   end
 end
