@@ -79,7 +79,7 @@ module Mrbmacs
         echo_text = "kill-buffer (default #{@current_buffer.name}): "
         buffername = @frame.echo_gets(echo_text, '') do |input_text|
           buffer_list = @buffer_list.collect { |b| b.name }.select { |b| b[0, input_text.length] == input_text }
-          [buffer_list.join(' '), input_text.length]
+          [buffer_list.join(@frame.view_win.sci_autoc_get_separator.chr), input_text.length]
         end
       end
       buffername = @current_buffer.name if buffername == ''

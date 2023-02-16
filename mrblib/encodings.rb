@@ -25,7 +25,7 @@ module Mrbmacs
             encoding.start_with?(tmp_str)
           end
           @logger.debug comp_list
-          [comp_list.join(' '), input_text.length]
+          [comp_list.join(@frame.view_win.sci_autoc_get_separator.chr), input_text.length]
         end
       end
       @current_buffer.encoding = code if system_encodings.include?(code.upcase)

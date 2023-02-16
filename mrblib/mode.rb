@@ -152,7 +152,7 @@ module Mrbmacs
     end
 
     def get_candidates(_input)
-      @keyword_list
+      @keyword_list.tr(' ', @frame.view_win.sci.autoc_get_separator.chr)
     end
 
     def get_completion_list(view_win)

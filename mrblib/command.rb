@@ -5,7 +5,7 @@ module Mrbmacs
       command_list = Mrbmacs::Command.instance_methods.map { |item| item.to_s }.sort
       input_str = @frame.echo_gets('M-x ') do |input_text|
         command_candidate = command_list.select { |item| item =~ /^#{input_text}/ }
-        [command_candidate.join(' '), input_text.length]
+        [command_candidate.join(@frame.view_win.sci_autoc_get_separator.chr), input_text.length]
       end
       if input_str != nil
         args = input_str.split(/\s/)
