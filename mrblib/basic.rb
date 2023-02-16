@@ -146,7 +146,7 @@ module Mrbmacs
 
     def upcase_word
       current_pos = @frame.view_win.sci_get_current_pos
-      wordend_pos = @frame.view_win.sci_word_end_position(current_pos, true)
+      wordend_pos = word_end_pos(current_pos)
       return if wordend_pos <= current_pos
 
       word = @frame.view_win.sci_get_textrange(current_pos, wordend_pos)
@@ -159,13 +159,21 @@ module Mrbmacs
   class Application
     include Command
 
+    def word_end_pos(start_pos)
+      (start_pos..@frame.view_win.sci_get_length).each do |p|
+        end_pos = @frame.view_win.sci_word_end_position(p, true)
+        return end_pos if end_pos != p
+      end
+      start_pos
+    end
+
     def line_col_from_pos(pos)
       col = @frame.view_win.sci_get_column(pos)
       line = @frame.view_win.sci_line_from_position(pos)
       [line, col]
     end
 
-    def get_current_line_col(pos = nil)
+    def get_current_line_col
       line_col_from_pos(@frame.view_win.sci_get_current_pos)
     end
 
