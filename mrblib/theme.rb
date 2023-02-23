@@ -9,7 +9,7 @@ module Mrbmacs
             comp_list.push name if name.start_with?(input_text)
           end
           $stderr.puts comp_list if $DEBUG
-          [comp_list.sort.join(@frame.view_win.sci_autoc_get_separator.chr), input_text.length]
+          [comp_list.sort.join(@frame.echo_win.sci_autoc_get_separator.chr), input_text.length]
         end
       end
       unless theme_name.nil?

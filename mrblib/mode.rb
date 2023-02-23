@@ -3,7 +3,7 @@ module Mrbmacs
   class Mode
     include Singleton
     attr_accessor :name, :lexer, :indent, :use_tab, :keymap, :start_of_comment, :end_of_comment,
-                  :build_command
+                  :build_command, :use_builtin_formatting
 
     @@mode_list = {
       # ruby-mode
@@ -97,6 +97,7 @@ module Mrbmacs
       @start_of_comment = ''
       @end_of_comment = ''
       @build_command = 'make'
+      @use_builtin_formatting = true
     end
 
     def set_lexer(view_win)
@@ -152,7 +153,7 @@ module Mrbmacs
     end
 
     def get_candidates(_input)
-      @keyword_list.tr(' ', @frame.view_win.sci.autoc_get_separator.chr)
+      @keyword_list.tr(' ', @frame.echo_win.sci.autoc_get_separator.chr)
     end
 
     def get_completion_list(view_win)

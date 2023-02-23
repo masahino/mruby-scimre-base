@@ -27,6 +27,7 @@ module Mrbmacs
       @sci.sci_set_caret_style(Scintilla::CARETSTYLE_BLOCK_AFTER |
         Scintilla::CARETSTYLE_OVERSTRIKE_BLOCK |
         Scintilla::CARETSTYLE_BLOCK)
+      @sci.sci_autoc_set_separator("\t".ord)
     end
 
     def init_buffer(buffer)

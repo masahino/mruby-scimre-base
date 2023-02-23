@@ -118,7 +118,7 @@ module Mrbmacs
           end
           len = fname.length
         end
-        [dir_list.sort.join(@frame.view_win.sci_autoc_get_separator.chr), len]
+        [dir_list.sort.join(@frame.echo_win.sci_autoc_get_separator.chr), len]
       end
       @frame.modeline_refresh(self)
       dirname
@@ -143,7 +143,7 @@ module Mrbmacs
           end
           len = fname.length
         end
-        [file_list.sort.join(@frame.view_win.sci_autoc_get_separator.chr), len]
+        [file_list.sort.join(@frame.echo_win.sci_autoc_get_separator.chr), len]
       end
       @frame.modeline_refresh(self)
       filename
