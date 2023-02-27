@@ -99,6 +99,7 @@ module Mrbmacs
     def keyboard_quit
       @frame.view_win.sci_set_empty_selection(get_current_pos)
       @frame.view_win.sci_autoc_cancel
+      @frame.view_win.sci_calltip_cancel
       @mark_pos = nil
     end
 
