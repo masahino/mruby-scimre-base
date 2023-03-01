@@ -11,7 +11,8 @@ module Mrbmacs
 
       args = input_str.split(/\s/)
       command = args.shift
-      args = args.join(' ') unless args == []
+      args = args.join(' ')
+      args = nil if args == ''
       begin
         instance_eval("#{command.gsub('-', '_')}(#{args})", __FILE__, __LINE__)
       rescue StandardError => e
