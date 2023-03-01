@@ -38,14 +38,7 @@ module Mrbmacs
     end
 
     def load_init_file
-      homedir =
-        if !ENV['HOME'].nil?
-          ENV['HOME']
-        elsif !ENV['HOMEDRIVE'].nil?
-          ENV['HOMEDRIVE'] + ENV['HOMEPATH']
-        else
-          return
-        end
+      homedir = Mrbmacs.homedir
       init_filename = "#{homedir}/.mrbmacsrc"
       @logger.debug 'load initfile'
       load_file(init_filename)
@@ -104,14 +97,12 @@ module Mrbmacs
     end
 
     def load_file(filename)
-      begin
-        File.open(File.expand_path(filename), 'r') do |f|
-          str = f.read
-          instance_eval(str)
-        end
-      rescue StandardError => e
-        @logger.error e
+      File.open(File.expand_path(filename), 'r') do |f|
+        str = f.read
+        instance_eval(str)
       end
+    rescue StandardError => e
+      @logger.error e
     end
 
     def add_recent_key(key)
