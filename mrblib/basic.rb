@@ -54,9 +54,10 @@ module Mrbmacs
     def indent
       win = @frame.view_win
       if win.sci_autoc_active
-        current = win.sci_autoc_get_current
-        win.sci_linedown
-        win.sci_vchome if current == win.sci_autoc_get_current
+        # current = win.sci_autoc_get_current
+        win.sci_autoc_complete
+        # win.sci_linedown
+        # win.sci_vchome if current == win.sci_autoc_get_current
       else
         line = win.sci_line_from_position(win.sci_get_current_pos)
         indent = @current_buffer.mode.get_indent(win)
