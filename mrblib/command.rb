@@ -7,20 +7,16 @@ module Mrbmacs
         command_candidate = command_list.select { |item| item =~ /^#{input_text}/ }
         [command_candidate.join(@frame.echo_win.sci_autoc_get_separator.chr), input_text.length]
       end
-      if input_str != nil
-        args = input_str.split(/\s/)
-        command = args.shift
-        if args != []
-          args = "\"#{args.join(' ')}\""
-        else
-          args = nil
-        end
-        begin
-          eval("#{command.gsub('-', '_')}(#{args})")
-        rescue
-          @logger.error $!
-          message "#{command} error"
-        end
+      return if input_str.nil?
+
+      args = input_str.split(/\s/)
+      command = args.shift
+      args = args.join(' ') unless args == []
+      begin
+        instance_eval("#{command.gsub('-', '_')}(#{args})", __FILE__, __LINE__)
+      rescue StandardError => e
+        @logger.error e.to_s
+        message "#{command} error"
       end
     end
   end
