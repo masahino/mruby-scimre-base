@@ -83,7 +83,7 @@ assert('indent') do
   win = app.frame.view_win
   win.test_return[Scintilla::SCI_AUTOCACTIVE] = 1
   app.indent
-  assert_equal(Scintilla::SCI_VCHOME, app.frame.view_win.messages.pop)
+  assert_equal(Scintilla::SCI_AUTOCCOMPLETE, app.frame.view_win.messages.pop)
   win.test_return[Scintilla::SCI_AUTOCACTIVE] = 0
   app.indent
   assert_equal(Scintilla::SCI_GETCOLUMN, app.frame.view_win.messages.pop)
