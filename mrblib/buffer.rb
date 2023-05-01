@@ -60,9 +60,7 @@ module Mrbmacs
   # Command
   module Command
     def revert_buffer
-      if @current_buffer.name == '*Messages*'
-        @frame.view_win.sci_set_read_only(0)
-      end
+      @frame.view_win.sci_set_read_only(0) if @current_buffer.name == '*Messages*'
       @frame.view_win.sci_clear_all
       insert_file(@current_buffer.filename)
       if @current_buffer.name == '*Messages*'
@@ -117,6 +115,7 @@ module Mrbmacs
       @frame.view_win.sci_goto_pos(new_buffer.pos)
       @current_buffer = new_buffer
       @frame.sync_tab(new_buffer.name)
+      recenter
       @frame.modeline(self)
     end
 
@@ -127,19 +126,15 @@ module Mrbmacs
       if buffername.nil?
         buffername = @frame.select_buffer(@buffer_list[-2].name, @buffer_list.collect { |b| b.name })
       end
-      if buffername != nil
-        if buffername == ''
-          buffername = @buffer_list[-2].name
-        end
-        if buffername == @current_buffer.name
-          return
-        end
+      return if buffername.nil?
 
-        new_buffer = Mrbmacs.get_buffer_from_name(@buffer_list, buffername)
-        if new_buffer != nil
-          @buffer_list.push(@buffer_list.delete(new_buffer))
-          update_buffer_window(new_buffer)
-        end
+      buffername = @buffer_list[-2].name if buffername == ''
+      return if buffername == @current_buffer.name
+
+      new_buffer = Mrbmacs.get_buffer_from_name(@buffer_list, buffername)
+      unless new_buffer.nil?
+        @buffer_list.push(@buffer_list.delete(new_buffer))
+        update_buffer_window(new_buffer)
       end
     end
 
@@ -148,30 +143,30 @@ module Mrbmacs
       return if new_buffer.basename == ''
 
       duplicates = @buffer_list.select { |b| b.basename == new_buffer.basename }
-      if duplicates.size > 1
-        n = 1
-        loop do
-          dirs = duplicates.map do |b|
-            tmp_str = b.directory.gsub(/^\//, '')
-            if tmp_str.count('/') < n
-              tmp_str
-            else
-              tmp_str.split('/')[-n, n].join('/')
-            end
-          end
-          break if dirs.uniq == dirs
+      return unless duplicates.size > 1
 
-          n += 1
-        end
-        @buffer_list.each do |b|
-          if b.basename == new_buffer.basename
-            tmp_str = b.directory.gsub(/^\//, '')
-            if tmp_str.count('/') < n
-              b.name = b.basename + '<' + tmp_str + '>'
-            else
-              b.name = b.basename + '<' + tmp_str.split('/')[-n, n].join('/') + '>'
-            end
+      n = 1
+      loop do
+        dirs = duplicates.map do |b|
+          tmp_str = b.directory.gsub(/^\//, '')
+          if tmp_str.count('/') < n
+            tmp_str
+          else
+            tmp_str.split('/')[-n, n].join('/')
           end
+        end
+        break if dirs.uniq == dirs
+
+        n += 1
+      end
+      @buffer_list.each do |b|
+        next if b.basename != new_buffer.basename
+
+        tmp_str = b.directory.gsub(/^\//, '')
+        if tmp_str.count('/') < n
+          b.name = "#{b.basename}<#{tmp_str}>"
+        else
+          b.name = "#{b.basename}<#{tmp_str.split('/')[-n, n].join('/')}>"
         end
       end
     end
