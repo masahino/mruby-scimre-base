@@ -1,4 +1,5 @@
 module Mrbmacs
+  # ruby-mode
   class RubyMode < Mode
     def initialize
       super.initialize
