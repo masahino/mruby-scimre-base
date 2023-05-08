@@ -26,6 +26,10 @@ module Mrbmacs
         puts op.to_s
         exit
       end
+      op.on('-v', '--veresion', 'show version') do
+        puts Version
+        exit
+      end
       op.banner = "Usage: #{$0} [OPTION-OR-FILENAME]..."
       begin
         args = op.parse(argv)
