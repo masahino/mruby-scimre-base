@@ -34,12 +34,10 @@ module Mrbmacs
       filename = read_file_name('find file: ', @current_buffer.directory) if filename.nil?
       return if filename.nil?
 
-      if Mrbmacs.get_buffer_from_path(@buffer_list, filename) != nil
-        switch_to_buffer(Mrbmacs.get_buffer_from_path(@buffer_list, filename).name)
-      else
+      if Mrbmacs.get_buffer_from_path(@buffer_list, filename).nil?
         @current_buffer.pos = @frame.view_win.sci_get_current_pos
         new_buffer = Buffer.new(filename)
-        if @current_buffer.docpointer != nil
+        unless @current_buffer.docpointer.nil?
           @frame.view_win.sci_add_refdocument(@current_buffer.docpointer)
         end
         @frame.view_win.sci_set_docpointer(nil)
@@ -57,6 +55,8 @@ module Mrbmacs
           error = @current_buffer.mode.syntax_check(@frame.view_win)
           @frame.show_annotation(error[0], error[1], error[2]) if error.size > 0
         end
+      else
+        switch_to_buffer(Mrbmacs.get_buffer_from_path(@buffer_list, filename).name)
       end
       after_find_file(self, filename)
     end
@@ -76,9 +76,7 @@ module Mrbmacs
       if @config.use_builtin_syntax_check == true
         @frame.view_win.sci_annotation_clearall
         error = @current_buffer.mode.syntax_check(@frame.view_win)
-        if error.size > 0
-          @frame.show_annotation(error[0], error[1], error[2])
-        end
+        @frame.show_annotation(error[0], error[1], error[2]) if error.size > 0
       end
       after_save_buffer(self, @current_buffer.filename)
     end
@@ -125,10 +123,8 @@ module Mrbmacs
     end
 
     def read_file_name(prompt, directory, default_name = nil)
-      prefix_text = directory + '/'
-      if default_name != nil
-        prefix_text += default_name
-      end
+      prefix_text = "#{directory}/"
+      prefix_text += default_name unless default_name.nil?
       filename = @frame.echo_gets(prompt, prefix_text) do |input_text|
         file_list = []
         len = 0
