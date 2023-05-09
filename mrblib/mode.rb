@@ -107,8 +107,8 @@ module Mrbmacs
     end
 
     def set_style(view_win, theme)
-      for i in 0..@style.length - 1
-        color = theme.font_color[@style[i]]
+      @style.each_with_index do |s, i|
+        color = theme.font_color[s]
         view_win.sci_style_set_fore(i, color[0]) if color[0] # foreground
         view_win.sci_style_set_back(i, color[1]) if color[1] # background
         view_win.sci_style_set_italic(i, color[2]) if color[2] # italic
