@@ -39,17 +39,21 @@ module Mrbmacs
         :color_foreground, # SCE_RB_STRING_QW 28
         :color_foreground, # SCE_RB_WORD_DEMOTED 29
         :color_foreground, # SCE_RB_STDIN 30
-        :color_foreground # SCE_RB_STDOUT 31
-        #        :color_foreground, # 32
-        #        :color_foreground, # 33
-        #        :color_foreground, # 34
-        #        :color_foreground, # 35
-        #        :color_foreground, # 36
-        #        :color_foreground, # 37
-        #        :color_foreground, # 38
-        #        :color_foreground, # 39
-        #        :color_foreground, # SCE_RB_STDERR 40
-        #        :color_foreground, # SCE_RB_UPPER_BOUND 41
+        :color_foreground, # SCE_RB_STDOUT 31
+        :color_foreground, # 32
+        :color_foreground, # 33
+        :color_foreground, # 34
+        :color_foreground, # 35
+        :color_foreground, # 36
+        :color_foreground, # 37
+        :color_foreground, # 38
+        :color_foreground, # 39
+        :color_foreground, # SCE_RB_STDERR 40
+        :color_foreground, # SCE_RB_STRING_W 41
+        :color_foreground, # SCE_RB_STRING_I 42
+        :color_foreground, # SCE_RB_STRING_QI 43
+        :color_foreground, # SCE_RB_STRING_QS 44
+        :color_foreground  # SCE_RB_UPPER_BOUND 45
       ]
     end
 
