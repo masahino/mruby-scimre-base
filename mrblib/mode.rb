@@ -108,6 +108,8 @@ module Mrbmacs
 
     def set_style(view_win, theme)
       @style.each_with_index do |s, i|
+        next if s.nil?
+
         color = theme.font_color[s]
         view_win.sci_style_set_fore(i, color[0]) if color[0] # foreground
         view_win.sci_style_set_back(i, color[1]) if color[1] # background
