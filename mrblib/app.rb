@@ -6,6 +6,28 @@ module Mrbmacs
     attr_accessor :frame, :mark_pos, :current_buffer, :buffer_list, :theme,
                   :sci_handler, :ext, :config, :modeline, :project, :io_handler
 
+    def initialize(argv = [])
+      opts, argv = parse_args(argv)
+      init_instance_variables
+      @logger = init_logfile
+      init_buffer
+      init_frame
+      init_keymap
+
+      @project = Project.new(@current_buffer.directory)
+      load_init_file if opts[:no_init_file] == false
+      # after load initialize file
+      init_theme
+      register_extensions
+      init_default_event
+      create_messages_buffer(@logfile)
+
+      find_file(argv[0]) if argv.size > 0
+      load_file(opts[:load]) if opts[:load] != ''
+
+      @frame.modeline(self)
+    end
+
     def parse_args(argv)
       op = OptionParser.new
       opts = {
@@ -58,46 +80,36 @@ module Mrbmacs
       logger
     end
 
-    def initialize(argv = [])
-      opts, argv = parse_args(argv)
+    def init_instance_variables
       @io_handler = {}
-      @readings = []
       @sci_handler = {}
+      @command_handler = {}
       @ext = Extension.new
       @config = Config.new
-      @command_handler = {}
-      @mark_pos = nil
-      @target_start_pos = nil
-      @last_search_text = ''
       @theme = nil
       @modeline = Modeline.new
+      @mark_pos = nil
       @recent_keys = []
+      @readings = []
+      @target_start_pos = nil
+      @last_search_text = ''
+    end
 
-      @logger = init_logfile
-
+    def init_buffer
       @current_buffer = Buffer.new('*scratch*')
       @buffer_list = [@current_buffer]
+    end
+
+    def init_frame
       @frame = Mrbmacs::Frame.new(@current_buffer)
       @frame.set_buffer_name(@current_buffer.name)
       @current_buffer.docpointer = @frame.view_win.sci_get_docpointer
-      init_keymap
+    end
 
-      @themes = Theme.create_theme_list
-      @project = Project.new(@current_buffer.directory)
-
-      load_init_file if opts[:no_init_file] == false
-
+    def init_theme
       @theme = @config.theme.new
       @frame.apply_theme(@theme)
       @current_buffer.mode.set_style(@frame.view_win, @theme)
-
-      register_extensions
-      init_default_event
-      create_messages_buffer(@logfile)
-      find_file(argv[0]) if argv.size > 0
-      load_file(opts[:load]) if opts[:load] != ''
-
-      @frame.modeline(self)
     end
 
     def load_file(filename)

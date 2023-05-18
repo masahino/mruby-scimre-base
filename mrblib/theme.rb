@@ -2,22 +2,19 @@ module Mrbmacs
   # Command
   module Command
     def select_theme(theme_name = nil)
+      themes = Theme.create_theme_list
       if theme_name.nil?
         theme_name = @frame.echo_gets('theme:') do |input_text|
           comp_list = []
-          @themes.each do |name, _klass|
+          themes.each do |name|
             comp_list.push name if name.start_with?(input_text)
           end
-          $stderr.puts comp_list if $DEBUG
           [comp_list.sort.join(@frame.echo_win.sci_autoc_get_separator.chr), input_text.length]
         end
       end
       unless theme_name.nil?
-        if @themes.key?(theme_name)
-          @theme = @themes[theme_name].new
-          #          if @theme.respond_to?(:set_pallete)
-          #            @theme.set_pallete
-          #          end
+        if themes.include?(theme_name)
+          @theme = Theme.find_by_name(theme_name).new
           @frame.apply_theme(@theme)
           @current_buffer.mode.set_style(@frame.view_win, @theme)
         else
@@ -94,12 +91,25 @@ module Mrbmacs
       end
     end
 
-    def self.create_theme_list
-      list = {}
+    def self.find_by_name(name)
+      theme = Theme
       ObjectSpace.each_object(Class) do |klass|
         next unless klass < self
 
-        list[klass.class_variable_get(:@@theme_name)] = klass if klass.class_variable_defined? :@@theme_name
+        if klass.class_variable_defined?(:@@theme_name) && (klass.class_variable_get(:@@theme_name) == name)
+          theme = klass
+          break
+        end
+      end
+      theme
+    end
+
+    def self.create_theme_list
+      list = []
+      ObjectSpace.each_object(Class) do |klass|
+        next unless klass < self
+
+        list.push(klass.class_variable_get(:@@theme_name)) if klass.class_variable_defined? :@@theme_name
       end
       list
     end
