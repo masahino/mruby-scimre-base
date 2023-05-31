@@ -112,7 +112,7 @@ module Scintilla
       end
     end
 
-    def send_message_get_text(length)
+    def send_message_get_text(_message, length)
       send_message(Scintilla::SCI_GETTEXT, [length])
     end
 
@@ -120,7 +120,7 @@ module Scintilla
       send_message(Scintilla::SCI_GETLINE, [line])
     end
 
-    def send_message_get_text(wparam)
+    def send_message_get_text(_message, _wparam)
       ''
       # dummy
     end
