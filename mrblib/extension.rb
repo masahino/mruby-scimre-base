@@ -7,12 +7,6 @@ module Mrbmacs
       @config = {}
       @data = {}
     end
-
-    def self.subclasses
-      subclasses = []
-      ObjectSpace.each_object(Class) { |klass| subclasses << klass if klass.superclass == self }
-      subclasses
-    end
   end
 
   # Application
