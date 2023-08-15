@@ -13,7 +13,7 @@ module Mrbmacs
       init_keymap
 
       @project = Project.new(@current_buffer.directory)
-      load_init_file if opts[:no_init_file] == false
+      load_init_file if opts[:q] == false
       # after load initialize file
       init_theme
       register_extensions
@@ -21,44 +21,46 @@ module Mrbmacs
       create_messages_buffer(@logfile)
 
       find_file(argv[0]) if argv.size > 0
-      load_file(opts[:load]) if opts[:load] != ''
+      load_file(opts[:load]) unless opts[:load].nil?
 
       @frame.modeline(self)
     end
 
+    def print_usage
+      puts "Usage: #{$0} [OPTION-OR-FILENAME]..."
+      puts '-q                 do not load ~/.mrbmacs'
+      puts '-l, --load FILE    load ruby file'
+      puts '-d, --debug        set debugging flags (set $DEBUG to true)'
+      puts '-h, --help         Prints this help'
+      puts '-v, --veresion     show version'
+    end
+
     def parse_args(argv)
-      op = OptionParser.new
-      opts = {
-        # version = [1, 1],
-        no_init_file: false,
-        load: ''
-      }
-      op.on('-q', '--[no-]init-file', 'do not load ~/.mrbmacs') do |v|
-        opts[:no_init_file] = v
+      parser = OptParser.new do |opts|
+        opts.on(:q, :bool, false)
+        opts.on(:load, :string)
+        opts.on(:debug, :bool, false) { |debug| $DEBUG = debug }
+        opts.on(:help, :bool, false) do |help|
+          if help
+            print_usage
+            exit
+          end
+        end
+        opts.on(:version, :bool, false) do |version|
+          if version
+            puts Version
+            exit
+          end
+        end
       end
-      op.on('-l', '--load FILE', 'load ruby file') do |v|
-        opts[:load] = v
-      end
-      op.on('-d', '--debug', 'set debugging flags (set $DEBUG to true)') do |_v|
-        $DEBUG = true
-      end
-      op.on('-h', '--help', 'Prints this help') do
-        puts op.to_s
-        exit
-      end
-      op.on('-v', '--veresion', 'show version') do
-        puts Version
-        exit
-      end
-      op.banner = "Usage: #{$0} [OPTION-OR-FILENAME]..."
       begin
-        args = op.parse(argv)
+        parser.parse(argv)
       rescue StandardError => e
         puts e.message
-        puts op.to_s
+        print_usage
         exit
       end
-      [opts, args]
+      [parser.opts, parser.tail]
     end
 
     def load_init_file
