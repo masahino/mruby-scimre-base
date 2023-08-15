@@ -1,6 +1,5 @@
 module Mrbmacs
   class XmlMode < Mode
-    include Scintilla
     def initialize
       super.initialize
       @name = 'xml'

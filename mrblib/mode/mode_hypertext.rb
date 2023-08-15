@@ -1,6 +1,5 @@
 module Mrbmacs
   class HtmlMode < Mode
-    include Scintilla
     def initialize
       super.initialize
       @name = 'html'

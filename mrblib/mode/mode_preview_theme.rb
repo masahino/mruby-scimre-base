@@ -1,7 +1,6 @@
 module Mrbmacs
   # mode for preview-theme
   class PreviewthemeMode < Mode
-    include Scintilla
     attr_reader :style
 
     def initialize

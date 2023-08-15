@@ -1,5 +1,4 @@
 module Mrbmacs
-  include Scintilla
   class JavaMode < CppMode
     def initialize
       super

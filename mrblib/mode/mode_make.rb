@@ -1,6 +1,5 @@
 module Mrbmacs
   class MakeMode < Mode
-    include Scintilla
     def initialize
       super
       @name = 'make'

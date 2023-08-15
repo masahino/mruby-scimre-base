@@ -1,6 +1,5 @@
 module Mrbmacs
   class MarkdownMode < Mode
-    include Scintilla
     def initialize
       super.initialize
       @name = 'markdown'

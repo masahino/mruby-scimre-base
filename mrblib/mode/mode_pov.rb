@@ -1,6 +1,5 @@
 module Mrbmacs
   class PovMode < Mode
-    include Scintilla
     def initialize
       super.initialize
       @name = 'pov'

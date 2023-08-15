@@ -1,8 +1,6 @@
 module Mrbmacs
   # compilation mode
   class CompilationMode < Mode
-    include Scintilla
-
     SCE_STYLE_DEFAULT = 0
     SCE_STYLE_ERROR = 1
     SCE_STYLE_FILE = 2

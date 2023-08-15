@@ -1,6 +1,5 @@
 module Mrbmacs
   class BashMode < Mode
-    include Scintilla
     def initialize
       super.initialize
       @name = 'bash'

@@ -1,6 +1,5 @@
 module Mrbmacs
   class LispMode < Mode
-    include Scintilla
     def initialize
       super
       @name = 'lisp'

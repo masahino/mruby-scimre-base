@@ -1,6 +1,5 @@
 module Mrbmacs
   class HaskellMode < Mode
-    include Scintilla
     def initialize
       super.initialize
       @name = 'haskell'

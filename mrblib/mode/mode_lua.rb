@@ -1,6 +1,5 @@
 module Mrbmacs
   class LuaMode < Mode
-    include Scintilla
     def initialize
       super.initialize
       @name = 'lua'

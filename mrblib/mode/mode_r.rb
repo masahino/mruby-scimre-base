@@ -1,6 +1,5 @@
 module Mrbmacs
   class RMode < Mode
-    include Scintilla
     def initialize
       super.initialize
       @name = 'r'

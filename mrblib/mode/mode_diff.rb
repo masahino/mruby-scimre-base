@@ -1,6 +1,5 @@
 module Mrbmacs
   class DiffMode < Mode
-    include Scintilla
     def initialize
       super
       @name = 'diff'

@@ -1,6 +1,5 @@
 module Mrbmacs
   class CssMode < Mode
-    include Scintilla
     def initialize
       super.initialize
       @name = 'css'

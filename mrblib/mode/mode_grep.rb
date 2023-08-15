@@ -3,8 +3,6 @@ module Mrbmacs
   class GrepMode < Mode
     attr_reader :pattern
 
-    include Scintilla
-
     SCE_STYLE_DEFAULT = 0
     SCE_STYLE_FILE = 1
     SCE_STYLE_NUMBER = 2

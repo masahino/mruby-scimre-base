@@ -1,6 +1,5 @@
 module Mrbmacs
   class RustMode < Mode
-    include Scintilla
     def initialize
       super.initialize
       @name = 'rust'

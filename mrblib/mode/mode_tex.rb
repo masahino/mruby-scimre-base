@@ -1,6 +1,5 @@
 module Mrbmacs
   class LatexMode < Mode
-    include Scintilla
     def initialize
       super.initialize
       @name = 'latex'

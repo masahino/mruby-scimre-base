@@ -1,6 +1,5 @@
 module Mrbmacs
   class JsonMode < Mode
-    include Scintilla
     def initialize
       super.initialize
       @name = 'json'

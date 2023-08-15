@@ -1,6 +1,5 @@
 module Mrbmacs
   class PerlMode < Mode
-    include Scintilla
     def initialize
       super.initialize
       @name = 'perl'

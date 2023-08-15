@@ -1,5 +1,4 @@
 module Mrbmacs
-  include Scintilla
   class GoMode < Mode
     def initialize
       super.initialize
