@@ -23,9 +23,4 @@ module Mrbmacs
       end
     end
   end
-
-  # Application class
-  class Application
-    include Command
-  end
 end

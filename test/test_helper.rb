@@ -9,6 +9,8 @@ $test_file_name = 'test'
 module Mrbmacs
   # Application class for test
   class ApplicationTest < Application
+    attr_accessor :mark_pos, :modeline
+
     def initialize(argv = [])
       super(argv)
     end

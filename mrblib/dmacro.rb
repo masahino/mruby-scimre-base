@@ -31,8 +31,6 @@ module Mrbmacs
 
   # Application
   class Application
-    include Command
-
     def dmacro_find_rep(ary)
       len = ary.length
       res = []

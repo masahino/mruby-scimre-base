@@ -24,19 +24,14 @@ module Mrbmacs
     end
   end
 
-  class Application
-    include Command
-  end
-
   # Theme
   class Theme
-    attr_accessor :style_list, :foreground_color, :background_color, :font_color, :name
+    attr_accessor :foreground_color, :background_color, :font_color, :name
 
     def initialize
       @name = 'default'
       @foreground_color = 0xffffff
       @background_color = 0
-      @style_list = {}
       @font_color = {
         # [fore, back, italic_flag, bold_flag ]
         # basic color

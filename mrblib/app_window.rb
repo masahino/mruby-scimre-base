@@ -44,8 +44,6 @@ module Mrbmacs
 
   # Application
   class Application
-    include Command
-
     def split_window(horizon)
       active_win = @frame.edit_win
       active_win.refresh

@@ -159,8 +159,6 @@ module Mrbmacs
 
   # Application
   class Application
-    include Command
-
     def word_end_pos(start_pos)
       (start_pos..@frame.view_win.sci_get_length).each do |p|
         end_pos = @frame.view_win.sci_word_end_position(p, true)

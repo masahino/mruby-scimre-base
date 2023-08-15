@@ -43,9 +43,4 @@ module Mrbmacs
       @frame.view_win.sci_end_undo_action
     end
   end
-
-  # Application class
-  class Application
-    include Command
-  end
 end

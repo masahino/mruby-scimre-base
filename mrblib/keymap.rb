@@ -1,30 +1,29 @@
 module Mrbmacs
   # KeyMap
   class KeyMap
-    include Scintilla
     attr_accessor :keymap
 
     def initialize
       @default_keymap = {
-        'C-b' => SCI_CHARLEFT,
-        'C-d' => SCI_CLEAR,
-        'C-f' => SCI_CHARRIGHT,
+        'C-b' => Scintilla::SCI_CHARLEFT,
+        'C-d' => Scintilla::SCI_CLEAR,
+        'C-f' => Scintilla::SCI_CHARRIGHT,
         'C-g' => 'keyboard_quit',
-        'C-h' => SCI_DELETEBACK,
+        'C-h' => Scintilla::SCI_DELETEBACK,
         'C-w' => 'cut_region',
         'C- ' => 'set_mark', # C-SPC
-        'C-x u' => SCI_UNDO,
-        'C-_' => SCI_UNDO,
-        'C-/' => SCI_UNDO,
+        'C-x u' => Scintilla::SCI_UNDO,
+        'C-_' => Scintilla::SCI_UNDO,
+        'C-/' => Scintilla::SCI_UNDO,
         'Escape' => 'prefix',
-        'M-b' => SCI_WORDLEFT,
-        'M-f' => SCI_WORDRIGHT,
+        'M-b' => Scintilla::SCI_WORDLEFT,
+        'M-f' => Scintilla::SCI_WORDRIGHT,
         'M-w' => 'copy_region',
         'M-<' => 'beginning_of_buffer',
         'M->' => 'end_of_buffer',
-        'M-d' => SCI_DELWORDRIGHT,
-        'M-/' => SCI_REDO
-        # 'M-DEL' => SCI_DELWORDLEFT,
+        'M-d' => Scintilla::SCI_DELWORDRIGHT,
+        'M-/' => Scintilla::SCI_REDO
+        # 'M-DEL' => Scintilla::SCI_DELWORDLEFT,
       }
       @keymap = {}
     end
@@ -46,13 +45,13 @@ module Mrbmacs
         'C-e' => 'end_of_line',
         'C-k' => 'kill_line',
         'C-l' => 'recenter',
-        'C-m' => SCI_NEWLINE,
-        'C-n' => SCI_LINEDOWN,
-        'C-p' => SCI_LINEUP,
+        'C-m' => Scintilla::SCI_NEWLINE,
+        'C-n' => Scintilla::SCI_LINEDOWN,
+        'C-p' => Scintilla::SCI_LINEUP,
         'C-r' => 'isearch_backward',
         'C-s' => 'isearch_forward',
         'C-t' => 'dmacro_exec',
-        'C-v' => SCI_PAGEDOWN,
+        'C-v' => Scintilla::SCI_PAGEDOWN,
         'C-x' => 'prefix',
         'C-x r' => 'prefix',
         'C-y' => 'yank',
@@ -78,7 +77,7 @@ module Mrbmacs
         'C-x }' => 'enlarge_window_horizontally',
         'M-l' => 'downcase_word',
         'M-u' => 'upcase_word',
-        'M-v' => SCI_PAGEUP,
+        'M-v' => Scintilla::SCI_PAGEUP,
         'M-x' => 'execute_extended_command',
         'M-%' => 'query-replace'
       }
@@ -91,10 +90,10 @@ module Mrbmacs
     def initialize
       super.initialize
       keymap = {
-        'C-a' => SCI_HOME,
-        'C-e' => SCI_LINEEND,
-        'C-k' => SCI_DELLINERIGHT,
-        'C-y' => SCI_PASTE,
+        'C-a' => Scintilla::SCI_HOME,
+        'C-e' => Scintilla::SCI_LINEEND,
+        'C-k' => Scintilla::SCI_DELLINERIGHT,
+        'C-y' => Scintilla::SCI_PASTE,
         'Tab' => 'completion'
       }
       @keymap = @default_keymap.merge(keymap)
@@ -137,8 +136,7 @@ module Mrbmacs
 
     def apply_keymap(win, keymap)
       keymap.keymap.each do |key, action|
-        strokes = key.split(' ').size
-        if strokes == 1 && action.is_a?(Integer)
+        if !key.include?(' ') && action.is_a?(Integer)
           set_keybind(win, key, action)
         end
       end

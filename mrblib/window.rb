@@ -4,7 +4,7 @@ module Mrbmacs
 
   # base
   class EditWindow
-    attr_accessor :sci, :mode_win, :frame, :command_list, :buffer, :x1, :y1, :x2, :y2, :width, :height
+    attr_accessor :sci, :mode_win, :frame, :buffer, :x1, :y1, :x2, :y2, :width, :height
 
     MARGIN_LINE_NUMBER = 0
     MARGIN_FOLDING = 1

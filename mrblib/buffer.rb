@@ -99,8 +99,6 @@ module Mrbmacs
 
   # Application
   class Application
-    include Command
-
     def set_buffer_mode(buffer)
       buffer.mode.set_lexer(@frame.view_win)
       buffer.mode.set_style(@frame.view_win, @theme)

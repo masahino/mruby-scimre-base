@@ -23,8 +23,4 @@ module Mrbmacs
       @logger.debug ret
     end
   end
-
-  class Application
-    include Command
-  end
 end

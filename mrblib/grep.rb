@@ -12,8 +12,4 @@ module Mrbmacs
       exec_shell_command(buffer_name, command)
     end
   end
-
-  class Application
-    include Command
-  end
 end

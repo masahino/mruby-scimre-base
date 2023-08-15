@@ -1,10 +1,8 @@
 module Mrbmacs
   # Application
   class Application
-    include Scintilla
-
-    attr_accessor :frame, :mark_pos, :current_buffer, :buffer_list, :theme,
-                  :sci_handler, :ext, :config, :modeline, :project, :io_handler
+    attr_accessor :frame, :current_buffer, :buffer_list, :theme,
+                  :sci_handler, :ext, :config, :io_handler
 
     def initialize(argv = [])
       opts, argv = parse_args(argv)
@@ -115,7 +113,7 @@ module Mrbmacs
     def load_file(filename)
       File.open(File.expand_path(filename), 'r') do |f|
         str = f.read
-        instance_eval(str)
+        instance_eval(str, filename)
       end
     rescue StandardError => e
       @logger.error e

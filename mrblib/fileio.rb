@@ -97,8 +97,6 @@ module Mrbmacs
 
   # Application
   class Application
-    include Command
-
     def read_dir_name(prompt, default_directory = nil)
       prefix_text = default_directory
       prefix_text += '/' if prefix_text[-1] != '/'

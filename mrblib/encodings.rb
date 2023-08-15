@@ -31,8 +31,4 @@ module Mrbmacs
       @current_buffer.encoding = code if system_encodings.include?(code.upcase)
     end
   end
-
-  class Application
-    include Command
-  end
 end
