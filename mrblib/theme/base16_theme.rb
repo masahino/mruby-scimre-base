@@ -53,7 +53,7 @@ module Mrbmacs
         color_other_emphasized: [@@base05, @background_color, true, true],
         color_regexp_grouping_backslash: [@@base05, @background_color, nil, nil],
         # additional
-        color_brace_highlight: [@background_color, @foreground_color, nil, nil],
+        color_brace_highlight: [@@base08, @@base04, nil, nil],
         color_annotation: [@@base05, @@base08, true, nil],
         color_annotation_info: [@@base06, @@base03, true, nil],
         color_annotation_warn: [@@base06, @@base0F, true, nil],
@@ -62,7 +62,10 @@ module Mrbmacs
         color_caret_line: [@foreground_color, @@base01, nil, nil],
         color_indent_guide: [@@base03, @background_color, nil, nil],
         color_marker_breakpoint: [@@base08, @@base01, nil, nil],
-        color_marker_current: [@@base0D, @@base01, nil, nil]
+        color_marker_current: [@@base0D, @@base01, nil, nil],
+        # frame
+        color_mode_line: [@@base00, @@base04, nil, nil],
+        color_mode_line_inactive: [@@base04, @@base03, nil, nil]
       }
     end
   end

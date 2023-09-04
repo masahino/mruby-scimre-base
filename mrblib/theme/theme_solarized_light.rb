@@ -41,7 +41,10 @@ module Mrbmacs
         color_annotation_error: [@@base03, @@red, true, nil],
         color_linenumber: [@@base00, @@base2, nil, nil],
         color_caret_line: [@foreground_color, @@base2, nil, nil],
-        color_indent_guide: [@@base1, @background_color, nil, nil]
+        color_indent_guide: [@@base1, @background_color, nil, nil],
+        # frame
+        color_mode_line: [@@base2, @@base1, nil, nil],
+        color_mode_line_inactive: [@@base1, @@base2, nil, nil]
       }
     end
   end
