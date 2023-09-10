@@ -177,10 +177,9 @@ module Mrbmacs
     def identify_eolmode
       eolmode = @frame.view_win.sci_get_eolmode
       text = @frame.view_win.sci_get_text(4096)
-      cr = text.scan(/\r/).length
-      lf = text.scan(/\n/).length
-      crlf = text.scan(/\r\n/).length
-      if crlf > 0
+      cr = text.count("\r")
+      lf = text.count("\n")
+      if text.include?("\r\n")
         eolmode = Scintilla::SC_EOL_CRLF
       elsif lf > cr
         eolmode = Scintilla::SC_EOL_LF

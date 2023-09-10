@@ -9,7 +9,7 @@ module Mrbmacs
       end
       return if input_str.nil?
 
-      args = input_str.split(/\s/)
+      args = input_str.split(/\s+/)
       command = args.shift
       args = args.join(' ')
       args = nil if args == ''
