@@ -22,8 +22,6 @@ module Mrbmacs
 
       find_file(argv[0]) if argv.size > 0
       load_file(opts[:load]) unless opts[:load].nil?
-
-      @frame.modeline(self)
     end
 
     def print_usage
