@@ -77,10 +77,10 @@ module Mrbmacs
       @current_buffer.mode.set_style(new_win.sci, @theme)
       @frame.edit_win_list.push(new_win)
       @frame.edit_win_list.each do |win|
-        @frame.modeline(self, win)
         win.refresh
       end
       @frame.modeline(self, new_win)
+      @frame.modeline_refresh(self)
       new_win.focus_out
     end
   end
