@@ -8,7 +8,8 @@ module Mrbmacs
     def initialize(filename = nil)
       @vcinfo = nil
       if filename != nil
-        if filename =~ /^\*.*\*$/ # special buffer
+        # if filename =~ /^\*.*\*$/ # special buffer
+        if filename.start_with?('*') && filename.end_with?('*')
           @filename = ''
           @basename = ''
           @name = filename
