@@ -11,7 +11,8 @@ module Mrbmacs
   # Application
   class Application
     def modeline_str
-      @modeline.format.gsub(/#\{([^}]*)\}/) { eval($1).to_s }
+      # @modeline.format.gsub(/#\{([^}]*)\}/) { instance_eval(Regexp.last_match[1]).to_s }
+      instance_eval("%Q\1#{@modeline.format}\1", __FILE__, __LINE__)
     end
 
     def modeline_format(format)
