@@ -270,6 +270,9 @@ module Mrbmacs
       end
     end
 
+    def modeline_refresh(_app)
+    end
+
     def exit
       raise NotImplementedError
     end
