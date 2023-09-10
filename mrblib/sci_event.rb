@@ -19,10 +19,11 @@ module Mrbmacs
       end
       add_sci_event(Scintilla::SCN_UPDATEUI) do |_app, scn|
         brace_highlight(scn)
-      end
-      add_sci_event(Scintilla::SCN_UPDATEUI) do |_app, scn|
         display_selection_range(scn)
       end
+      # add_sci_event(Scintilla::SCN_UPDATEUI) do |_app, scn|
+      # display_selection_range(scn)
+      # end
       add_sci_event(Scintilla::SCN_STYLENEEDED) do |app, scn|
         @current_buffer.mode.on_style_needed(app, scn)
       end
