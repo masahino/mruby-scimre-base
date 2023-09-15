@@ -7,23 +7,20 @@ module Mrbmacs
 
     def initialize(filename = nil)
       @vcinfo = nil
-      if filename != nil
-        # if filename =~ /^\*.*\*$/ # special buffer
-        if filename.start_with?('*') && filename.end_with?('*')
-          @filename = ''
-          @basename = ''
-          @name = filename
-          @directory = Dir.getwd
-          @mode = Mrbmacs::Mode.set_mode_by_filename(filename)
-        else
-          update_filename(filename)
-        end
-      else
+      if filename.nil?
         @filename = ''
         @basename = ''
         @name = ''
         @directory = Dir.getwd
         @mode = Mrbmacs::Mode.instance
+      elsif filename.start_with?('*') && filename.end_with?('*')
+        @filename = ''
+        @basename = ''
+        @name = filename
+        @directory = Dir.getwd
+        @mode = Mrbmacs::Mode.set_mode_by_filename(filename)
+      else
+        update_filename(filename)
       end
       @encoding = 'utf-8'
       @docpointer = nil
