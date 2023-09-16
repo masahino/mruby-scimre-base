@@ -114,20 +114,21 @@ module Mrbmacs
       meta_code = Scintilla::SCMOD_ALT
       ctrl_code = Scintilla::SCMOD_META if Scintilla::PLATFORM == :GTK_MACOSX
       keydef = 0
-      if key =~ /^(\w)-(\S)$/
-        case Regexp.last_match[1]
+      key_parts = key.split('-')
+      if key_parts.length == 2
+        case key_parts[0]
         when 'C'
           keydef += ctrl_code << 16
         when 'M'
           keydef += meta_code << 16
         end
-        if Regexp.last_match[2] == 'DEL'
+        if key_parts[1] == 'DEL'
           keydef += Scintilla::SCK_DELETE
         else
           if Scintilla::PLATFORM == :GTK_MACOSX
-            keydef += Regexp.last_match[2].upcase.ord
+            keydef += key_parts[1].upcase.ord
           else
-            keydef += Regexp.last_match[2].ord
+            keydef += key_parts[1].ord
           end
         end
       end
