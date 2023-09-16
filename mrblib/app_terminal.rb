@@ -78,9 +78,10 @@ module Mrbmacs
             view_win.sci_set_target_end(end_pos)
           else
             next
-            search_text = @last_search_text
-            @frame.echo_win.sci_add_text(search_text.bytesize, search_text)
-            @frame.echo_win.refresh
+
+            # search_text = @last_search_text
+            # @frame.echo_win.sci_add_text(search_text.bytesize, search_text)
+            # @frame.echo_win.refresh
           end
         elsif key_str == 'C-g'
           view_win.sci_goto_pos(orig_pos)
