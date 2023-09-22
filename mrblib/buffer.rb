@@ -97,8 +97,8 @@ module Mrbmacs
 
   # Application
   class Application
-    def set_buffer_mode(buffer)
-      buffer.mode.set_lexer(@frame.view_win)
+    def update_buffer_mode(buffer)
+      buffer.mode.apply_lexer(@frame.view_win)
       buffer.mode.set_style(@frame.view_win, @theme)
     end
 
@@ -107,7 +107,7 @@ module Mrbmacs
       @frame.view_win.sci_add_refdocument(@current_buffer.docpointer)
       @frame.view_win.sci_set_docpointer(new_buffer.docpointer)
       @frame.edit_win.buffer = new_buffer
-      set_buffer_mode(new_buffer)
+      update_buffer_mode(new_buffer)
       @frame.view_win.sci_goto_pos(new_buffer.pos)
       @current_buffer = new_buffer
       @frame.sync_tab(new_buffer.name)
@@ -175,7 +175,7 @@ module Mrbmacs
       new_buffer = Mrbmacs::Buffer.new(buffer_name)
       add_new_buffer(new_buffer)
       add_buffer_to_frame(new_buffer)
-      set_buffer_mode(new_buffer)
+      update_buffer_mode(new_buffer)
       @frame.apply_theme(@theme)
       @frame.set_buffer_name(buffer_name)
       new_buffer

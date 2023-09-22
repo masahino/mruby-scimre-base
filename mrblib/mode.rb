@@ -100,7 +100,7 @@ module Mrbmacs
       @use_builtin_formatting = true
     end
 
-    def set_lexer(view_win)
+    def apply_lexer(view_win)
       return if @lexer.nil?
 
       view_win.sci_set_lexer_language(@name)
@@ -111,10 +111,10 @@ module Mrbmacs
         next if s.nil?
 
         color = theme.font_color[s]
-        view_win.sci_style_set_fore(i, color[0]) if color[0] # foreground
-        view_win.sci_style_set_back(i, color[1]) if color[1] # background
-        view_win.sci_style_set_italic(i, color[2]) if color[2] # italic
-        view_win.sci_style_set_bold(i, color[3]) if color[3] # bold
+        view_win.sci_style_set_fore(i, color[0]) # foreground
+        view_win.sci_style_set_back(i, color[1]) # background
+        view_win.sci_style_set_italic(i, true) if color[2] # italic
+        view_win.sci_style_set_bold(i, true) if color[3] # bold
       end
 
       #     # bracelight

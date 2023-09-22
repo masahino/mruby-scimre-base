@@ -66,7 +66,7 @@ module Mrbmacs
         add_new_buffer(result_buffer)
         @current_buffer = result_buffer
         add_buffer_to_frame(result_buffer)
-        set_buffer_mode(result_buffer)
+        update_buffer_mode(result_buffer)
         # @frame.set_theme(@theme)
         @current_buffer.mode.set_style(@frame.view_win, @theme)
         @frame.set_buffer_name(buffer_name)
