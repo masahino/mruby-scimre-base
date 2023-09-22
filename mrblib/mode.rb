@@ -2,8 +2,8 @@ module Mrbmacs
   # Mrbmacs::Mode
   class Mode
     include Singleton
-    attr_accessor :name, :lexer, :indent, :use_tab, :keymap, :start_of_comment, :end_of_comment,
-                  :build_command, :use_builtin_formatting
+    attr_accessor :name, :lexer, :keyword_list, :indent, :use_tab, :tab_indent, :keymap,
+                  :start_of_comment, :end_of_comment, :build_command, :use_builtin_formatting
 
     @@mode_list = {
       # ruby-mode
@@ -106,7 +106,7 @@ module Mrbmacs
       view_win.sci_set_lexer_language(@name)
     end
 
-    def set_style(view_win, theme)
+    def apply_theme(view_win, theme)
       @style.each_with_index do |s, i|
         next if s.nil?
 
@@ -116,19 +116,6 @@ module Mrbmacs
         view_win.sci_style_set_italic(i, true) if color[2] # italic
         view_win.sci_style_set_bold(i, true) if color[3] # bold
       end
-
-      #     # bracelight
-      #      view_win.sci_style_set_fore(34, theme.background_color)
-      #      view_win.sci_style_set_back(34, theme.foreground_color)
-
-      view_win.sci_set_keywords(0, @keyword_list)
-      view_win.sci_set_property('fold', '1')
-      view_win.sci_set_tab_width(@indent)
-      view_win.sci_set_use_tabs(@use_tabs)
-      view_win.sci_set_tab_indents(@tab_indent)
-      view_win.sci_set_back_space_un_indents(true)
-      view_win.sci_set_indent(@indent)
-      view_win.sci_set_wrap_mode(Scintilla::SC_WRAP_CHAR)
     end
 
     def config

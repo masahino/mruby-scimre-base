@@ -34,7 +34,6 @@ module Mrbmacs
     def init_buffer(buffer)
       @sci.sci_set_docpointer(buffer.docpointer)
       @sci.sci_set_lexer_language(buffer.mode.name)
-      #      buffer.mode.set_style(view_win, @theme)
     end
 
     def compute_area
@@ -147,6 +146,17 @@ module Mrbmacs
 
     def apply_theme(theme)
       apply_theme_base(theme)
+    end
+
+    def apply_mode_settings(mode)
+      @sci.sci_set_keywords(0, mode.keyword_list)
+      @sci.sci_set_property('fold', '1')
+      @sci.sci_set_tab_width(mode.indent)
+      @sci.sci_set_use_tabs(mode.use_tab)
+      @sci.sci_set_tab_indents(mode.tab_indent)
+      @sci.sci_set_back_space_un_indents(true)
+      @sci.sci_set_indent(mode.indent)
+      @sci.sci_set_wrap_mode(Scintilla::SC_WRAP_CHAR)
     end
 
     def newline

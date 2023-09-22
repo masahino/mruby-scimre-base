@@ -39,7 +39,7 @@ module Mrbmacs
         if Mrbmacs.const_defined?(mode_class_name)
           @current_buffer.mode = Mrbmacs.const_get(mode_class_name).new
           @frame.view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
-          @current_buffer.mode.set_style(@frame.view_win, @theme)
+          apply_theme_to_mode(@current_buffer.mode, @frame.edit_win, @theme)
         end
       end
     end
@@ -68,7 +68,7 @@ module Mrbmacs
         add_buffer_to_frame(result_buffer)
         update_buffer_mode(result_buffer)
         # @frame.set_theme(@theme)
-        @current_buffer.mode.set_style(@frame.view_win, @theme)
+        apply_theme_to_mode(@current_buffer.mode, @frame.edit_win, @theme)
         @frame.set_buffer_name(buffer_name)
         @frame.edit_win.buffer = @current_buffer
       else

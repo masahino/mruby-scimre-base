@@ -107,7 +107,7 @@ module Mrbmacs
     def init_theme
       @theme = @config.theme.new
       @frame.apply_theme(@theme)
-      @current_buffer.mode.set_style(@frame.view_win, @theme)
+      apply_theme_to_mode(@current_buffer.mode, @frame.edit_win, @theme)
     end
 
     def load_file(filename)

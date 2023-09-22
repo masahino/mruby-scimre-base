@@ -74,7 +74,7 @@ module Mrbmacs
       new_win = @frame.new_editwin(@current_buffer, x, y, new_width, new_height)
       apply_keymap(new_win.sci, @keymap)
       new_win.apply_theme(@theme)
-      @current_buffer.mode.set_style(new_win.sci, @theme)
+      apply_theme_to_mode(@current_buffer.mode, new_win, @theme)
       @frame.edit_win_list.push(new_win)
       @frame.edit_win_list.each do |win|
         win.refresh
@@ -82,6 +82,11 @@ module Mrbmacs
       @frame.modeline(self, new_win)
       @frame.modeline_refresh(self)
       new_win.focus_out
+    end
+
+    def apply_theme_to_mode(mode, edit_win, theme)
+      mode.apply_theme(edit_win.sci, theme)
+      edit_win.apply_mode_settings(mode)
     end
   end
 end

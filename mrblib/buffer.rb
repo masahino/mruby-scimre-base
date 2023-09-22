@@ -99,7 +99,7 @@ module Mrbmacs
   class Application
     def update_buffer_mode(buffer)
       buffer.mode.apply_lexer(@frame.view_win)
-      buffer.mode.set_style(@frame.view_win, @theme)
+      apply_theme_to_mode(buffer.mode, @frame.edit_win, @theme)
     end
 
     def update_buffer_window(new_buffer)
@@ -116,9 +116,6 @@ module Mrbmacs
     end
 
     def switch_to_buffer(buffername = nil)
-      # if @buffer_list.size <= 1
-      #   return
-      # end
       if buffername.nil?
         buffername = @frame.select_buffer(@buffer_list[-2].name, @buffer_list.collect { |b| b.name })
       end

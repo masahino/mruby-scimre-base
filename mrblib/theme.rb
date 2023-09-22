@@ -16,7 +16,7 @@ module Mrbmacs
         if themes.include?(theme_name)
           @theme = Theme.find_by_name(theme_name).new
           @frame.apply_theme(@theme)
-          @current_buffer.mode.set_style(@frame.view_win, @theme)
+          apply_theme_to_mode(@current_buffer.mode, @frame.edit_win, @theme)
         else
           @frame.echo_puts "#{theme_name} not found"
         end

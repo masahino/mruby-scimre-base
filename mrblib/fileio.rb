@@ -47,7 +47,7 @@ module Mrbmacs
         add_buffer_to_frame(@current_buffer)
         open_file(filename)
         @frame.view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
-        @current_buffer.mode.set_style(@frame.view_win, @theme)
+        apply_theme_to_mode(@current_buffer.mode, @frame.edit_win, @theme)
         @frame.set_buffer_name(@current_buffer.name)
         @frame.edit_win.buffer = @current_buffer
         @frame.modeline(self)
@@ -90,7 +90,7 @@ module Mrbmacs
       @current_buffer.update_filename(filename)
       save_buffer
       @frame.view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
-      @current_buffer.mode.set_style(@frame.view_win, @theme)
+      apply_theme_to_mode(@current_buffer.mode, @frame.edit_win, @theme)
       @frame.set_buffer_name(@current_buffer.name)
     end
   end
@@ -131,9 +131,8 @@ module Mrbmacs
         else
           dir = File.dirname(input_text)
           fname = File.basename(input_text)
-          qfname = Regexp.quote(fname)
           Dir.foreach(dir) do |item|
-            file_list.push(item) if item =~ /^#{qfname}/
+            file_list.push(item) if item.start_with?(fname)
           end
           len = fname.length
         end
