@@ -111,10 +111,10 @@ module Mrbmacs
         next if s.nil?
 
         color = theme.font_color[s]
-        view_win.sci_style_set_fore(i, color[0]) # foreground
-        view_win.sci_style_set_back(i, color[1]) # background
-        view_win.sci_style_set_italic(i, true) if color[2] # italic
-        view_win.sci_style_set_bold(i, true) if color[3] # bold
+        view_win.sci_style_set_fore(i, color[0])   # foreground
+        view_win.sci_style_set_back(i, color[1])   # background
+        view_win.sci_style_set_italic(i, color[2]) # italic
+        view_win.sci_style_set_bold(i, color[3])   # bold
       end
     end
 
