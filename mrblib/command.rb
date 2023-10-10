@@ -2,9 +2,8 @@ module Mrbmacs
   # command
   module Command
     def execute_extended_command
-      command_list = Mrbmacs::Command.instance_methods.map { |item| item.to_s }.sort
       input_str = @frame.echo_gets('M-x ') do |input_text|
-        command_candidate = command_list.select { |item| item =~ /^#{input_text}/ }
+        command_candidate = @command_list.select { |item| item.start_with?(input_text) }
         [command_candidate.join(@frame.echo_win.sci_autoc_get_separator.chr), input_text.length]
       end
       return if input_str.nil?

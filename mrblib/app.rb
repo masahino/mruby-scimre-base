@@ -22,6 +22,7 @@ module Mrbmacs
 
       find_file(argv[0]) if argv.size > 0
       load_file(opts[:load]) unless opts[:load].nil?
+      @command_list = Mrbmacs::Command.instance_methods.map(&:to_s).sort
     end
 
     def print_usage

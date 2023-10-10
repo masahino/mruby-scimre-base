@@ -137,9 +137,7 @@ module Mrbmacs
 
     def apply_keymap(win, keymap)
       keymap.keymap.each do |key, action|
-        if !key.include?(' ') && action.is_a?(Integer)
-          set_keybind(win, key, action)
-        end
+        set_keybind(win, key, action) if action.is_a?(Integer) && !key.include?(' ')
       end
     end
   end
