@@ -4,10 +4,8 @@ module Mrbmacs
     def key_scan(key_str)
       if @current_buffer.mode.keymap.key? key_str
         @current_buffer.mode.keymap[key_str]
-      elsif @keymap.keymap.key? key_str
-        @keymap.keymap[key_str]
       else
-        nil
+        @keymap.keymap[key_str]
       end
     end
 
