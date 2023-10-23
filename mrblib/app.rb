@@ -17,7 +17,7 @@ module Mrbmacs
       # after load initialize file
       init_theme
       register_extensions
-      init_default_event
+      init_default_sci_event
       create_messages_buffer(@logfile)
 
       find_file(argv[0]) if argv.size > 0
