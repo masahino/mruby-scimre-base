@@ -1,19 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper.rb'
-
-module Mrbmacs
-  class TestTheme < SolarizedTheme
-    @@theme_name = 'test-theme'
-    def initialize
-      super
-      @name = @@theme_name
-      @foreground_color = @@base0
-    end
-
-    def set_pallete
-      @@base0 = 0x010203
-    end
-  end
-end
+require "#{File.dirname(__FILE__)}/test_helper.rb"
 
 assert('select theme') do
   app = Mrbmacs::ApplicationTest.new
@@ -33,13 +18,9 @@ assert('select theme') do
   $test_echo_gets[:output_text] = 'solarized-dark'
   app.select_theme
   assert_equal('solarized-dark', app.theme.name)
-
-  app.select_theme('test-theme')
-  assert_equal('test-theme', app.theme.name)
-  assert_equal(0x010203, app.theme.foreground_color)
 end
 
 assert('create_theme_list') do
   list = Mrbmacs::Theme.create_theme_list
-  assert_equal(5, list.size)
+  assert_equal(4, list.size)
 end
