@@ -18,7 +18,8 @@ MRuby::Gem::Specification.new('mruby-mrbmacs-base') do |spec|
   spec.add_dependency 'mruby-tiny-opt-parser'
   spec.add_dependency 'mruby-logger'
   spec.add_dependency 'mruby-iconv'
+#  spec.add_dependency 'mruby-uchardet'
   spec.add_dependency 'mruby-process', mgem: 'mruby-process2'
   spec.add_dependency 'mruby-singleton'
-  spec.add_test_dependency 'mruby-require', github: 'masahino/mruby-require', branch: 'mruby3.1'
+  spec.add_test_dependency 'mruby-require'
 end
