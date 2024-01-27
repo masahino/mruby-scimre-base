@@ -24,9 +24,9 @@ module Mrbmacs
       @sci.sci_set_caret_fore(0xffffff)
       @sci.sci_set_codepage(Scintilla::SC_CP_UTF8)
       @sci.sci_set_mod_event_mask(Scintilla::SC_MOD_INSERTTEXT | Scintilla::SC_MOD_DELETETEXT)
-      @sci.sci_set_caret_style(Scintilla::CARETSTYLE_BLOCK_AFTER |
-        Scintilla::CARETSTYLE_OVERSTRIKE_BLOCK |
-        Scintilla::CARETSTYLE_BLOCK)
+      # @sci.sci_set_caret_style(Scintilla::CARETSTYLE_BLOCK_AFTER |
+      # Scintilla::CARETSTYLE_OVERSTRIKE_BLOCK | 32 |
+      # Scintilla::CARETSTYLE_BLOCK)
       @sci.sci_autoc_set_max_height(10)
       @sci.sci_autoc_set_separator("\t".ord)
     end
