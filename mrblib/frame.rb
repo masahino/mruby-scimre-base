@@ -51,12 +51,12 @@ module Mrbmacs
       else
         mode_text += '--'
       end
-      mode_text += sprintf('    %-20s', app.current_buffer.name)
+      mode_text += format('    %-20s', app.current_buffer.name)
       x = @view_win.sci_get_column(@view_win.sci_get_current_pos) + 1
       y = @view_win.sci_line_from_position(@view_win.sci_get_current_pos) + 1
-      mode_text += sprintf('%-10s', "(#{x},#{y})")
-      mode_text += sprintf('%-10s', '[' + app.current_buffer.mode.name + ']')
-      mode_text += sprintf('%-20s', '[' + app.current_buffer.additional_info + ']')
+      mode_text += format('%-10s', "(#{x},#{y})")
+      mode_text += format('%-10s', "[#{app.current_buffer.mode.name}]")
+      mode_text += format('%-20s', "[#{app.current_buffer.additional_info}]")
       mode_text
     end
 
