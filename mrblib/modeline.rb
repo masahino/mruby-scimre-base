@@ -4,15 +4,24 @@ module Mrbmacs
     attr_accessor :format
 
     def initialize
-      @format = '(#{modeline_encoding}-#{modeline_eol}):#{modeline_modified} #{modeline_buffername} #{modeline_pos}    (#{modeline_vcinfo})    [#{modeline_modename}]    [#{modeline_additional_info}]'
+      @format = '%<encoding>s-%<eol>s:%<modified>s %<buffername>s %<pos>s    (%<vcinfo>s)    [%<modename>s]    [%<additional_info>s]'
     end
   end
 
   # Application
   class Application
     def modeline_str
-      # @modeline.format.gsub(/#\{([^}]*)\}/) { instance_eval(Regexp.last_match[1]).to_s }
-      instance_eval("%Q\1#{@modeline.format}\1", __FILE__, __LINE__)
+      format(
+        @modeline.format,
+        encoding: modeline_encoding,
+        eol: modeline_eol,
+        modified: modeline_modified,
+        buffername: modeline_buffername,
+        pos: modeline_pos,
+        vcinfo: modeline_vcinfo,
+        modename: modeline_modename,
+        additional_info: modeline_additional_info
+      )
     end
 
     def modeline_format(format)
@@ -28,16 +37,13 @@ module Mrbmacs
     end
 
     def modeline_modified
-      if @frame.view_win.sci_get_modify != 0
-        if @frame.view_win.sci_get_readonly != 0
-          '%*'
-        else
-          '**'
-        end
-      elsif @frame.view_win.sci_get_readonly != 0
-        '%%'
+      modified = @frame.view_win.sci_get_modify != 0
+      readonly = @frame.view_win.sci_get_readonly
+
+      if readonly
+        modified ? '%*' : '%%'
       else
-        '--'
+        modified ? '**' : '--'
       end
     end
 
