@@ -4,7 +4,7 @@ module Mrbmacs
     attr_accessor :format
 
     def initialize
-      @format = '%<encoding>s-%<eol>s:%<modified>s %<buffername>s %<pos>s    (%<vcinfo>s)    [%<modename>s]    [%<additional_info>s]'
+      @format = '(%<encoding>s-%<eol>s):%<modified>s %<buffername>s %<pos>s    (%<vcinfo>s)    [%<modename>s]    [%<additional_info>s]'
     end
   end
 

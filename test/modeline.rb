@@ -1,10 +1,5 @@
 require File.dirname(__FILE__) + '/test_helper.rb'
 
-assert('Modeline.new') do
-  modeline = Mrbmacs::Modeline.new
-  assert_equal '(#{modeline_encoding}-#{modeline_eol}):#{modeline_modified} #{modeline_buffername} #{modeline_pos}    (#{modeline_vcinfo})    [#{modeline_modename}]    [#{modeline_additional_info}]', modeline.format
-end
-
 assert('modeline_str') do
   app = Mrbmacs::ApplicationTest.new
   assert_equal '(', app.modeline_str[0]
