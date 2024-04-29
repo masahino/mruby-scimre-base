@@ -90,6 +90,10 @@ module Mrbmacs
       end
       # delete buffer
       target_buffer = Mrbmacs.get_buffer_from_name(@buffer_list, buffername)
+      if target_buffer.nil?
+        message 'no match'
+        return
+      end
       @buffer_list.delete(target_buffer)
       switch_to_buffer(@buffer_list.last.name)
     end
