@@ -25,8 +25,8 @@ end
 
 assert('get_candidates Constant or class methods') do
   mode = Mrbmacs::RubyMode.new
-  assert_equal(['Mrbmacs::Mode::get_mode_by_filename', 'Mrbmacs::Mode::get_mode_by_name', 'Mrbmacs::Mode::get_mode_by_suffix'],
-    mode.get_candidates_a('Mrbmacs::Mode::get_'))
+  assert_equal(['Mrbmacs::ModeManager::get_mode_by_filename', 'Mrbmacs::ModeManager::get_mode_by_name', 'Mrbmacs::ModeManager::get_mode_by_suffix'],
+    mode.get_candidates_a('Mrbmacs::ModeManager::get_'))
 end
 
 assert('get_candidates Symbol') do
@@ -62,10 +62,10 @@ assert('get_candidates unknown') do
 end
 
 #      if line =~/^\s*(end|else|then|elsif|when|rescue|ensure|\}|\]|\)).*$/
-assert('is_end_of_block') do
+assert('end_of_block?') do
   mode = Mrbmacs::RubyMode.new
-  assert_equal true, mode.is_end_of_block('end')
-  assert_equal true, mode.is_end_of_block('}')
-  assert_equal true, mode.is_end_of_block(']')
-  assert_equal true, mode.is_end_of_block(')')
+  assert_equal true, mode.end_of_block?('end')
+  assert_equal true, mode.end_of_block?('}')
+  assert_equal true, mode.end_of_block?(']')
+  assert_equal true, mode.end_of_block?(')')
 end
