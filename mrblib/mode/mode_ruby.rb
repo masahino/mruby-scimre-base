@@ -13,7 +13,8 @@ module Mrbmacs
         :color_comment, # SCE_RB_COMMENTLINE 2
         :color_comment, # SCE_RB_POD 3
         :color_constant, # SCE_RB_NUMBER 4
-        :color_builtin, # SCE_RB_WORD 5
+        # :color_builtin, # SCE_RB_WORD 5
+        :color_keyword, # SCE_RB_WORD 5
         :color_string, # SCE_RB_STRING 6
         :color_string, # SCE_RB_CHARACTER 7
         :color_type, # SCE_RB_CLASSNAME 8
@@ -53,7 +54,7 @@ module Mrbmacs
       view_win.sci_get_indent * get_indent_level(view_win)
     end
 
-    def is_end_of_block(line)
+    def end_of_block?(line)
       if line =~ /^\s*(end|else|then|elsif|when|rescue|ensure|when|\}|\]|\)).*$/
         true
       else

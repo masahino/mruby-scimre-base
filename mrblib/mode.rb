@@ -119,9 +119,10 @@ module Mrbmacs
     end
 
     def config
+      # config
     end
 
-    def is_end_of_block(_line)
+    def end_of_block?(_line)
       false
     end
 
@@ -129,7 +130,7 @@ module Mrbmacs
       line = view_win.sci_line_from_position(view_win.sci_get_current_pos)
       level = view_win.sci_get_fold_level(line) & Scintilla::SC_FOLDLEVELNUMBERMASK - Scintilla::SC_FOLDLEVELBASE
       cur_line = view_win.sci_get_curline[0]
-      level -= 1 if level > 0 && is_end_of_block(cur_line) == true
+      level -= 1 if level > 0 && end_of_block?(cur_line) == true
       level
     end
 
@@ -168,14 +169,14 @@ module Mrbmacs
     end
 
     def on_style_needed(app, notify)
-      #      $stderr.puts "on_style_needed"
+      # "on_style_needed"
     end
   end
 
   # fundamental mode
   class FundamentalMode < Mode
     def initialize
-      super.initialize
+      super
       @name = 'fundamental'
       @lexer = 'indent'
       @style = [:color_foreground]

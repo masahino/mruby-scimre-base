@@ -44,7 +44,7 @@ module Mrbmacs
       view_win.sci_set_property('lexer.cpp.track.preprocessor', '0')
     end
 
-    def is_end_of_block(line)
+    def end_of_block?(line)
       if line =~ /^\s*}.*$/
         true
       else

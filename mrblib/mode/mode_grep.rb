@@ -24,20 +24,14 @@ module Mrbmacs
       @pattern = ''
     end
 
-    def pattern=(pattern)
-      @pattern = pattern
-    end
-
     def set_style(view_win, theme)
       super
       view_win.sci_set_property('fold.compact', '1')
     end
 
-    def is_end_of_block(_line)
+    def end_of_block?(_line)
       false
     end
-
-    def set_lexer(view_win) end
 
     def on_style_needed(app, scn)
       start_line = app.frame.view_win.sci_line_from_position(app.frame.view_win.sci_get_end_styled)

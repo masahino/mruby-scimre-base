@@ -33,7 +33,7 @@ module Mrbmacs
       ]
     end
 
-    def is_end_of_block(line)
+    def end_of_block?(_line)
       false
     end
   end

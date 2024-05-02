@@ -49,16 +49,12 @@ module Mrbmacs
       view_win.sci_set_property('fold.compact', '1')
     end
 
-    def is_end_of_block(line)
+    def end_of_block?(line)
       if line =~ /^\s*(end|else|fi|done|}).*$/
         true
       else
         false
       end
-    end
-
-    def set_lexer(view_win)
-      #      view_win.sci_set_lexer(Scintilla::SCLEX_CONTAINER)
     end
   end
 end

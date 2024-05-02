@@ -36,7 +36,7 @@ module Mrbmacs
       view_win.sci_set_property('fold.compact', '1')
     end
 
-    def is_end_of_block(line)
+    def end_of_block?(line)
       if line =~ /^\s*(end|else}).*$/
         true
       else
