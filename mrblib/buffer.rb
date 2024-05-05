@@ -18,7 +18,7 @@ module Mrbmacs
         @basename = ''
         @name = filename
         @directory = Dir.getwd
-        @mode = Mrbmacs::Mode.set_mode_by_filename(filename)
+        @mode = Mrbmacs::ModeManager.set_mode_by_filename(filename)
       else
         update_filename(filename)
       end
@@ -33,7 +33,7 @@ module Mrbmacs
       @name = File.basename(@filename)
       @basename = File.basename(@filename)
       @directory = File.dirname(@filename)
-      @mode = Mrbmacs::Mode.set_mode_by_filename(filename)
+      @mode = Mrbmacs::ModeManager.set_mode_by_filename(filename)
       @vcinfo = VC.new(@directory)
     end
   end
