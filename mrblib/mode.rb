@@ -32,12 +32,10 @@ module Mrbmacs
       view_win.sci_style_set_italic(Scintilla::STYLE_DEFAULT, false)
       view_win.sci_style_set_bold(Scintilla::STYLE_DEFAULT, false)
       view_win.sci_style_clear_all
-      @style.each_with_index do |s, i|
-        next if s.nil?
+      @style.each_with_index do |style_name, i|
+        next if style_name.nil? || style_name == :color_default
 
-        next if s == :color_default
-
-        color = theme.font_color[s]
+        color = theme.font_color[style_name]
         view_win.sci_style_set_fore(i, color[0])   # foreground
         view_win.sci_style_set_back(i, color[1])   # background
         view_win.sci_style_set_italic(i, color[2]) # italic
@@ -76,19 +74,15 @@ module Mrbmacs
     def get_completion_list(view_win)
       pos = view_win.sci_get_current_pos
       col = view_win.sci_get_column(pos)
-      if col > 0
-        line = view_win.sci_line_from_position(pos)
-        line_text = view_win.sci_get_line(line).chomp[0..col]
-        input = line_text.split(' ').pop
-        if input != nil && input.length > 0
-          candidates = get_candidates(input)
-          [input.length, candidates]
-        else
-          [0, []]
-        end
-      else
-        [0, []]
-      end
+      return [0, []] if col <= 0
+
+      line = view_win.sci_line_from_position(pos)
+      line_text = view_win.sci_get_line(line).chomp[0..col]
+      input = line_text.split(' ').pop
+      return [0, []] if input.nil? || input.length <= 0
+
+      candidates = get_candidates(input)
+      [input.length, candidates]
     end
 
     def add_keybind(key_str, command)
