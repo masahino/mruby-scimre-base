@@ -16,10 +16,9 @@ module Mrbmacs
     @@blue   = 0xd28b26
     @@cyan   = 0x98a12a
     @@green  = 0x009985
+
     def initialize
-      if respond_to?(:set_pallete)
-        set_pallete
-      end
+      set_pallete if respond_to?(:set_pallete)
       super
       @name = nil
     end

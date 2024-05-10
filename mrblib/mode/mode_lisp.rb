@@ -19,17 +19,17 @@ module Mrbmacs
       logorc2 logtest logbitp logcount integer length nil"
       @start_of_comment = '; '
       @style = [
-        :color_foreground, # define SCE_LISP_DEFAULT 0
+        :color_default, # define SCE_LISP_DEFAULT 0
         :color_comment, # define SCE_LISP_COMMENT 1
-        :color_foreground, # define SCE_LISP_NUMBER 2
+        :color_default, # define SCE_LISP_NUMBER 2
         :color_keyword, # define SCE_LISP_KEYWORD 3
         :color_keyword, # define SCE_LISP_KEYWORD_KW 4
         :color_function_name, # define SCE_LISP_SYMBOL 5
         :color_string, # define SCE_LISP_STRING 6
         :color_string, # define SCE_LISP_STRINGEOL 8
         :color_variable_name, # define SCE_LISP_IDENTIFIER 9
-        :color_foreground, # define SCE_LISP_OPERATOR 10
-        :color_foreground, # define SCE_LISP_SPECIAL 11
+        :color_default, # define SCE_LISP_OPERATOR 10
+        :color_default, # define SCE_LISP_SPECIAL 11
         :color_comment # define SCE_LISP_MULTI_COMMENT 12
       ]
     end

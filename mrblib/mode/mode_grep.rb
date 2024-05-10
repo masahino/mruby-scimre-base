@@ -13,7 +13,7 @@ module Mrbmacs
       @lexer = nil
       @keyword_list = ''
       @style = [
-        :color_foreground,    # 0: default
+        :color_default,    # 0: default
         :color_function_name, # 1: file path
         :color_keyword,       # 2: number
         :color_warning,       # 3: pattern

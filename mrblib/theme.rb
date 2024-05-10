@@ -35,7 +35,7 @@ module Mrbmacs
       @font_color = {
         # [fore, back, italic_flag, bold_flag ]
         # basic color
-        color_foreground: [@foreground_color, @background_color, false, false],
+        color_default: [@foreground_color, @background_color, false, false],
         color_builtin: [0x00ff00, @background_color, false, false],
         color_comment: [0xc0c0c0, @background_color, false, false],
         color_constant: [0x00ffff, @background_color, false, false],

@@ -7,15 +7,15 @@ module Mrbmacs
       @keyword_list = ''
       @start_of_comment = '# '
       @style = [
-        :color_foreground, # #define SCE_POV_DEFAULT 0
+        :color_default, # #define SCE_POV_DEFAULT 0
         :color_comment, # #define SCE_POV_COMMENT 1
         :color_comment, # #define SCE_POV_COMMENTLINE 2
-        :color_foreground, # #define SCE_POV_NUMBER 3
-        :color_foreground, # #define SCE_POV_OPERATOR 4
-        :color_foreground, # #define SCE_POV_IDENTIFIER 5
+        :color_default, # #define SCE_POV_NUMBER 3
+        :color_default, # #define SCE_POV_OPERATOR 4
+        :color_default, # #define SCE_POV_IDENTIFIER 5
         :color_string, # #define SCE_POV_STRING 6
         :color_string, # #define SCE_POV_STRINGEOL 7
-        :color_foreground, # #define SCE_POV_DIRECTIVE 8
+        :color_default, # #define SCE_POV_DIRECTIVE 8
         :color_foregrond, # #define SCE_POV_BADDIRECTIVE 9
         :color_keyword, # #define SCE_POV_WORD2 10
         :color_keyword, # #define SCE_POV_WORD3 11

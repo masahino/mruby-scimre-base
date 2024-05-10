@@ -26,7 +26,7 @@ module Mrbmacs
       @font_color = {
         # [fore, back, italic_flag, bold_flag ]
         # basic colors
-        color_foreground: [@@base0, @@base03, false, false],
+        color_default: [@@base0, @@base03, false, false],
         color_builtin: [@@green, @@base03, false, false],
         color_comment: [@@base01, @@base03, true, false],
         color_constant: [@@cyan, @@base03, false, false],

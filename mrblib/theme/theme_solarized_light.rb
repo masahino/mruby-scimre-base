@@ -9,7 +9,7 @@ module Mrbmacs
       @font_color = {
         #                                italic, bold
         # basic color
-        color_foreground: [@@base00, @@base3, false, false],
+        color_default: [@@base00, @@base3, false, false],
         color_builtin: [@@green, @@base3, false, false],
         color_comment: [@@base1, @@base3, true, false],
         color_constant: [@@cyan, @@base3, false, false],

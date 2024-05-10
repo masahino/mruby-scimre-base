@@ -9,7 +9,7 @@ module Mrbmacs
       @lexer = nil
       @keyword_list = ''
       @style = [
-        :color_foreground,
+        :color_default,
         :color_builtin,
         :color_comment,
         :color_constant,

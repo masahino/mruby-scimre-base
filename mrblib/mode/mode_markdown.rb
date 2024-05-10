@@ -5,8 +5,8 @@ module Mrbmacs
       @name = 'markdown'
       @lexer = 'markdown'
       @style = [
-        :color_foreground, # SCE_MARKDOWN_DEFAULT 0
-        :color_foreground, # SCE_MARKDOWN_LINE_BEGIN 1
+        :color_default, # SCE_MARKDOWN_DEFAULT 0
+        :color_default, # SCE_MARKDOWN_LINE_BEGIN 1
         :color_string, # SCE_MARKDOWN_STRONG1 2
         :color_string, # SCE_MARKDOWN_STRONG2 3
         :color_string, # SCE_MARKDOWN_EM1 4
@@ -21,11 +21,11 @@ module Mrbmacs
         :color_type,    # SCE_MARKDOWN_ULIST_ITEM 13
         :color_keyword, # SCE_MARKDOWN_OLIST_ITEM 14
         :color_string,  # SCE_MARKDOWN_BLOCKQUOTE 15
-        :color_foreground, # SCE_MARKDOWN_STRIKEOUT 16
-        :color_foreground, # SCE_MARKDOWN_HRULE 17
-        :color_foreground, # SCE_MARKDOWN_LINK 18
-        :color_foreground, # SCE_MARKDOWN_CODE 19
-        :color_foreground, # SCE_MARKDOWN_CODE2 20
+        :color_default, # SCE_MARKDOWN_STRIKEOUT 16
+        :color_default, # SCE_MARKDOWN_HRULE 17
+        :color_default, # SCE_MARKDOWN_LINK 18
+        :color_default, # SCE_MARKDOWN_CODE 19
+        :color_default, # SCE_MARKDOWN_CODE2 20
         :color_other_emphasized # SCE_MARKDOWN_CODEBK 21},
       ]
     end

@@ -34,51 +34,51 @@ module Mrbmacs
       given when default say state UNITCHECK"
       @start_of_comment = '# '
       @style = [
-        :color_foreground, # define SCE_PL_DEFAULT 0
+        :color_default, # define SCE_PL_DEFAULT 0
         :color_warning, # define SCE_PL_ERROR 1
         :color_comment, # define SCE_PL_COMMENTLINE 2
         :color_comment, # define SCE_PL_POD 3
-        :color_foreground, # define SCE_PL_NUMBER 4
+        :color_default, # define SCE_PL_NUMBER 4
         :color_keyword, # define SCE_PL_WORD 5
         :color_string, # define SCE_PL_STRING 6
         :color_string, # define SCE_PL_CHARACTER 7
-        :color_foreground, # define SCE_PL_PUNCTUATION 8
+        :color_default, # define SCE_PL_PUNCTUATION 8
         :color_preprocessor, # define SCE_PL_PREPROCESSOR 9
-        :color_foreground, # define SCE_PL_OPERATOR 10
-        :color_foreground, # define SCE_PL_IDENTIFIER 11
-        :color_foreground, # define SCE_PL_SCALAR 12
-        :color_foreground, # #define SCE_PL_ARRAY 13
-        :color_foreground, # #define SCE_PL_HASH 14
-        :color_foreground, # #define SCE_PL_SYMBOLTABLE 15
-        :color_foreground, # #define SCE_PL_VARIABLE_INDEXER 16
-        :color_foreground, # #define SCE_PL_REGEX 17
-        :color_foreground, # #define SCE_PL_REGSUBST 18
-        :color_foreground, # #define SCE_PL_LONGQUOTE 19
-        :color_foreground, # #define SCE_PL_BACKTICKS 20
-        :color_foreground, # #define SCE_PL_DATASECTION 21
-        :color_foreground, # #define SCE_PL_HERE_DELIM 22
-        :color_foreground, # #define SCE_PL_HERE_Q 23
-        :color_foreground, # #define SCE_PL_HERE_QQ 24
-        :color_foreground, # #define SCE_PL_HERE_QX 25
-        :color_foreground, # #define SCE_PL_STRING_Q 26
-        :color_foreground, # #define SCE_PL_STRING_QQ 27
-        :color_foreground, # #define SCE_PL_STRING_QX 28
-        :color_foreground, # #define SCE_PL_STRING_QR 29
-        :color_foreground, # #define SCE_PL_STRING_QW 30
-        :color_foreground, # #define SCE_PL_POD_VERB 31
-        :color_foreground, # #define SCE_PL_SUB_PROTOTYPE 40
-        :color_foreground, # #define SCE_PL_FORMAT_IDENT 41
-        :color_foreground, # #define SCE_PL_FORMAT 42
-        :color_foreground, # #define SCE_PL_STRING_VAR 43
-        :color_foreground, # #define SCE_PL_XLAT 44
-        :color_foreground, # #define SCE_PL_REGEX_VAR 54
-        :color_foreground, # #define SCE_PL_REGSUBST_VAR 55
-        :color_foreground, # #define SCE_PL_BACKTICKS_VAR 57
-        :color_foreground, # #define SCE_PL_HERE_QQ_VAR 61
-        :color_foreground, # #define SCE_PL_HERE_QX_VAR 62
-        :color_foreground, # #define SCE_PL_STRING_QQ_VAR 64
-        :color_foreground, # #define SCE_PL_STRING_QX_VAR 65
-        :color_foreground  # #define SCE_PL_STRING_QR_VAR 66
+        :color_default, # define SCE_PL_OPERATOR 10
+        :color_default, # define SCE_PL_IDENTIFIER 11
+        :color_default, # define SCE_PL_SCALAR 12
+        :color_default, # #define SCE_PL_ARRAY 13
+        :color_default, # #define SCE_PL_HASH 14
+        :color_default, # #define SCE_PL_SYMBOLTABLE 15
+        :color_default, # #define SCE_PL_VARIABLE_INDEXER 16
+        :color_default, # #define SCE_PL_REGEX 17
+        :color_default, # #define SCE_PL_REGSUBST 18
+        :color_default, # #define SCE_PL_LONGQUOTE 19
+        :color_default, # #define SCE_PL_BACKTICKS 20
+        :color_default, # #define SCE_PL_DATASECTION 21
+        :color_default, # #define SCE_PL_HERE_DELIM 22
+        :color_default, # #define SCE_PL_HERE_Q 23
+        :color_default, # #define SCE_PL_HERE_QQ 24
+        :color_default, # #define SCE_PL_HERE_QX 25
+        :color_default, # #define SCE_PL_STRING_Q 26
+        :color_default, # #define SCE_PL_STRING_QQ 27
+        :color_default, # #define SCE_PL_STRING_QX 28
+        :color_default, # #define SCE_PL_STRING_QR 29
+        :color_default, # #define SCE_PL_STRING_QW 30
+        :color_default, # #define SCE_PL_POD_VERB 31
+        :color_default, # #define SCE_PL_SUB_PROTOTYPE 40
+        :color_default, # #define SCE_PL_FORMAT_IDENT 41
+        :color_default, # #define SCE_PL_FORMAT 42
+        :color_default, # #define SCE_PL_STRING_VAR 43
+        :color_default, # #define SCE_PL_XLAT 44
+        :color_default, # #define SCE_PL_REGEX_VAR 54
+        :color_default, # #define SCE_PL_REGSUBST_VAR 55
+        :color_default, # #define SCE_PL_BACKTICKS_VAR 57
+        :color_default, # #define SCE_PL_HERE_QQ_VAR 61
+        :color_default, # #define SCE_PL_HERE_QX_VAR 62
+        :color_default, # #define SCE_PL_STRING_QQ_VAR 64
+        :color_default, # #define SCE_PL_STRING_QX_VAR 65
+        :color_default  # #define SCE_PL_STRING_QR_VAR 66
       ]
     end
 

@@ -8,7 +8,7 @@ module Mrbmacs
     def initialize
       @name = 'default'
       @keyword_list = ''
-      @style = [:color_foreground]
+      @style = [:color_default]
       @indent = 2
       @use_tab = false
       @tab_indent = 0
@@ -27,8 +27,15 @@ module Mrbmacs
     end
 
     def apply_theme(view_win, theme)
+      view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, theme.foreground_color)
+      view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, theme.background_color)
+      view_win.sci_style_set_italic(Scintilla::STYLE_DEFAULT, false)
+      view_win.sci_style_set_bold(Scintilla::STYLE_DEFAULT, false)
+      view_win.sci_style_clear_all
       @style.each_with_index do |s, i|
         next if s.nil?
+
+        next if s == :color_default
 
         color = theme.font_color[s]
         view_win.sci_style_set_fore(i, color[0])   # foreground
@@ -99,7 +106,7 @@ module Mrbmacs
       super
       @name = 'fundamental'
       @lexer = 'indent'
-      @style = [:color_foreground]
+      @style = [:color_default]
     end
   end
 end

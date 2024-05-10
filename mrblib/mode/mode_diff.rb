@@ -6,10 +6,10 @@ module Mrbmacs
       @lexer = 'diff'
       @keyword_list = ''
       @style = [
-        :color_foreground, # define SCE_DIFF_DEFAULT 0
+        :color_default, # define SCE_DIFF_DEFAULT 0
         :color_comment, # define SCE_DIFF_COMMENT 1
-        :color_foreground, # define SCE_DIFF_COMMAND 2
-        :color_foreground, # define SCE_DIFF_HEADER 3
+        :color_default, # define SCE_DIFF_COMMAND 2
+        :color_default, # define SCE_DIFF_HEADER 3
         :color_builtin, # define SCE_DIFF_POSITION 4
         :color_variable_name, # define SCE_DIFF_DELETED 5
         :color_string, # define SCE_DIFF_ADDED 6
