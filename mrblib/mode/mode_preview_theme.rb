@@ -4,7 +4,7 @@ module Mrbmacs
     attr_reader :style
 
     def initialize
-      super.initialize
+      super
       @name = 'previewtheme'
       @lexer = nil
       @keyword_list = ''

@@ -1,25 +1,24 @@
 module Mrbmacs
   class RMode < Mode
     def initialize
-      super.initialize
+      super
       @name = 'r'
       @lexer = 'r'
       @keyword_list = 'if else repeat while function for in next break TRUE FALSE NULL NA Inf NaN'
       @start_of_comment = '# '
-      @style = [
-        :color_default, # define SCE_R_DEFAULT 0
-        :color_comment, # define SCE_R_COMMENT 1
-        :color_builtin, # define SCE_R_KWORD 2
-        :color_keyword, # define SCE_R_BASEKWORD 3
-        :color_keyword, # define SCE_R_OTHERKWORD 4
-        :color_default, # define SCE_R_NUMBER 5
-        :color_string, # define SCE_R_STRING 6
-        :color_string, # define SCE_R_STRING2 7
-        :color_default, # define SCE_R_OPERATOR 8
-        :color_default, # define SCE_R_IDENTIFIER 9
-        :color_default, # define SCE_R_INFIX 10
-        :color_default # define SCE_R_INFIXEOL 11
-      ]
+
+      @style[Scintilla::SCE_R_DEFAULT] = :color_default
+      @style[Scintilla::SCE_R_COMMENT] = :color_comment
+      @style[Scintilla::SCE_R_KWORD] = :color_builtin
+      @style[Scintilla::SCE_R_BASEKWORD] = :color_keyword
+      @style[Scintilla::SCE_R_OTHERKWORD] = :color_keyword
+      @style[Scintilla::SCE_R_NUMBER] = :color_default
+      @style[Scintilla::SCE_R_STRING] = :color_string
+      @style[Scintilla::SCE_R_STRING2] = :color_string
+      @style[Scintilla::SCE_R_OPERATOR] = :color_default
+      @style[Scintilla::SCE_R_IDENTIFIER] = :color_default
+      @style[Scintilla::SCE_R_INFIX] = :color_default
+      @style[Scintilla::SCE_R_INFIXEOL] = :color_default
     end
 
     def set_style(view_win, theme)

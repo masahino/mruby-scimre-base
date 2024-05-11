@@ -8,12 +8,12 @@ module Mrbmacs
     SCE_STYLE_NUMBER = 2
     SCE_STYLE_PATTERN = 3
     def initialize
-      super.initialize
+      super
       @name = 'grep'
       @lexer = nil
       @keyword_list = ''
       @style = [
-        :color_default,    # 0: default
+        :color_default,       # 0: default
         :color_function_name, # 1: file path
         :color_keyword,       # 2: number
         :color_warning,       # 3: pattern

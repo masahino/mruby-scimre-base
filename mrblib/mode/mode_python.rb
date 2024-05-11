@@ -1,7 +1,7 @@
 module Mrbmacs
   class PythonMode < Mode
     def initialize
-      super.initialize
+      super
       @indent = 4
       @name = 'python'
       @lexer = 'python'
@@ -9,28 +9,27 @@ module Mrbmacs
       @keyword_list = "and as assert break class continue def del elif else except exec finally for from \
       global if import in is lambda not or pass print raise return try while with yield"
       @start_of_comment = '# '
-      @style = [
-        :color_default, # SCE_P_DEFAULT 0
-        :color_comment, # SCE_P_COMMENT 1
-        :color_default, # SCE_P_NUMBER 2
-        :color_string, # SCE_P_STRING 3
-        :color_string, # SCE_P_CHARACTER 4
-        :color_keyword, # SCE_P_WORD 5
-        :color_default, # SCE_P_TRIPLE 6
-        :color_default, # SCE_P_TRIPLEDOUBLE 7
-        :color_type, # SCE_P_CLASSNAME 8
-        :color_function_name, # SCE_P_DEFNAME 9
-        :color_default, # SCE_P_OPERATOR 10
-        :color_keyword, # SCE_P_IDENTIFIER 11
-        :color_comment, # SCE_P_COMMENTBLOCK 12
-        :color_default, # SCE_P_STRINGEOL 13
-        :color_keyword, # SCE_P_WORD2 14
-        :color_default, # SCE_P_DECORATOR 15
-        :color_string, # SCE_P_FSTRING 16
-        :color_default, # SCE_P_FCHARACTER 17
-        :color_default, # SCE_P_FTRIPLE 18
-        :color_default # SCE_P_FTRIPLEDOUBLE 19
-      ]
+
+      @style[Scintilla::SCE_P_DEFAULT] = :color_default
+      @style[Scintilla::SCE_P_COMMENT] = :color_comment
+      @style[Scintilla::SCE_P_NUMBER] = :color_default
+      @style[Scintilla::SCE_P_STRING] = :color_string
+      @style[Scintilla::SCE_P_CHARACTER] = :color_string
+      @style[Scintilla::SCE_P_WORD] = :color_keyword
+      @style[Scintilla::SCE_P_TRIPLE] = :color_default
+      @style[Scintilla::SCE_P_TRIPLEDOUBLE] = :color_default
+      @style[Scintilla::SCE_P_CLASSNAME] = :color_type
+      @style[Scintilla::SCE_P_DEFNAME] = :color_function_name
+      @style[Scintilla::SCE_P_OPERATOR] = :color_default
+      @style[Scintilla::SCE_P_IDENTIFIER] = :color_keyword
+      @style[Scintilla::SCE_P_COMMENTBLOCK] = :color_comment
+      @style[Scintilla::SCE_P_STRINGEOL] = :color_default
+      @style[Scintilla::SCE_P_WORD2] = :color_keyword
+      @style[Scintilla::SCE_P_DECORATOR] = :color_default
+      @style[Scintilla::SCE_P_FSTRING] = :color_string
+      @style[Scintilla::SCE_P_FCHARACTER] = :color_default
+      @style[Scintilla::SCE_P_FTRIPLE] = :color_default
+      @style[Scintilla::SCE_P_FTRIPLEDOUBLE] = :color_default
     end
 
     def end_of_block?(_line)

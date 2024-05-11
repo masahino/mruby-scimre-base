@@ -18,20 +18,19 @@ module Mrbmacs
       random logand logior logxor lognot bignums logeqv lognand lognor \
       logorc2 logtest logbitp logcount integer length nil"
       @start_of_comment = '; '
-      @style = [
-        :color_default, # define SCE_LISP_DEFAULT 0
-        :color_comment, # define SCE_LISP_COMMENT 1
-        :color_default, # define SCE_LISP_NUMBER 2
-        :color_keyword, # define SCE_LISP_KEYWORD 3
-        :color_keyword, # define SCE_LISP_KEYWORD_KW 4
-        :color_function_name, # define SCE_LISP_SYMBOL 5
-        :color_string, # define SCE_LISP_STRING 6
-        :color_string, # define SCE_LISP_STRINGEOL 8
-        :color_variable_name, # define SCE_LISP_IDENTIFIER 9
-        :color_default, # define SCE_LISP_OPERATOR 10
-        :color_default, # define SCE_LISP_SPECIAL 11
-        :color_comment # define SCE_LISP_MULTI_COMMENT 12
-      ]
+
+      @style[Scintilla::SCE_LISP_DEFAULT] = :color_default
+      @style[Scintilla::SCE_LISP_COMMENT] = :color_comment
+      @style[Scintilla::SCE_LISP_NUMBER] = :color_default
+      @style[Scintilla::SCE_LISP_KEYWORD] = :color_keyword
+      @style[Scintilla::SCE_LISP_KEYWORD_KW] = :color_keyword
+      @style[Scintilla::SCE_LISP_SYMBOL] = :color_function_name
+      @style[Scintilla::SCE_LISP_STRING] = :color_string
+      @style[Scintilla::SCE_LISP_STRINGEOL] = :color_string
+      @style[Scintilla::SCE_LISP_IDENTIFIER] = :color_variable_name
+      @style[Scintilla::SCE_LISP_OPERATOR] = :color_default
+      @style[Scintilla::SCE_LISP_SPECIAL] = :color_default
+      @style[Scintilla::SCE_LISP_MULTI_COMMENT] = :color_comment
     end
 
     def set_style(view_win, theme)

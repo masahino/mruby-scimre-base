@@ -1,7 +1,7 @@
 module Mrbmacs
   class PerlMode < Mode
     def initialize
-      super.initialize
+      super
       @name = 'perl'
       @lexer = 'perl'
       @keyword_list = "NULL __FILE__ __LINE__ __PACKAGE__ __DATA__ __END__ AUTOLOAD \
@@ -33,53 +33,52 @@ module Mrbmacs
       xor \
       given when default say state UNITCHECK"
       @start_of_comment = '# '
-      @style = [
-        :color_default, # define SCE_PL_DEFAULT 0
-        :color_warning, # define SCE_PL_ERROR 1
-        :color_comment, # define SCE_PL_COMMENTLINE 2
-        :color_comment, # define SCE_PL_POD 3
-        :color_default, # define SCE_PL_NUMBER 4
-        :color_keyword, # define SCE_PL_WORD 5
-        :color_string, # define SCE_PL_STRING 6
-        :color_string, # define SCE_PL_CHARACTER 7
-        :color_default, # define SCE_PL_PUNCTUATION 8
-        :color_preprocessor, # define SCE_PL_PREPROCESSOR 9
-        :color_default, # define SCE_PL_OPERATOR 10
-        :color_default, # define SCE_PL_IDENTIFIER 11
-        :color_default, # define SCE_PL_SCALAR 12
-        :color_default, # #define SCE_PL_ARRAY 13
-        :color_default, # #define SCE_PL_HASH 14
-        :color_default, # #define SCE_PL_SYMBOLTABLE 15
-        :color_default, # #define SCE_PL_VARIABLE_INDEXER 16
-        :color_default, # #define SCE_PL_REGEX 17
-        :color_default, # #define SCE_PL_REGSUBST 18
-        :color_default, # #define SCE_PL_LONGQUOTE 19
-        :color_default, # #define SCE_PL_BACKTICKS 20
-        :color_default, # #define SCE_PL_DATASECTION 21
-        :color_default, # #define SCE_PL_HERE_DELIM 22
-        :color_default, # #define SCE_PL_HERE_Q 23
-        :color_default, # #define SCE_PL_HERE_QQ 24
-        :color_default, # #define SCE_PL_HERE_QX 25
-        :color_default, # #define SCE_PL_STRING_Q 26
-        :color_default, # #define SCE_PL_STRING_QQ 27
-        :color_default, # #define SCE_PL_STRING_QX 28
-        :color_default, # #define SCE_PL_STRING_QR 29
-        :color_default, # #define SCE_PL_STRING_QW 30
-        :color_default, # #define SCE_PL_POD_VERB 31
-        :color_default, # #define SCE_PL_SUB_PROTOTYPE 40
-        :color_default, # #define SCE_PL_FORMAT_IDENT 41
-        :color_default, # #define SCE_PL_FORMAT 42
-        :color_default, # #define SCE_PL_STRING_VAR 43
-        :color_default, # #define SCE_PL_XLAT 44
-        :color_default, # #define SCE_PL_REGEX_VAR 54
-        :color_default, # #define SCE_PL_REGSUBST_VAR 55
-        :color_default, # #define SCE_PL_BACKTICKS_VAR 57
-        :color_default, # #define SCE_PL_HERE_QQ_VAR 61
-        :color_default, # #define SCE_PL_HERE_QX_VAR 62
-        :color_default, # #define SCE_PL_STRING_QQ_VAR 64
-        :color_default, # #define SCE_PL_STRING_QX_VAR 65
-        :color_default  # #define SCE_PL_STRING_QR_VAR 66
-      ]
+
+      @style[Scintilla::SCE_PL_DEFAULT] = :color_default
+      @style[Scintilla::SCE_PL_ERROR] = :color_warning
+      @style[Scintilla::SCE_PL_COMMENTLINE] = :color_comment
+      @style[Scintilla::SCE_PL_POD] = :color_comment
+      @style[Scintilla::SCE_PL_NUMBER] = :color_default
+      @style[Scintilla::SCE_PL_WORD] = :color_keyword
+      @style[Scintilla::SCE_PL_STRING] = :color_string
+      @style[Scintilla::SCE_PL_CHARACTER] = :color_string
+      @style[Scintilla::SCE_PL_PUNCTUATION] = :color_default
+      @style[Scintilla::SCE_PL_PREPROCESSOR] = :color_preprocessor
+      @style[Scintilla::SCE_PL_OPERATOR] = :color_default
+      @style[Scintilla::SCE_PL_IDENTIFIER] = :color_default
+      @style[Scintilla::SCE_PL_SCALAR] = :color_default
+      @style[Scintilla::SCE_PL_ARRAY] = :color_default
+      @style[Scintilla::SCE_PL_HASH] = :color_default
+      @style[Scintilla::SCE_PL_SYMBOLTABLE] = :color_default
+      @style[Scintilla::SCE_PL_VARIABLE_INDEXER] = :color_default
+      @style[Scintilla::SCE_PL_REGEX] = :color_default
+      @style[Scintilla::SCE_PL_REGSUBST] = :color_default
+      @style[Scintilla::SCE_PL_LONGQUOTE] = :color_default
+      @style[Scintilla::SCE_PL_BACKTICKS] = :color_default
+      @style[Scintilla::SCE_PL_DATASECTION] = :color_default
+      @style[Scintilla::SCE_PL_HERE_DELIM] = :color_default
+      @style[Scintilla::SCE_PL_HERE_Q] = :color_default
+      @style[Scintilla::SCE_PL_HERE_QQ] = :color_default
+      @style[Scintilla::SCE_PL_HERE_QX] = :color_default
+      @style[Scintilla::SCE_PL_STRING_Q] = :color_default
+      @style[Scintilla::SCE_PL_STRING_QQ] = :color_default
+      @style[Scintilla::SCE_PL_STRING_QX] = :color_default
+      @style[Scintilla::SCE_PL_STRING_QR] = :color_default
+      @style[Scintilla::SCE_PL_STRING_QW] = :color_default
+      @style[Scintilla::SCE_PL_POD_VERB] = :color_default
+      @style[Scintilla::SCE_PL_SUB_PROTOTYPE] = :color_default
+      @style[Scintilla::SCE_PL_FORMAT_IDENT] = :color_default
+      @style[Scintilla::SCE_PL_FORMAT] = :color_default
+      @style[Scintilla::SCE_PL_STRING_VAR] = :color_default
+      @style[Scintilla::SCE_PL_XLAT] = :color_default
+      @style[Scintilla::SCE_PL_REGEX_VAR] = :color_default
+      @style[Scintilla::SCE_PL_REGSUBST_VAR] = :color_default
+      @style[Scintilla::SCE_PL_BACKTICKS_VAR] = :color_default
+      @style[Scintilla::SCE_PL_HERE_QQ_VAR] = :color_default
+      @style[Scintilla::SCE_PL_HERE_QX_VAR] = :color_default
+      @style[Scintilla::SCE_PL_STRING_QQ_VAR] = :color_default
+      @style[Scintilla::SCE_PL_STRING_QX_VAR] = :color_default
+      @style[Scintilla::SCE_PL_STRING_QR_VAR] = :color_default
     end
 
     def set_style(view_win, theme)

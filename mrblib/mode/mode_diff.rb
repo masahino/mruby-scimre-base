@@ -5,20 +5,18 @@ module Mrbmacs
       @name = 'diff'
       @lexer = 'diff'
       @keyword_list = ''
-      @style = [
-        :color_default, # define SCE_DIFF_DEFAULT 0
-        :color_comment, # define SCE_DIFF_COMMENT 1
-        :color_default, # define SCE_DIFF_COMMAND 2
-        :color_default, # define SCE_DIFF_HEADER 3
-        :color_builtin, # define SCE_DIFF_POSITION 4
-        :color_variable_name, # define SCE_DIFF_DELETED 5
-        :color_string, # define SCE_DIFF_ADDED 6
-        :color_keyword, # define SCE_DIFF_CHANGED 7
-        :color_string, # define SCE_DIFF_PATCH_ADD 8
-        :color_variable_name, # define SCE_DIFF_PATCH_DELETE 9
-        :color_variable_name, # define SCE_DIFF_REMOVED_PATCH_ADD 10
-        :color_variable_name # define SCE_DIFF_REMOVED_PATCH_DELETE 11
-      ]
+      @style[Scintilla::SCE_DIFF_DEFAULT] = :color_default
+      @style[Scintilla::SCE_DIFF_COMMENT] = :color_comment
+      @style[Scintilla::SCE_DIFF_COMMAND] = :color_default
+      @style[Scintilla::SCE_DIFF_HEADER] = :color_default
+      @style[Scintilla::SCE_DIFF_POSITION] = :color_builtin
+      @style[Scintilla::SCE_DIFF_DELETED] = :color_variable_name
+      @style[Scintilla::SCE_DIFF_ADDED] = :color_string
+      @style[Scintilla::SCE_DIFF_CHANGED] = :color_keyword
+      @style[Scintilla::SCE_DIFF_PATCH_ADD] = :color_string
+      @style[Scintilla::SCE_DIFF_PATCH_DELETE] = :color_variable_name
+      @style[Scintilla::SCE_DIFF_REMOVED_PATCH_ADD] = :color_variable_name
+      @style[Scintilla::SCE_DIFF_REMOVED_PATCH_DELETE] = :color_variable_name
     end
 
     def set_style(view_win, theme)

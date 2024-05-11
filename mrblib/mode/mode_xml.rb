@@ -1,7 +1,7 @@
 module Mrbmacs
   class XmlMode < Mode
     def initialize
-      super.initialize
+      super
       @name = 'xml'
       @lexer = 'xml'
       @keyword_list = ''

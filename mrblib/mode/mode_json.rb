@@ -1,25 +1,24 @@
 module Mrbmacs
   class JsonMode < Mode
     def initialize
-      super.initialize
+      super
       @name = 'json'
       @lexer = 'json'
-      @style = [
-        :color_default, # define SCE_JSON_DEFAULT 0
-        :color_constant, # define SCE_JSON_NUMBER 1
-        :color_string, # define SCE_JSON_STRING 2
-        :color_string, # define SCE_JSON_STRINGEOL 3
-        :color_function_name, # define SCE_JSON_PROPERTYNAME 4
-        :color_string, # define SCE_JSON_ESCAPESEQUENCE 5
-        :color_comment, # #define SCE_JSON_LINECOMMENT 6
-        :color_comment, # #define SCE_JSON_BLOCKCOMMENT 7
-        :color_default, # define SCE_JSON_OPERATOR 8
-        :color_constant, # define SCE_JSON_URI 9
-        :color_constant, # define SCE_JSON_COMPACTIRI 10
-        :color_keyword, # define SCE_JSON_KEYWORD 11
-        :color_keyword, # define SCE_JSON_LDKEYWORD 12
-        :color_warning # define SCE_JSON_ERROR 13
-      ]
+
+      @style[Scintilla::SCE_JSON_DEFAULT] = :color_default
+      @style[Scintilla::SCE_JSON_NUMBER] = :color_constant
+      @style[Scintilla::SCE_JSON_STRING] = :color_string
+      @style[Scintilla::SCE_JSON_STRINGEOL] = :color_string
+      @style[Scintilla::SCE_JSON_PROPERTYNAME] = :color_function_name
+      @style[Scintilla::SCE_JSON_ESCAPESEQUENCE] = :color_string
+      @style[Scintilla::SCE_JSON_LINECOMMENT] = :color_comment
+      @style[Scintilla::SCE_JSON_BLOCKCOMMENT] = :color_comment
+      @style[Scintilla::SCE_JSON_OPERATOR] = :color_default
+      @style[Scintilla::SCE_JSON_URI] = :color_constant
+      @style[Scintilla::SCE_JSON_COMPACTIRI] = :color_constant
+      @style[Scintilla::SCE_JSON_KEYWORD] = :color_keyword
+      @style[Scintilla::SCE_JSON_LDKEYWORD] = :color_keyword
+      @style[Scintilla::SCE_JSON_ERROR] = :color_warning
     end
 
     def end_of_block?(line)

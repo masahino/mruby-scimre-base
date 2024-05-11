@@ -6,18 +6,14 @@ module Mrbmacs
       @lexer = 'make'
       @keyword_list = ''
       @start_of_comment = '# '
-      @style = [
-        :color_default, # define SCE_MAKE_DEFAULT 0
-        :color_comment, # define SCE_MAKE_COMMENT 1
-        :color_preprocessor, # define SCE_MAKE_PREPROCESSOR 2
-        :color_builtin, # define SCE_MAKE_IDENTIFIER 3
-        :color_default, # define SCE_MAKE_OPERATOR 4
-        :color_function_name, # define SCE_MAKE_TARGET 5
-        :color_default, # 6
-        :color_default, # 7
-        :color_default, # 8
-        :color_default # define SCE_MAKE_IDEOL 9
-      ]
+
+      @style[Scintilla::SCE_MAKE_DEFAULT] = :color_default
+      @style[Scintilla::SCE_MAKE_COMMENT] = :color_comment
+      @style[Scintilla::SCE_MAKE_PREPROCESSOR] = :color_preprocessor
+      @style[Scintilla::SCE_MAKE_IDENTIFIER] = :color_builtin
+      @style[Scintilla::SCE_MAKE_OPERATOR] = :color_default
+      @style[Scintilla::SCE_MAKE_TARGET] = :color_function_name
+      @style[Scintilla::SCE_MAKE_IDEOL] = :color_default
     end
 
     def set_style(view_win, theme)

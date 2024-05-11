@@ -1,26 +1,25 @@
 module Mrbmacs
   class LatexMode < Mode
     def initialize
-      super.initialize
+      super
       @name = 'latex'
       @lexer = 'latex'
       @keyword_list = ''
       @start_of_comment = '% '
-      @style = [
-        :color_default, # define SCE_L_DEFAULT 0
-        :color_builtin, # define SCE_L_COMMAND 1
-        :color_variable_name, # define SCE_L_TAG 2
-        :color_default, # define SCE_L_MATH 3
-        :color_comment, # define SCE_L_COMMENT 4
-        :color_variable_name, # define SCE_L_TAG2 5
-        :color_default, # define SCE_L_MATH2 6
-        :color_comment, # define SCE_L_COMMENT2 7
-        :color_default, # define SCE_L_VERBATIM 8
-        :color_default, # define SCE_L_SHORTCMD 9
-        :color_default, # define SCE_L_SPECIAL 10
-        :color_default, # define SCE_L_CMDOPT 11
-        :color_warning # define SCE_L_ERROR 12
-      ]
+
+      @style[Scintilla::SCE_L_DEFAULT] = :color_default
+      @style[Scintilla::SCE_L_COMMAND] = :color_builtin
+      @style[Scintilla::SCE_L_TAG] = :color_variable_name
+      @style[Scintilla::SCE_L_MATH] = :color_default
+      @style[Scintilla::SCE_L_COMMENT] = :color_comment
+      @style[Scintilla::SCE_L_TAG2] = :color_variable_name
+      @style[Scintilla::SCE_L_MATH2] = :color_default
+      @style[Scintilla::SCE_L_COMMENT2] = :color_comment
+      @style[Scintilla::SCE_L_VERBATIM] = :color_default
+      @style[Scintilla::SCE_L_SHORTCMD] = :color_default
+      @style[Scintilla::SCE_L_SPECIAL] = :color_default
+      @style[Scintilla::SCE_L_CMDOPT] = :color_default
+      @style[Scintilla::SCE_L_ERROR] = :color_warning
     end
 
     def set_style(view_win, theme)

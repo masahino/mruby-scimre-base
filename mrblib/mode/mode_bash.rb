@@ -1,27 +1,26 @@
 module Mrbmacs
+  # Bash mode
   class BashMode < Mode
     def initialize
-      super.initialize
+      super
       @name = 'bash'
       @lexer = 'bash'
       @keyword_list = ''
       @start_of_comment = '# '
-      @style = [
-        :color_default, # define SCE_SH_DEFAULT 0
-        :color_warning, # define SCE_SH_ERROR 1
-        :color_comment, # define SCE_SH_COMMENTLINE 2
-        :color_default, # define SCE_SH_NUMBER 3
-        :color_keyword, # define SCE_SH_WORD 4
-        :color_string, # define SCE_SH_STRING 5
-        :color_default, # define SCE_SH_CHARACTER 6
-        :color_default, # define SCE_SH_OPERATOR 7
-        :color_default, # define SCE_SH_IDENTIFIER 8
-        :color_default, # define SCE_SH_SCALAR 9
-        :color_default, # define SCE_SH_PARAM 10
-        :color_default, # define SCE_SH_BACKTICKS 11
-        :color_default, # define SCE_SH_HERE_DELIM 12
-        :color_default # define SCE_SH_HERE_Q 13
-      ]
+      @style[Scintilla::SCE_SH_DEFAULT] = :color_default
+      @style[Scintilla::SCE_SH_ERROR] = :color_warning
+      @style[Scintilla::SCE_SH_COMMENTLINE] = :color_comment
+      @style[Scintilla::SCE_SH_NUMBER] = :color_default
+      @style[Scintilla::SCE_SH_WORD] = :color_keyword
+      @style[Scintilla::SCE_SH_STRING] = :color_string
+      @style[Scintilla::SCE_SH_CHARACTER] = :color_default
+      @style[Scintilla::SCE_SH_OPERATOR] = :color_default
+      @style[Scintilla::SCE_SH_IDENTIFIER] = :color_default
+      @style[Scintilla::SCE_SH_SCALAR] = :color_default
+      @style[Scintilla::SCE_SH_PARAM] = :color_default
+      @style[Scintilla::SCE_SH_BACKTICKS] = :color_default
+      @style[Scintilla::SCE_SH_HERE_DELIM] = :color_default
+      @style[Scintilla::SCE_SH_HERE_Q] = :color_default
     end
 
     def set_style(view_win, theme)

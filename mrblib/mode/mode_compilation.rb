@@ -6,12 +6,12 @@ module Mrbmacs
     SCE_STYLE_FILE = 2
     SCE_STYLE_NUMBER = 3
     def initialize
-      super.initialize
+      super
       @name = 'compilation'
       @lexer = nil
       @keyword_list = ''
       @style = [
-        :color_default,    # 0: default
+        :color_default,       # 0: default
         :color_warning,       # 1: error message
         :color_function_name, # 2: file path
         :color_keyword,       # 3: number

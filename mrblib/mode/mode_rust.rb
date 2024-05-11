@@ -1,7 +1,7 @@
 module Mrbmacs
   class RustMode < Mode
     def initialize
-      super.initialize
+      super
       @name = 'rust'
       @lexer = 'rust'
       @indent = 4
@@ -11,32 +11,31 @@ module Mrbmacs
       move mut ref box do catch default"
       @start_of_comment = '// '
       @build_command = 'cargo build'
-      @style = [
-        :color_default, # define SCE_RUST_DEFAULT 0
-        :color_comment, # define SCE_RUST_COMMENTBLOCK 1
-        :color_comment, # define SCE_RUST_COMMENTLINE 2
-        :color_comment, # define SCE_RUST_COMMENTBLOCKDOC 3
-        :color_comment, # define SCE_RUST_COMMENTLINEDOC 4
-        :color_default, # #define SCE_RUST_NUMBER 5
-        :color_keyword, # define SCE_RUST_WORD 6
-        :color_keyword, # define SCE_RUST_WORD2 7
-        :color_keyword, # define SCE_RUST_WORD3 8
-        :color_keyword, # define SCE_RUST_WORD4 9
-        :color_keyword, # define SCE_RUST_WORD5 10
-        :color_keyword, # define SCE_RUST_WORD6 11
-        :color_keyword, # define SCE_RUST_WORD7 12
-        :color_string, # define SCE_RUST_STRING 13
-        :color_string, # define SCE_RUST_STRINGR 14
-        :color_default, # define SCE_RUST_CHARACTER 15
-        :color_default, # define SCE_RUST_OPERATOR 16
-        :color_default, # define SCE_RUST_IDENTIFIER 17
-        :color_variable_name, # define SCE_RUST_LIFETIME 18
-        :color_builtin, # define SCE_RUST_MACRO 19
-        :color_warning, # define SCE_RUST_LEXERROR 20
-        :color_default, # define SCE_RUST_BYTESTRING 21
-        :color_default, # define SCE_RUST_BYTESTRINGR 22
-        :color_default # define SCE_RUST_BYTECHARACTER 23
-      ]
+
+      @style[Scintilla::SCE_RUST_DEFAULT] = :color_default
+      @style[Scintilla::SCE_RUST_COMMENTBLOCK] = :color_comment
+      @style[Scintilla::SCE_RUST_COMMENTLINE] = :color_comment
+      @style[Scintilla::SCE_RUST_COMMENTBLOCKDOC] = :color_comment
+      @style[Scintilla::SCE_RUST_COMMENTLINEDOC] = :color_comment
+      @style[Scintilla::SCE_RUST_NUMBER] = :color_default
+      @style[Scintilla::SCE_RUST_WORD] = :color_keyword
+      @style[Scintilla::SCE_RUST_WORD2] = :color_keyword
+      @style[Scintilla::SCE_RUST_WORD3] = :color_keyword
+      @style[Scintilla::SCE_RUST_WORD4] = :color_keyword
+      @style[Scintilla::SCE_RUST_WORD5] = :color_keyword
+      @style[Scintilla::SCE_RUST_WORD6] = :color_keyword
+      @style[Scintilla::SCE_RUST_WORD7] = :color_keyword
+      @style[Scintilla::SCE_RUST_STRING] = :color_string
+      @style[Scintilla::SCE_RUST_STRINGR] = :color_string
+      @style[Scintilla::SCE_RUST_CHARACTER] = :color_default
+      @style[Scintilla::SCE_RUST_OPERATOR] = :color_default
+      @style[Scintilla::SCE_RUST_IDENTIFIER] = :color_default
+      @style[Scintilla::SCE_RUST_LIFETIME] = :color_variable_name
+      @style[Scintilla::SCE_RUST_MACRO] = :color_builtin
+      @style[Scintilla::SCE_RUST_LEXERROR] = :color_warning
+      @style[Scintilla::SCE_RUST_BYTESTRING] = :color_default
+      @style[Scintilla::SCE_RUST_BYTESTRINGR] = :color_default
+      @style[Scintilla::SCE_RUST_BYTECHARACTER] = :color_default
     end
 
     def set_style(view_win, theme)
