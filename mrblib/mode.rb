@@ -28,7 +28,7 @@ module Mrbmacs
 
     def apply_theme(view_win, theme)
       @style.each_with_index do |style_name, i|
-        next if style_name.nil? || style_name == :color_default
+        next if style_name.nil?
 
         color = theme.font_color[style_name]
         view_win.sci_style_set_fore(i, color[0])   # foreground
