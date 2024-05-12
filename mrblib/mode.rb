@@ -27,11 +27,6 @@ module Mrbmacs
     end
 
     def apply_theme(view_win, theme)
-      view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, theme.foreground_color)
-      view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, theme.background_color)
-      view_win.sci_style_set_italic(Scintilla::STYLE_DEFAULT, false)
-      view_win.sci_style_set_bold(Scintilla::STYLE_DEFAULT, false)
-      view_win.sci_style_clear_all
       @style.each_with_index do |style_name, i|
         next if style_name.nil? || style_name == :color_default
 
