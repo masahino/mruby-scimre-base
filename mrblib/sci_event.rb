@@ -12,7 +12,7 @@ module Mrbmacs
   # methods
   class Application
     def init_default_sci_event
-      if @config.use_builtin_completion == true
+      if @config.use_builtin_completion
         add_sci_event(Scintilla::SCN_CHARADDED) do |_app, scn|
           builtin_completion(scn)
         end

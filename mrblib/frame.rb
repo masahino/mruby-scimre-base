@@ -82,9 +82,7 @@ module Mrbmacs
 
     def get_edit_win_from_pos(line, col)
       @edit_win_list.each do |w|
-        if line >= w.y1 && line <= w.y2 && col >= w.x1 && col <= w.x2
-          return w
-        end
+        return w if line >= w.y1 && line <= w.y2 && col >= w.x1 && col <= w.x2
       end
       nil
     end
