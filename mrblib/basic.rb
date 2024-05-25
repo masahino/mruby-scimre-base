@@ -12,17 +12,23 @@ module Mrbmacs
     end
 
     def copy_region
-      @frame.view_win.sci_copy_range(@mark_pos, @frame.view_win.sci_get_current_pos)
-      @frame.view_win.sci_set_empty_selection(get_current_pos)
+      win = @frame.view_win
+      current_pos = win.sci_get_current_pos
+
+      win.sci_copy_range(@mark_pos, current_pos)
+      win.sci_set_empty_selection(current_pos)
       @mark_pos = nil
     end
 
     def cut_region
       return if @mark_pos.nil?
 
-      @frame.view_win.sci_goto_pos(@frame.view_win.sci_get_current_pos)
-      @frame.view_win.sci_copy_range(@mark_pos, @frame.view_win.sci_get_current_pos)
-      @frame.view_win.sci_delete_range(@mark_pos, @frame.view_win.sci_get_current_pos - @mark_pos)
+      win = @frame.view_win
+      current_pos = win.sci_get_current_pos
+
+      win.sci_goto_pos(current_pos)
+      win.sci_copy_range(@mark_pos, current_pos)
+      win.sci_delete_range(@mark_pos, current_pos - @mark_pos)
       @mark_pos = nil
     end
 
@@ -33,6 +39,7 @@ module Mrbmacs
     def kill_line
       win = @frame.view_win
       current_pos = win.sci_get_current_pos
+
       line = win.sci_line_from_position(current_pos)
       line_end_pos = win.sci_get_line_end_position(line)
       if win.sci_get_line(line) != "\n"
@@ -53,16 +60,19 @@ module Mrbmacs
 
     def indent
       win = @frame.view_win
+
       if win.sci_autoc_active
         # current = win.sci_autoc_get_current
         win.sci_autoc_complete
         # win.sci_linedown
         # win.sci_vchome if current == win.sci_autoc_get_current
       else
-        line = win.sci_line_from_position(win.sci_get_current_pos)
+        current_pos = win.sci_get_current_pos
+
+        line = win.sci_line_from_position(current_pos)
         indent = @current_buffer.mode.get_indent(win)
         win.sci_set_line_indentation(line, indent)
-        win.sci_vchome if win.sci_get_column(win.sci_get_current_pos) < indent
+        win.sci_vchome if win.sci_get_column(current_pos) < indent
       end
     end
 
@@ -131,6 +141,7 @@ module Mrbmacs
 
     def recenter
       current_pos = @frame.view_win.sci_get_current_pos
+
       y = @frame.view_win.sci_pointy_from_position(0, current_pos)
       diff = @frame.edit_win.height / 2 - y
       @frame.view_win.sci_linescroll(0, -diff)
@@ -139,6 +150,7 @@ module Mrbmacs
     def downcase_word
       current_pos = @frame.view_win.sci_get_current_pos
       wordend_pos = @frame.view_win.sci_word_end_position(current_pos, true)
+
       return if wordend_pos <= current_pos
 
       word = @frame.view_win.sci_get_textrange(current_pos, wordend_pos)
