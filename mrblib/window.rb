@@ -117,9 +117,9 @@ module Mrbmacs
     end
 
     def apply_theme_base(theme)
-      @sci.sci_style_clear_all
       @sci.sci_style_set_fore(Scintilla::STYLE_DEFAULT, theme.foreground_color)
       @sci.sci_style_set_back(Scintilla::STYLE_DEFAULT, theme.background_color)
+      @sci.sci_style_clear_all
       if theme.font_color[:color_brace_highlight]
         @sci.sci_style_set_fore(Scintilla::STYLE_BRACELIGHT,
                                 theme.font_color[:color_brace_highlight][0])
