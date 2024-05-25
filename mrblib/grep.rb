@@ -2,7 +2,8 @@ module Mrbmacs
   # Command
   module Command
     def grep(command = nil)
-      command = @frame.echo_gets("Run Grep[#{Dir.getwd}]: ", 'grep -n ') if command.nil?
+      default_dir = @current_buffer.directory
+      command = @frame.echo_gets("Run Grep[#{default_dir}]: ", 'grep -n ') if command.nil?
       return if command.nil?
 
       buffer_name = '*grep*'
