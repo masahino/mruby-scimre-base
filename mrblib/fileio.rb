@@ -164,12 +164,9 @@ module Mrbmacs
 
     def insert_text_from_file(filename, from_encoding)
       pos = @frame.view_win.sci_get_current_pos
-      File.open(filename) do |f|
-        f.each do |line|
-          line = Iconv.conv('utf-8', from_encoding, line) if from_encoding != 'utf-8'
-          @frame.view_win.sci_add_text(line.bytesize, line)
-        end
-      end
+      content = File.read(filename, mode: 'rb')
+      content = Iconv.conv('utf-8', from_encoding, content) if from_encoding != 'utf-8'
+      @frame.view_win.sci_add_text(content.bytesize, content)
       @frame.view_win.sci_goto_pos(pos)
     end
 
