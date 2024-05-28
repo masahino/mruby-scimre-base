@@ -136,6 +136,13 @@ module Mrbmacs
           end
           len = fname.length
         end
+        file_list.map! do |file_name|
+          if File.directory?(file_name)
+            "#{file_name}/"
+          else
+            file_name
+          end
+        end
         [file_list.sort.join(@frame.echo_win.sci_autoc_get_separator.chr), len]
       end
       @frame.modeline_refresh(self)
