@@ -21,6 +21,7 @@ module Mrbmacs
     end
   end
 
+  # Application
   class Application
     include Command
 
@@ -28,19 +29,42 @@ module Mrbmacs
       if method.to_s[0..3].upcase == 'SCI_'
         @logger.debug "call: #{method}"
         @frame.view_win.send(method, *args)
-      elsif @command_handler[method.to_sym] != nil
+      elsif !@command_handler[method.to_sym].nil?
         @command_handler[method.to_sym].each do |m|
           m.call(*args)
         end
       elsif method.to_s[-5, 5] == '_mode'
         mode_name = method.to_s[0..-6]
-        mode_class_name = mode_name.capitalize + 'Mode'
+        mode_class_name = "#{mode_name.capitalize}Mode"
         if Mrbmacs.const_defined?(mode_class_name)
           @current_buffer.mode = Mrbmacs.const_get(mode_class_name).new
           @frame.view_win.sci_set_lexer_language(@current_buffer.mode.lexer)
           apply_theme_to_mode(@current_buffer.mode, @frame.edit_win, @theme)
         end
       end
+    end
+
+    def respond_to_missing?(method, include_private = false)
+      method_name = method.to_s
+      method_name.upcase.start_with?('SCI_') ||
+        @command_handler.key?(method.to_sym) ||
+        method_name.end_with?('_mode') ||
+        super
+    end
+
+    def create_result_buffer(buffer_name)
+      result_buffer = Mrbmacs::Buffer.new(buffer_name)
+      @frame.view_win.sci_add_refdocument(@current_buffer.docpointer) unless @current_buffer.docpointer.nil?
+      @frame.view_win.sci_set_docpointer(nil)
+      result_buffer.docpointer = @frame.view_win.sci_get_docpointer
+      add_new_buffer(result_buffer)
+      @current_buffer = result_buffer
+      add_buffer_to_frame(result_buffer)
+      update_buffer_mode(result_buffer)
+      # @frame.set_theme(@theme)
+      apply_theme_to_mode(@current_buffer.mode, @frame.edit_win, @theme)
+      @frame.set_buffer_name(buffer_name)
+      @frame.edit_win.buffer = @current_buffer
     end
 
     def setup_result_buffer(buffer_name)
@@ -52,26 +76,42 @@ module Mrbmacs
       end
       split_window_vertically if @frame.edit_win_list.size == 1
       other_window
-      # @frame.refresh_all
-
       result_buffer = Mrbmacs.get_buffer_from_name(@buffer_list, buffer_name)
       if result_buffer.nil?
-        result_buffer = Mrbmacs::Buffer.new(buffer_name)
-        if @current_buffer.docpointer != nil
-          @frame.view_win.sci_add_refdocument(@current_buffer.docpointer)
-        end
-        @frame.view_win.sci_set_docpointer(nil)
-        result_buffer.docpointer = @frame.view_win.sci_get_docpointer
-        add_new_buffer(result_buffer)
-        @current_buffer = result_buffer
-        add_buffer_to_frame(result_buffer)
-        update_buffer_mode(result_buffer)
-        # @frame.set_theme(@theme)
-        apply_theme_to_mode(@current_buffer.mode, @frame.edit_win, @theme)
-        @frame.set_buffer_name(buffer_name)
-        @frame.edit_win.buffer = @current_buffer
+        create_result_buffer(buffer_name)
       else
         switch_to_buffer(buffer_name)
+      end
+    end
+
+    def exec_shell_command_open3(command)
+      _o, e, s = Open3.capture3(command)
+      @frame.view_win.sci_set_text(e)
+      @frame.view_win.sci_goto_pos(@frame.view_win.sci_get_length)
+      @frame.view_win.sci_insert_text(@frame.view_win.sci_get_length, "\n")
+      if s.zero?
+        @frame.view_win.sci_insert_text(@frame.view_win.sci_get_length, "#{command} finished")
+      else
+        @frame.view_win.sci_insert_text(@frame.view_win.sci_get_length,
+                                        "#{command} exited with abnormally with code #{s}")
+      end
+    end
+
+    def exec_shell_command_popen(buffer_name, command)
+      io = IO.popen("#{command} 2>&1")
+      add_io_read_event(io) do |app, io_arg|
+        ret = io_arg.read(256) unless io_arg.closed?
+        result_win = app.frame.edit_win_from_buffer(buffer_name)
+        if !ret.nil?
+          if app.current_buffer.name == buffer_name
+            result_win.sci.sci_insert_text(result_win.sci.sci_get_length, ret)
+            result_win.sci.sci_goto_pos(result_win.sci.sci_get_length)
+          end
+        else
+          result_win.sci.sci_insert_text(result_win.sci.sci_get_length, "\n#{command} finished")
+          result_win.sci.sci_goto_pos(result_win.sci.sci_get_length)
+          app.del_io_read_event(io_arg)
+        end
       end
     end
 
@@ -80,31 +120,9 @@ module Mrbmacs
       @current_buffer.docpointer = @frame.view_win.sci_get_docpointer
       @frame.view_win.sci_clear_all
       if Object.const_defined? 'Open3'
-        _o, e, s = Open3.capture3(command)
-        @frame.view_win.sci_set_text(e)
-        @frame.view_win.sci_goto_pos(@frame.view_win.sci_get_length)
-        @frame.view_win.sci_insert_text(@frame.view_win.sci_get_length, "\n")
-        if s == 0
-          @frame.view_win.sci_insert_text(@frame.view_win.sci_get_length, "#{command} finished")
-        else
-          @frame.view_win.sci_insert_text(@frame.view_win.sci_get_length, "#{command} exited with abnormally with code #{s}")
-        end
+        exec_shell_command_open3(command)
       else
-        io = IO.popen(command + ' 2>&1')
-        add_io_read_event(io) do |app, io_arg|
-          ret = io_arg.read(256) unless io_arg.closed?
-          result_win = app.frame.edit_win_from_buffer(buffer_name)
-          if !ret.nil?
-            if app.current_buffer.name == buffer_name
-              result_win.sci.sci_insert_text(result_win.sci.sci_get_length, ret)
-              result_win.sci.sci_goto_pos(result_win.sci.sci_get_length)
-            end
-          else
-            result_win.sci.sci_insert_text(result_win.sci.sci_get_length, "\n#{command} finished")
-            result_win.sci.sci_goto_pos(result_win.sci.sci_get_length)
-            app.del_io_read_event(io_arg)
-          end
-        end
+        exec_shell_command_popen(buffer_name, command)
       end
     end
   end
